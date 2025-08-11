@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>عثمان نادرا ای سہولت — آمدنی/خرچہ/ادھار</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-main: linear-gradient(135deg,#e8f2ff,#f7fbff);
+      --page-bg: rgba(255,255,255,0.98);
+      --text: #17202a;
+      --muted: #566074;
+      --accent: #0b63d8;
+      --income: #16a34a;
+      --expense: #ef4444;
+      --bank: #f59e0b;
+      --udhar-taken: #0ea5e9;
+      --udhar-given: #8b5cf6;
+      --shadow: 0 8px 30px rgba(2,6,23,0.08);
+      --glass-blur: none;
+    }
+
+    /* dark theme variables (applied when [data-theme="dark"]) */
+    :root[data-theme="dark"]{
+      --bg-main: linear-gradient(135deg,#0b1720,#071127);
+      --page-bg: rgba(18,24,31,0.92);
+      --text: #e6eef8;
+      --muted: #9fb0c8;
+      --accent: #059669;
+      --income: #10b981;
+      --expense: #f87171;
+      --bank: #f59e0b;
+      --udhar-taken: #38bdf8;
+      --udhar-given: #a78bfa;
+      --shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; font-family: 'Noto Nastaliq Urdu', serif; }
+
+    body{
+      min-height:100vh;
+      background: var(--bg-main);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      padding:20px;
+      display:flex; align-items:flex-start; justify-content:center;
+    }
+
+    /* centered app shell */
+    .app{
+      width:100%;
+      max-width:1200px;
+      margin:10px;
+      background:var(--page-bg);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter: var(--glass-blur);
+    }
+
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+    header h1{ font-size:1.15rem; color:var(--text); display:flex; gap:12px; align-items:center; margin:0; }
+    header .brand{
+      display:flex; gap:10px; align-items:center;
+    }
+    .logo{
+      width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#fff,#e6f0ff);
+      display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent);
+    }
+
+    .top-controls{ display:flex; gap:12px; align-items:center; }
+
+    main{ display:grid; grid-template-columns:320px 1fr; gap:18px; padding:18px; }
+    @media (max-width:980px){ main{ grid-template-columns:1fr; } }
+
+    /* sidebar */
+    .sidebar{
+      padding:12px; border-radius:10px; background: rgba(255,255,255,0.85); box-shadow:0 6px 18px rgba(4,8,20,0.06);
+    }
+    :root[data-theme="dark"] .sidebar{ background: rgba(255,255,255,0.02); box-shadow:none; }
+
+    .nav{ list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+    .nav a{ text-decoration:none; padding:10px; border-radius:8px; color:var(--text); display:block; }
+    .nav a.active{ background:var(--accent); color:#fff; }
+
+    .small { font-size:0.85rem; color:var(--muted); margin-top:8px; }
+
+    .swatches{ display:none; /* hidden per request */ gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .swatch{ width:28px; height:28px; border-radius:6px; cursor:pointer; border:1px solid rgba(0,0,0,0.06); }
+
+    .compact-row{ display:flex; gap:8px; align-items:center; margin-top:10px; }
+
+    /* content area */
+    .content{ padding:6px; }
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.98)); padding:12px; border-radius:10px; margin-bottom:12px; box-shadow:0 4px 14px rgba(4,8,20,0.04); }
+    :root[data-theme="dark"] .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: none; }
+
+    .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
+
+    .summary{ padding:10px; border-radius:8px; text-align:center; border-top:4px solid transparent; background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
+    :root[data-theme="dark"] .summary{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .summary h3{ font-size:0.92rem; color:var(--muted); margin-bottom:6px; }
+    .summary p{ font-size:1.05rem; font-weight:700; margin:0; }
+
+    .summary.income{ border-top-color:var(--income); }
+    .summary.expense{ border-top-color:var(--expense); }
+    .summary.balance{ border-top-color:var(--accent); }
+    .summary.bank{ border-top-color:var(--bank); }
+    .summary.udharTaken{ border-top-color:var(--udhar-taken); }
+    .summary.udharGiven{ border-top-color:var(--udhar-given); }
+
+    form .row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+    @media (max-width:600px){ form .row{ grid-template-columns:1fr; } }
+
+    input, select, textarea, button{
+      padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:0.95rem; width:100%;
+      background:transparent; color:var(--text);
+    }
+    :root[data-theme="dark"] input, :root[data-theme="dark"] select, :root[data-theme="dark"] textarea{ border-color: rgba(255,255,255,0.06); }
+
+    button{ background:var(--accent); color:#fff; border:none; cursor:pointer; }
+
+    table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:0.95rem; }
+    th,td{ padding:10px; text-align:right; border-bottom:1px solid rgba(0,0,0,0.06); }
+    :root[data-theme="dark"] th, :root[data-theme="dark"] td{ border-bottom:1px solid rgba(255,255,255,0.03); }
+    th{ background:var(--accent); color:#fff; font-weight:normal; }
+
+    .type-pill{ padding:6px 10px; border-radius:18px; color:#fff; font-weight:700; display:inline-block; min-width:100px; text-align:center; }
+    .pill-income{ background:var(--income); }
+    .pill-expense{ background:var(--expense); }
+    .pill-bank{ background:var(--bank); }
+    .pill-udharTaken{ background:var(--udhar-taken); }
+    .pill-udharGiven{ background:var(--udhar-given); }
+
+    .row-income td{ background: linear-gradient(90deg, rgba(22,163,74,0.06), rgba(22,163,74,0.02)); }
+    .row-expense td{ background: linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); }
+    .row-bank td{ background: linear-gradient(90deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02)); }
+    .row-udharTaken td{ background: linear-gradient(90deg, rgba(14,165,233,0.06), rgba(14,165,233,0.02)); }
+    .row-udharGiven td{ background: linear-gradient(90deg, rgba(139,92,246,0.06), rgba(139,92,246,0.02)); }
+
+    .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .icon-btn{ background:transparent; border:none; cursor:pointer; font-size:1.05rem; padding:6px; color:var(--text); }
+
+    footer{ padding:10px 18px; text-align:center; color:var(--muted); font-size:0.9rem; }
+
+    /* small helpers */
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+  <div class="app" role="application" aria-label="Usman NADRA e-Sahulat">
+    <header>
+      <div class="brand">
+        <div class="logo">N</div>
+        <h1>عثمان نادرا ای سہولت</h1>
+      </div>
+
+      <div class="top-controls">
+        <!-- simple theme toggle (visible) — swatches hidden per request -->
+        <label style="display:flex;align-items:center;gap:8px;">
+          <input id="theme-toggle" type="checkbox" />
+          <span class="small" id="theme-label">Light</span>
+        </label>
+
+        <div style="color:var(--muted);margin-right:6px">تھیم</div>
+
+        <div class="compact-row">
+          <label><input id="compact-mode" type="checkbox"> Compact</label>
+          <label style="margin-left:6px"><input id="blur-mode" type="checkbox"> Blur</label>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <aside class="sidebar">
+        <nav>
+          <ul class="nav">
+            <li><a href="#" id="menu-daily" class="active">روزانہ</a></li>
+            <li><a href="#" id="menu-weekly">ہفتہ وار</a></li>
+            <li><a href="#" id="menu-monthly">ماہانہ</a></li>
+            <li><a href="#" id="menu-banks">بینک اکاؤنٹس</a></li>
+            <li><a href="#" id="menu-udhar">ادھار</a></li>
+          </ul>
+        </nav>
+
+        <div class="small">تیز رفتار کیلئے Compact آن کریں۔</div>
+        <div style="margin-top:10px" class="controls">
+          <button class="icon-btn" id="export-json" title="Export JSON">⬇️</button>
+          <button class="icon-btn" id="import-json" title="Import JSON">⬆️</button>
+          <button class="icon-btn" id="clear-data" title="Clear Data">🗑️</button>
+        </div>
+      </aside>
+
+      <section class="content">
+        <!-- DAILY -->
+        <section id="daily-section" class="card">
+          <h2>آج کا مجموعہ</h2>
+
+          <div class="summary-grid" style="margin-top:10px;">
+            <div class="summary income"><h3>آج کی آمدنی</h3><p id="today-income">0</p></div>
+            <div class="summary expense"><h3>آج کا خرچ</h3><p id="today-expense">0</p></div>
+            <div class="summary balance"><h3>آج کا بیلنس</h3><p id="today-balance">0</p></div>
+            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="today-bank-transfer">0</p></div>
+            <div class="summary udharTaken"><h3>آج ادھار لیا</h3><p id="today-udhar-taken">0</p></div>
+            <div class="summary udharGiven"><h3>آج ادھار دیا</h3><p id="today-udhar-given">0</p></div>
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <h3>نیا ریکارڈ شامل کریں</h3>
+            <form id="daily-form" style="margin-top:8px;">
+              <div class="row">
+                <div>
+                  <label>رقم</label>
+                  <input id="amount" type="number" required />
+                </div>
+                <div>
+                  <label>قسم</label>
+                  <select id="type">
+                    <option value="income">آمدنی</option>
+                    <option value="expense">خرچ</option>
+                    <option value="bank-transfer">بینک ٹرانسفر</option>
+                    <option value="udhar-taken">ادھار — لیا</option>
+                    <option value="udhar-given">ادھار — دیا</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:8px;">
+                <div id="bank-transfer-group" style="display:none;">
+                  <label>بینک اکاؤنٹ</label>
+                  <select id="bank-account"></select>
+                </div>
+                <div>
+                  <label>تفصیل</label>
+                  <textarea id="description" rows="1"></textarea>
+                </div>
+              </div>
+
+              <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+                <button type="submit" class="small-btn">محفوظ کریں</button>
+                <span id="type-badge" class="type-pill" style="background:transparent;color:#000"></span>
+              </div>
+            </form>
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <table id="daily-table" aria-live="polite">
+              <thead>
+                <tr><th>وقت</th><th>رقم</th><th>قسم</th><th>تفصیل</th><th>عمل</th></tr>
+              </thead>
+              <tbody id="daily-body"><tr><td colspan="5" style="text-align:center">آج کا کوئی ریکارڈ نہیں</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- WEEKLY -->
+        <section id="weekly-section" class="card" style="display:none;">
+          <h2>ہفتہ وار رپورٹ</h2>
+          <div class="summary-grid" style="margin-top:10px;">
+            <div class="summary"><h3>ہفتے کی آمدنی</h3><p id="weekly-income">0</p></div>
+            <div class="summary"><h3>ہفتے کا خرچ</h3><p id="weekly-expense">0</p></div>
+            <div class="summary"><h3>ہفتے کا بیلنس</h3><p id="weekly-balance">0</p></div>
+            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="weekly-bank-transfer">0</p></div>
+          </div>
+
+          <div class="card" style="margin-top:10px;">
+            <table id="weekly-table">
+              <thead><tr><th>تاریخ</th><th>آمدنی</th><th>خرچ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
+              <tbody id="weekly-body"><tr><td colspan="5" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- MONTHLY -->
+        <section id="monthly-section" class="card" style="display:none;">
+          <h2>ماہانہ رپورٹ</h2>
+          <div class="summary-grid" style="margin-top:10px;">
+            <div class="summary"><h3>ماہ کی آمدنی</h3><p id="monthly-income">0</p></div>
+            <div class="summary"><h3>ماہ کا خرچ</h3><p id="monthly-expense">0</p></div>
+            <div class="summary"><h3>ماہ کا بیلنس</h3><p id="monthly-balance">0</p></div>
+            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="monthly-bank-transfer">0</p></div>
+          </div>
+
+          <div class="card" style="margin-top:10px;">
+            <table id="monthly-table">
+              <thead><tr><th>ہفتہ</th><th>آمدنی</th><th>خرچ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
+              <tbody id="monthly-body"><tr><td colspan="5" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- BANKS -->
+        <section id="banks-section" class="card" style="display:none;">
+          <h2>بینک اکاؤنٹس</h2>
+          <div class="summary-grid" style="margin-top:10px;">
+            <div class="summary bank"><h3>کل بیلنس</h3><p id="total-bank-balance">0</p></div>
+          </div>
+
+          <form id="bank-form" style="margin-top:10px;">
+            <div class="row">
+              <div><label>بینک کا نام</label><input id="bank-name" type="text" required /></div>
+              <div><label>ابتدائی بیلنس</label><input id="bank-balance" type="number" required /></div>
+            </div>
+            <div style="margin-top:8px;"><button type="submit">بینک شامل کریں</button></div>
+          </form>
+
+          <div class="card" style="margin-top:10px;">
+            <table id="banks-table">
+              <thead><tr><th>بینک کا نام</th><th>بیلنس</th><th>عمل</th></tr></thead>
+              <tbody id="banks-body"><tr><td colspan="3" style="text-align:center">کوئی بینک اکاؤنٹ موجود نہیں</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- UDHAR -->
+        <section id="udhar-section" class="card" style="display:none;">
+          <h2>ادھار مینجمنٹ</h2>
+
+          <div class="card" style="margin-top:6px;">
+            <h3>نیا ادھار ریکارڈ</h3>
+            <form id="udhar-form" style="margin-top:8px;">
+              <div class="row">
+                <div><label>کس کا نام</label><input id="udhar-name" type="text" required/></div>
+                <div>
+                  <label>قسم</label>
+                  <select id="udhar-type">
+                    <option value="taken">ادھار لیا</option>
+                    <option value="given">ادھار دیا</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" style="margin-top:8px;">
+                <div><label>رقم</label><input id="udhar-amount" type="number" required/></div>
+                <div><label>تاریخ (اختیاری)</label><input id="udhar-date" type="date"/></div>
+              </div>
+              <div style="margin-top:8px;"><button type="submit">ادھار شامل کریں</button></div>
+            </form>
+          </div>
+
+          <div class="card" style="margin-top:10px;">
+            <table id="udhar-table">
+              <thead><tr><th>نام</th><th>قسم</th><th>رقم</th><th>تاریخ</th><th>عمل</th></tr></thead>
+              <tbody id="udhar-body"><tr><td colspan="5" style="text-align:center">کوئی ادھار ریکارڈ نہیں</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+      </section>
+    </main>
+
+    <footer>نسخہ محفوظ — مقامی طور پر آپ کے براؤزر میں۔ مزید فیچرز کے لیے بتائیں۔</footer>
+  </div>
+
+  <script>
+    // ---------- Data ----------
+    let dailyRecords = [];
+    let weeklySummaries = [];
+    let monthlySummaries = [];
+    let banks = [];
+    let udhars = [];
+
+    const BANK_NAMES_PRESET = ["الحبیب","نادرا","نقلِ فرد","اومنی","جاز کیش","ایزیپہسہ","یو پیسہ (گلے میں)","یو بی ایل"];
+    const $ = id => document.getElementById(id);
+
+    // ---------- Persistence ----------
+    function saveData(){
+      try{
+        localStorage.setItem('usman_esahulat_v4', JSON.stringify({ dailyRecords, weeklySummaries, monthlySummaries, banks, udhars }));
+      }catch(e){ console.warn('Could not save', e); }
+    }
+
+    function loadData(){
+      const raw = localStorage.getItem('usman_esahulat_v4');
+      if(raw){
+        try{
+          const data = JSON.parse(raw);
+          dailyRecords = data.dailyRecords || [];
+          weeklySummaries = data.weeklySummaries || [];
+          monthlySummaries = data.monthlySummaries || [];
+          banks = data.banks || [];
+          udhars = data.udhars || [];
+        }catch(err){
+          // if parse error, reset to defaults
+          dailyRecords = []; weeklySummaries=[]; monthlySummaries=[]; udhars=[];
+          banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+        }
+      } else {
+        banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+      }
+      renderAll();
+    }
+
+    // ---------- Render ----------
+    function renderAll(){
+      renderDaily();
+      renderWeekly();
+      renderMonthly();
+      renderBanks();
+      updateBankDropdown();
+      renderUdhars();
+    }
+
+    function renderDaily(){
+      const todayKey = new Date().toLocaleDateString('en-CA');
+      const todayRecords = dailyRecords.filter(r => r.date === todayKey).sort((a,b)=>b.timestamp-a.timestamp);
+
+      const income = todayRecords.filter(r => r.type==='income').reduce((s,r)=>s+r.amount,0);
+      const expense = todayRecords.filter(r => r.type==='expense').reduce((s,r)=>s+r.amount,0);
+      const bankTransfer = todayRecords.filter(r => r.type==='bank-transfer').reduce((s,r)=>s+r.amount,0);
+      const udharTaken = todayRecords.filter(r => r.type==='udhar-taken').reduce((s,r)=>s+r.amount,0);
+      const udharGiven = todayRecords.filter(r => r.type==='udhar-given').reduce((s,r)=>s+r.amount,0);
+      const balance = income - expense;
+
+      $('today-income').textContent = income.toLocaleString();
+      $('today-expense').textContent = expense.toLocaleString();
+      $('today-bank-transfer').textContent = bankTransfer.toLocaleString();
+      $('today-udhar-taken').textContent = udharTaken.toLocaleString();
+      $('today-udhar-given').textContent = udharGiven.toLocaleString();
+      $('today-balance').textContent = balance.toLocaleString();
+
+      const tbody = $('daily-body');
+      if(todayRecords.length===0){
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">آج کا کوئی ریکارڈ نہیں</td></tr>';
+      } else {
+        tbody.innerHTML = todayRecords.map(r=>{
+          const cls = r.type==='income' ? 'row-income' : r.type==='expense' ? 'row-expense' : r.type==='bank-transfer' ? 'row-bank' : r.type==='udhar-taken' ? 'row-udharTaken' : 'row-udharGiven';
+          const typeLabel = r.type==='income' ? 'آمدنی' : r.type==='expense' ? 'خرچ' : r.type==='bank-transfer' ? 'بینک ٹرانسفر' : r.type==='udhar-taken' ? 'ادھار لیا' : 'ادھار دیا';
+          return `<tr class="${cls}">
+            <td>${new Date(r.timestamp).toLocaleTimeString('ur-PK')}</td>
+            <td>${r.amount.toLocaleString()}</td>
+            <td><span class="type-pill ${r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTaken':'pill-udharGiven'}">${typeLabel}</span></td>
+            <td>${r.description || '-' } ${r.bankName ? '('+r.bankName +')' : ''}</td>
+            <td><button class="icon-btn" onclick="deleteDailyRecord('${r.id}')">❌</button></td>
+          </tr>`;
+        }).join('');
+      }
+    }
+
+    function renderWeekly(){
+      const nowWeek = getCurrentWeekNumber();
+      const week = weeklySummaries.find(w=>w.week===nowWeek) || { income:0,expense:0,bankTransfer:0 };
+      $('weekly-income').textContent = (week.income||0).toLocaleString();
+      $('weekly-expense').textContent = (week.expense||0).toLocaleString();
+      $('weekly-bank-transfer').textContent = (week.bankTransfer||0).toLocaleString();
+      $('weekly-balance').textContent = ((week.income||0)-(week.expense||0)).toLocaleString();
+
+      const weekStart = getStartOfWeek();
+      const weekRecords = dailyRecords.filter(r => new Date(r.timestamp) >= weekStart);
+      const dailyMap = {};
+      weekRecords.forEach(r=>{
+        if(!dailyMap[r.date]) dailyMap[r.date]={income:0,expense:0,bankTransfer:0};
+        if(r.type==='income') dailyMap[r.date].income += r.amount;
+        else if(r.type==='expense') dailyMap[r.date].expense += r.amount;
+        else dailyMap[r.date].bankTransfer += r.amount;
+      });
+
+      const tbody = $('weekly-body');
+      const keys = Object.keys(dailyMap).sort();
+      if(keys.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr>';
+      else tbody.innerHTML = keys.map(d=>{
+        const day = dailyMap[d];
+        return `<tr>
+          <td>${new Date(d).toLocaleDateString('ur-PK')}</td>
+          <td>${(day.income||0).toLocaleString()}</td>
+          <td>${(day.expense||0).toLocaleString()}</td>
+          <td>${(day.bankTransfer||0).toLocaleString()}</td>
+          <td>${((day.income||0)-(day.expense||0)).toLocaleString()}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderMonthly(){
+      const now = new Date();
+      const key = `${now.getFullYear()}-${now.getMonth()+1}`;
+      const m = monthlySummaries.find(m=>m.month===key) || { income:0,expense:0,bankTransfer:0 };
+      $('monthly-income').textContent = (m.income||0).toLocaleString();
+      $('monthly-expense').textContent = (m.expense||0).toLocaleString();
+      $('monthly-bank-transfer').textContent = (m.bankTransfer||0).toLocaleString();
+      $('monthly-balance').textContent = ((m.income||0)-(m.expense||0)).toLocaleString();
+
+      const tbody = $('monthly-body');
+      const weeks = weeklySummaries.filter(w=>{
+        const d = new Date(w.timestamp||Date.now());
+        return d.getFullYear()===now.getFullYear() && (d.getMonth()+1)=== (now.getMonth()+1);
+      }).sort((a,b)=>a.week-b.week);
+      if(weeks.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr>';
+      else tbody.innerHTML = weeks.map(w=>`<tr><td>ہفتہ ${w.week}</td><td>${(w.income||0).toLocaleString()}</td><td>${(w.expense||0).toLocaleString()}</td><td>${(w.bankTransfer||0).toLocaleString()}</td><td>${((w.income||0)-(w.expense||0)).toLocaleString()}</td></tr>`).join('');
+    }
+
+    function renderBanks(){
+      $('total-bank-balance').textContent = banks.reduce((s,b)=>s+(b.balance||0),0).toLocaleString();
+      const tbody = $('banks-body');
+      if(banks.length===0) tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">کوئی بینک اکاؤنٹ موجود نہیں</td></tr>';
+      else tbody.innerHTML = banks.map(b=>`<tr><td>${b.name}</td><td>${(b.balance||0).toLocaleString()}</td><td><button class="icon-btn" onclick="editBank('${b.id}')">✏️</button><button class="icon-btn" onclick="deleteBank('${b.id}')">🗑️</button></td></tr>`).join('');
+    }
+
+    function updateBankDropdown(){
+      const sel = $('bank-account');
+      if(!sel) return;
+      if(banks.length===0) sel.innerHTML = '<option value="">کوئی بینک نہیں</option>';
+      else sel.innerHTML = banks.map(b=>`<option value="${b.id}">${b.name} (${(b.balance||0).toLocaleString()})</option>`).join('');
+    }
+
+    function renderUdhars(){
+      const tbody = $('udhar-body');
+      if(udhars.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">کوئی ادھار ریکارڈ نہیں</td></tr>';
+      else tbody.innerHTML = udhars.map(u=>`<tr><td>${u.name}</td><td>${u.type==='taken'?'ادھار لیا':'ادھار دیا'}</td><td>${u.amount.toLocaleString()}</td><td>${u.date||''}</td><td><button class="icon-btn" onclick="deleteUdhar('${u.id}')">🗑️</button></td></tr>`).join('');
+    }
+
+    // ---------- Helpers ----------
+    function getCurrentWeekNumber(){
+      const now = new Date();
+      const start = new Date(now.getFullYear(),0,1);
+      const diff = Math.floor((now - start) / 86400000);
+      return Math.ceil((diff + start.getDay()+1)/7);
+    }
+    function getStartOfWeek(){
+      const now = new Date();
+      const day = now.getDay();
+      const diff = now.getDate() - day;
+      return new Date(now.getFullYear(), now.getMonth(), diff);
+    }
+
+    // ---------- Forms ----------
+    $('daily-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const amt = parseFloat($('amount').value);
+      const type = $('type').value;
+      const desc = $('description').value || '';
+      if(!amt || isNaN(amt)){ alert('براہ کرم رقم درج کریں'); return; }
+      const now = new Date();
+      const rec = {
+        id: 'r'+Date.now().toString(36),
+        date: now.toLocaleDateString('en-CA'),
+        timestamp: now.getTime(),
+        amount: amt,
+        type,
+        description: desc,
+        week: getCurrentWeekNumber(),
+        month: `${now.getFullYear()}-${now.getMonth()+1}`
+      };
+      if(type==='bank-transfer'){
+        const bankId = $('bank-account').value;
+        const bank = banks.find(b=>b.id===bankId);
+        if(!bank){ alert('براہ کرم بینک منتخب کریں'); return; }
+        rec.bankId = bankId;
+        rec.bankName = bank.name;
+        bank.balance = (bank.balance||0) + amt;
+      }
+      if(type==='udhar-taken' || type==='udhar-given'){
+        const u = {
+          id: 'u'+Date.now().toString(36),
+          name: desc || 'نام غیر معلوم',
+          type: type==='udhar-taken' ? 'taken' : 'given',
+          amount: amt,
+          date: new Date().toLocaleDateString('en-CA')
+        };
+        udhars.push(u);
+      }
+      dailyRecords.push(rec);
+      updateSummariesOnAdd(rec);
+      saveData();
+      renderAll();
+      this.reset();
+      $('type-badge').textContent='';
+    });
+
+    $('type').addEventListener('change', function(){
+      const v = this.value;
+      const badge = $('type-badge');
+      if(v==='income'){ badge.textContent='آمدنی'; badge.className='type-pill pill-income'; $('bank-transfer-group').style.display='none'; }
+      else if(v==='expense'){ badge.textContent='خرچ'; badge.className='type-pill pill-expense'; $('bank-transfer-group').style.display='none'; }
+      else if(v==='bank-transfer'){ badge.textContent='بینک ٹرانسفر'; badge.className='type-pill pill-bank'; $('bank-transfer-group').style.display='block'; }
+      else if(v==='udhar-taken'){ badge.textContent='ادھار لیا'; badge.className='type-pill pill-udharTaken'; $('bank-transfer-group').style.display='none'; }
+      else { badge.textContent='ادھار دیا'; badge.className='type-pill pill-udharGiven'; $('bank-transfer-group').style.display='none'; }
+    });
+
+    // bank form
+    $('bank-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = $('bank-name').value.trim();
+      const bal = parseFloat($('bank-balance').value);
+      if(!name || isNaN(bal)){ alert('درست معلومات درج کریں'); return; }
+      banks.push({ id:'b'+Date.now().toString(36), name, balance:bal });
+      saveData(); renderAll(); this.reset();
+    });
+
+    // udhar form
+    $('udhar-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = $('udhar-name').value.trim();
+      const type = $('udhar-type').value;
+      const amount = parseFloat($('udhar-amount').value);
+      const date = $('udhar-date').value || new Date().toLocaleDateString('en-CA');
+      if(!name || isNaN(amount)){ alert('درست معلومات درج کریں'); return; }
+      udhars.push({ id:'u'+Date.now().toString(36), name, type, amount, date });
+      saveData(); renderUdhars(); this.reset();
+    });
+
+    // delete/edit
+    window.deleteDailyRecord = function(id){
+      if(!confirm('کیا حذف کرنا چاہتے ہیں؟')) return;
+      const idx = dailyRecords.findIndex(r=>r.id===id);
+      if(idx===-1) return;
+      const rec = dailyRecords[idx];
+      if(rec.type==='bank-transfer' && rec.bankId){
+        const b = banks.find(x=>x.id===rec.bankId);
+        if(b) b.balance -= rec.amount;
+      }
+      updateSummariesOnDelete(rec);
+      dailyRecords.splice(idx,1);
+      saveData(); renderAll();
+    };
+
+    window.deleteBank = function(id){
+      if(!confirm('کیا واقعی بینک ہٹانا ہے؟')) return;
+      // when deleting bank, also remove bankId from transfers (no balance changes because already applied)
+      dailyRecords = dailyRecords.map(r=> r.bankId===id ? {...r, bankId:null, bankName:'(حذف شدہ بینک)'} : r);
+      banks = banks.filter(b=>b.id!==id);
+      saveData(); renderAll();
+    };
+
+    window.editBank = function(id){
+      const b = banks.find(x=>x.id===id);
+      if(!b) return;
+      const val = prompt('نیا بیلنس درج کریں: ' + b.name, b.balance||0);
+      if(val!==null && !isNaN(parseFloat(val))){ b.balance = parseFloat(val); saveData(); renderAll(); }
+    };
+
+    window.deleteUdhar = function(id){
+      if(!confirm('کیا واقعی ادھار ریکارڈ ہٹانا ہے؟')) return;
+      udhars = udhars.filter(u=>u.id!==id);
+      saveData(); renderUdhars();
+    };
+
+    // summaries update
+    function updateSummariesOnAdd(rec){
+      let week = weeklySummaries.find(w=>w.week===rec.week);
+      if(!week){ week = { week: rec.week, income:0, expense:0, bankTransfer:0, timestamp: Date.now() }; weeklySummaries.push(week); }
+      if(rec.type==='income') week.income += rec.amount;
+      else if(rec.type==='expense') week.expense += rec.amount;
+      else if(rec.type==='bank-transfer') week.bankTransfer += rec.amount;
+
+      let month = monthlySummaries.find(m=>m.month===rec.month);
+      if(!month){ month = { month: rec.month, income:0, expense:0, bankTransfer:0, timestamp: Date.now() }; monthlySummaries.push(month); }
+      if(rec.type==='income') month.income += rec.amount;
+      else if(rec.type==='expense') month.expense += rec.amount;
+      else if(rec.type==='bank-transfer') month.bankTransfer += rec.amount;
+    }
+
+    function updateSummariesOnDelete(rec){
+      const w = weeklySummaries.find(x=>x.week===rec.week);
+      if(w){
+        if(rec.type==='income') w.income -= rec.amount;
+        else if(rec.type==='expense') w.expense -= rec.amount;
+        else if(rec.type==='bank-transfer') w.bankTransfer -= rec.amount;
+        if((w.income||0)+(w.expense||0)+(w.bankTransfer||0)===0) weeklySummaries = weeklySummaries.filter(x=>x.week!==rec.week);
+      }
+      const m = monthlySummaries.find(x=>x.month===rec.month);
+      if(m){
+        if(rec.type==='income') m.income -= rec.amount;
+        else if(rec.type==='expense') m.expense -= rec.amount;
+        else if(rec.type==='bank-transfer') m.bankTransfer -= rec.amount;
+        if((m.income||0)+(m.expense||0)+(m.bankTransfer||0)===0) monthlySummaries = monthlySummaries.filter(x=>x.month!==rec.month);
+      }
+    }
+
+    // navigation
+    function showSection(id){
+      ['daily','weekly','monthly','banks','udhar'].forEach(s=>{
+        const el = document.getElementById(s+'-section');
+        if(el) el.style.display = (s===id ? 'block' : 'none');
+        const link = document.getElementById('menu-'+s);
+        if(link) link.classList.toggle('active', s===id);
+      });
+    }
+    $('menu-daily').addEventListener('click', e=>{ e.preventDefault(); showSection('daily'); });
+    $('menu-weekly').addEventListener('click', e=>{ e.preventDefault(); showSection('weekly'); });
+    $('menu-monthly').addEventListener('click', e=>{ e.preventDefault(); showSection('monthly'); });
+    $('menu-banks').addEventListener('click', e=>{ e.preventDefault(); showSection('banks'); });
+    $('menu-udhar').addEventListener('click', e=>{ e.preventDefault(); showSection('udhar'); });
+
+    // ---------- Theme logic ----------
+    // Keep multiple themes in code, but per request theme-swatches hidden.
+    const THEMES = {
+      light: { name:'light', accent:'#0b6ef6', bg:'linear-gradient(135deg,#e8f2ff,#f7fbff)', card:'#ffffff' },
+      dark: { name:'dark', accent:'#059669', bg:'linear-gradient(135deg,#0b1720,#071127)', card:'rgba(18,24,31,0.92)' }
+      // more themes could be defined here but are not exposed in UI
+    };
+
+    function applyThemeByName(name){
+      if(name==='dark'){
+        document.documentElement.setAttribute('data-theme','dark');
+        $('theme-toggle').checked = true;
+        $('theme-label').textContent = 'Dark';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        $('theme-toggle').checked = false;
+        $('theme-label').textContent = 'Light';
+      }
+      localStorage.setItem('esahulat_theme_v4', JSON.stringify(name));
+    }
+
+    // compact + blur toggles
+    $('compact-mode').addEventListener('change', function(){
+      if(this.checked) document.documentElement.setAttribute('data-compact','true');
+      else document.documentElement.removeAttribute('data-compact');
+      localStorage.setItem('esahulat_compact_v4', this.checked ? '1' : '0');
+    });
+    $('blur-mode').addEventListener('change', function(){
+      if(this.checked) document.documentElement.style.setProperty('--glass-blur','blur(10px)');
+      else document.documentElement.style.setProperty('--glass-blur','none');
+      localStorage.setItem('esahulat_blur_v4', this.checked ? '1' : '0');
+    });
+
+    function loadPrefs(){
+      const t = localStorage.getItem('esahulat_theme_v4');
+      if(t){
+        try{
+          const name = JSON.parse(t);
+          applyThemeByName(name);
+        }catch(e){ applyThemeByName('light'); }
+      } else {
+        // default: light theme
+        applyThemeByName('light');
+      }
+
+      const c = localStorage.getItem('esahulat_compact_v4'); if(c==='1'){ $('compact-mode').checked = true; document.documentElement.setAttribute('data-compact','true'); }
+      const b = localStorage.getItem('esahulat_blur_v4'); if(b==='1'){ $('blur-mode').checked = true; document.documentElement.style.setProperty('--glass-blur','blur(10px)'); }
+    }
+
+    // theme toggle control
+    $('theme-toggle').addEventListener('change', function(){
+      applyThemeByName(this.checked ? 'dark' : 'light');
+    });
+
+    // ---------- Export/Import/Clear ----------
+    $('export-json').addEventListener('click', ()=>{
+      const data = JSON.stringify({ dailyRecords, weeklySummaries, monthlySummaries, banks, udhars }, null, 2);
+      const blob = new Blob([data],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'usman_esahulat_backup.json'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    $('import-json').addEventListener('click', ()=>{
+      const input = document.createElement('input'); input.type='file'; input.accept='application/json';
+      input.onchange = e => {
+        const f = e.target.files[0]; if(!f) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          try{
+            const obj = JSON.parse(ev.target.result);
+            dailyRecords = obj.dailyRecords || dailyRecords;
+            weeklySummaries = obj.weeklySummaries || weeklySummaries;
+            monthlySummaries = obj.monthlySummaries || monthlySummaries;
+            banks = obj.banks || banks;
+            udhars = obj.udhars || udhars;
+            saveData(); renderAll(); alert('ڈیٹا امپورٹ ہو گیا');
+          }catch(err){ alert('فائل پڑھنے میں مسئلہ'); }
+        };
+        reader.readAsText(f);
+      };
+      input.click();
+    });
+
+    $('clear-data').addEventListener('click', ()=>{
+      if(!confirm('کیا آپ سارا مقامی ڈیٹا صاف کرنا چاہتے ہیں؟')) return;
+      localStorage.removeItem('usman_esahulat_v4');
+      dailyRecords=[]; weeklySummaries=[]; monthlySummaries=[]; banks=[]; udhars=[];
+      banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+      saveData(); renderAll();
+    });
+
+    // ---------- Init ----------
+    loadPrefs();
+    loadData();
+    setInterval(()=>{ renderAll(); }, 30000);
+    // initialize UI badge
+    if($('type')) $('type').dispatchEvent(new Event('change'));
+  </script>
+</body>
+</html>
