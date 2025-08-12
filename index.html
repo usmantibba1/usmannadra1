@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>عثمان نادرا ای سہولت — آمدنی/خرچہ/ادھار</title>
+  <title>عثمان نادرا ای سہولت — آمدنی/خرچہ/دکان خرچہ/ادھار</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 
@@ -19,6 +19,7 @@
       --bank: #f59e0b;
       --udhar-taken: #0ea5e9;
       --udhar-given: #8b5cf6;
+      --shop-expense: #d97706; /* نارنجی / دکان خرچہ */
       --shadow: 0 8px 30px rgba(2,6,23,0.08);
       --glass-blur: none;
     }
@@ -33,6 +34,7 @@
       --bank: #f59e0b;
       --udhar-taken: #38bdf8;
       --udhar-given: #a78bfa;
+      --shop-expense: #f59e0b;
       --shadow: 0 8px 30px rgba(0,0,0,0.6);
     }
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -93,6 +95,7 @@
     .summary.bank{ border-top-color:var(--bank); }
     .summary.udharTaken{ border-top-color:var(--udhar-taken); }
     .summary.udharGiven{ border-top-color:var(--udhar-given); }
+    .summary.shopExpense{ border-top-color:var(--shop-expense); }
 
     form .row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
     @media (max-width:600px){ form .row{ grid-template-columns:1fr; } }
@@ -116,12 +119,14 @@
     .pill-bank{ background:var(--bank); }
     .pill-udharTaken{ background:var(--udhar-taken); }
     .pill-udharGiven{ background:var(--udhar-given); }
+    .pill-shopExpense{ background:var(--shop-expense); }
 
     .row-income td{ background: linear-gradient(90deg, rgba(22,163,74,0.06), rgba(22,163,74,0.02)); }
     .row-expense td{ background: linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); }
     .row-bank td{ background: linear-gradient(90deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02)); }
     .row-udharTaken td{ background: linear-gradient(90deg, rgba(14,165,233,0.06), rgba(14,165,233,0.02)); }
     .row-udharGiven td{ background: linear-gradient(90deg, rgba(139,92,246,0.06), rgba(139,92,246,0.02)); }
+    .row-shopExpense td{ background: linear-gradient(90deg, rgba(217,119,6,0.06), rgba(217,119,6,0.02)); }
 
     .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .icon-btn{ background:transparent; border:none; cursor:pointer; font-size:1.05rem; padding:6px; color:var(--text); }
@@ -201,6 +206,7 @@
           <div class="summary-grid" style="margin-top:10px;">
             <div class="summary income"><h3>آمدنی</h3><p id="today-income">0</p></div>
             <div class="summary expense"><h3>خرچ</h3><p id="today-expense">0</p></div>
+            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="today-shop-expense">0</p></div>
             <div class="summary balance"><h3>بیلنس</h3><p id="today-balance">0</p></div>
             <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="today-bank-transfer">0</p></div>
             <div class="summary udharTaken"><h3>ادھار لیا</h3><p id="today-udhar-taken">0</p></div>
@@ -220,6 +226,7 @@
                   <select id="type">
                     <option value="income">آمدنی</option>
                     <option value="expense">خرچ</option>
+                    <option value="shop-expense">دکان خرچہ</option>
                     <option value="bank-transfer">بینک ٹرانسفر</option>
                     <option value="udhar-taken">ادھار — لیا</option>
                     <option value="udhar-given">ادھار — دیا</option>
@@ -261,14 +268,15 @@
           <div class="summary-grid" style="margin-top:10px;">
             <div class="summary"><h3>ہفتے کی آمدنی</h3><p id="weekly-income">0</p></div>
             <div class="summary"><h3>ہفتے کا خرچ</h3><p id="weekly-expense">0</p></div>
+            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="weekly-shop-expense">0</p></div>
             <div class="summary"><h3>ہفتے کا بیلنس</h3><p id="weekly-balance">0</p></div>
             <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="weekly-bank-transfer">0</p></div>
           </div>
 
           <div class="card" style="margin-top:10px;">
             <table id="weekly-table">
-              <thead><tr><th>تاریخ</th><th>آمدنی</th><th>خرچ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
-              <tbody id="weekly-body"><tr><td colspan="5" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr></tbody>
+              <thead><tr><th>تاریخ</th><th>آمدنی</th><th>خرچ</th><th>دکان خرچہ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
+              <tbody id="weekly-body"><tr><td colspan="6" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr></tbody>
             </table>
           </div>
         </section>
@@ -279,14 +287,15 @@
           <div class="summary-grid" style="margin-top:10px;">
             <div class="summary"><h3>ماہ کی آمدنی</h3><p id="monthly-income">0</p></div>
             <div class="summary"><h3>ماہ کا خرچ</h3><p id="monthly-expense">0</p></div>
+            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="monthly-shop-expense">0</p></div>
             <div class="summary"><h3>ماہ کا بیلنس</h3><p id="monthly-balance">0</p></div>
             <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="monthly-bank-transfer">0</p></div>
           </div>
 
           <div class="card" style="margin-top:10px;">
             <table id="monthly-table">
-              <thead><tr><th>ہفتہ</th><th>آمدنی</th><th>خرچ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
-              <tbody id="monthly-body"><tr><td colspan="5" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr></tbody>
+              <thead><tr><th>ہفتہ</th><th>آمدنی</th><th>خرچ</th><th>دکان خرچہ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
+              <tbody id="monthly-body"><tr><td colspan="6" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr></tbody>
             </table>
           </div>
         </section>
@@ -461,13 +470,16 @@
 
       const income = todayRecords.filter(r => r.type==='income').reduce((s,r)=>s+r.amount,0);
       const expense = todayRecords.filter(r => r.type==='expense').reduce((s,r)=>s+r.amount,0);
+      const shopExpense = todayRecords.filter(r => r.type==='shop-expense').reduce((s,r)=>s+r.amount,0);
       const bankTransfer = todayRecords.filter(r => r.type==='bank-transfer').reduce((s,r)=>s+r.amount,0);
       const udharTaken = todayRecords.filter(r => r.type==='udhar-taken').reduce((s,r)=>s+r.amount,0);
       const udharGiven = todayRecords.filter(r => r.type==='udhar-given').reduce((s,r)=>s+r.amount,0);
+      // Balance *should not* include shopExpense (as per request)
       const balance = income - expense;
 
       $('today-income').textContent = income.toLocaleString();
       $('today-expense').textContent = expense.toLocaleString();
+      $('today-shop-expense').textContent = shopExpense.toLocaleString();
       $('today-bank-transfer').textContent = bankTransfer.toLocaleString();
       $('today-udhar-taken').textContent = udharTaken.toLocaleString();
       $('today-udhar-given').textContent = udharGiven.toLocaleString();
@@ -478,12 +490,13 @@
         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس تاریخ کا کوئی ریکارڈ نہیں</td></tr>';
       } else {
         tbody.innerHTML = todayRecords.map(r=>{
-          const cls = r.type==='income' ? 'row-income' : r.type==='expense' ? 'row-expense' : r.type==='bank-transfer' ? 'row-bank' : r.type==='udhar-taken' ? 'row-udharTaken' : 'row-udharGiven';
-          const typeLabel = r.type==='income' ? 'آمدنی' : r.type==='expense' ? 'خرچ' : r.type==='bank-transfer' ? 'بینک ٹرانسفر' : r.type==='udhar-taken' ? 'ادھار لیا' : 'ادھار دیا';
+          const cls = r.type==='income' ? 'row-income' : r.type==='expense' ? 'row-expense' : r.type==='bank-transfer' ? 'row-bank' : r.type==='udhar-taken' ? 'row-udharTaken' : r.type==='udhar-given' ? 'row-udharGiven' : 'row-shopExpense';
+          const typeLabel = r.type==='income' ? 'آمدنی' : r.type==='expense' ? 'خرچ' : r.type==='bank-transfer' ? 'بینک ٹرانسفر' : r.type==='udhar-taken' ? 'ادھار لیا' : r.type==='udhar-given' ? 'ادھار دیا' : 'دکان خرچہ';
+          const pillClass = r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTaken':r.type==='udhar-given'?'pill-udharGiven':'pill-shopExpense';
           return `<tr class="${cls}">
             <td>${new Date(r.timestamp).toLocaleTimeString('ur-PK')}</td>
             <td>${r.amount.toLocaleString()}</td>
-            <td><span class="type-pill ${r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTake':'pill-udharGiven'}">${typeLabel}</span></td>
+            <td><span class="type-pill ${pillClass}">${typeLabel}</span></td>
             <td>${r.description || '-' } ${r.bankName ? '('+r.bankName +')' : ''}</td>
             <td><button class="icon-btn" onclick="deleteDailyRecord('${r.id}')">❌</button></td>
           </tr>`;
@@ -493,9 +506,10 @@
 
     function renderWeekly(){
       const nowWeek = getCurrentWeekNumber();
-      const week = weeklySummaries.find(w=>w.week===nowWeek) || { income:0,expense:0,bankTransfer:0 };
+      const week = weeklySummaries.find(w=>w.week===nowWeek) || { income:0,expense:0,bankTransfer:0,shopExpense:0 };
       $('weekly-income').textContent = (week.income||0).toLocaleString();
       $('weekly-expense').textContent = (week.expense||0).toLocaleString();
+      $('weekly-shop-expense').textContent = (week.shopExpense||0).toLocaleString();
       $('weekly-bank-transfer').textContent = (week.bankTransfer||0).toLocaleString();
       $('weekly-balance').textContent = ((week.income||0)-(week.expense||0)).toLocaleString();
 
@@ -503,21 +517,23 @@
       const weekRecords = dailyRecords.filter(r => new Date(r.timestamp) >= weekStart);
       const dailyMap = {};
       weekRecords.forEach(r=>{
-        if(!dailyMap[r.date]) dailyMap[r.date]={income:0,expense:0,bankTransfer:0};
+        if(!dailyMap[r.date]) dailyMap[r.date]={income:0,expense:0,bankTransfer:0,shopExpense:0};
         if(r.type==='income') dailyMap[r.date].income += r.amount;
         else if(r.type==='expense') dailyMap[r.date].expense += r.amount;
-        else dailyMap[r.date].bankTransfer += r.amount;
+        else if(r.type==='bank-transfer') dailyMap[r.date].bankTransfer += r.amount;
+        else if(r.type==='shop-expense') dailyMap[r.date].shopExpense += r.amount;
       });
 
       const tbody = $('weekly-body');
       const keys = Object.keys(dailyMap).sort();
-      if(keys.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr>';
+      if(keys.length===0) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr>';
       else tbody.innerHTML = keys.map(d=>{
         const day = dailyMap[d];
         return `<tr>
           <td>${new Date(d).toLocaleDateString('ur-PK')}</td>
           <td>${(day.income||0).toLocaleString()}</td>
           <td>${(day.expense||0).toLocaleString()}</td>
+          <td>${(day.shopExpense||0).toLocaleString()}</td>
           <td>${(day.bankTransfer||0).toLocaleString()}</td>
           <td>${((day.income||0)-(day.expense||0)).toLocaleString()}</td>
         </tr>`;
@@ -527,9 +543,10 @@
     function renderMonthly(){
       const now = new Date();
       const key = `${now.getFullYear()}-${now.getMonth()+1}`;
-      const m = monthlySummaries.find(m=>m.month===key) || { income:0,expense:0,bankTransfer:0 };
+      const m = monthlySummaries.find(m=>m.month===key) || { income:0,expense:0,bankTransfer:0,shopExpense:0 };
       $('monthly-income').textContent = (m.income||0).toLocaleString();
       $('monthly-expense').textContent = (m.expense||0).toLocaleString();
+      $('monthly-shop-expense').textContent = (m.shopExpense||0).toLocaleString();
       $('monthly-bank-transfer').textContent = (m.bankTransfer||0).toLocaleString();
       $('monthly-balance').textContent = ((m.income||0)-(m.expense||0)).toLocaleString();
 
@@ -538,8 +555,8 @@
         const d = new Date(w.timestamp||Date.now());
         return d.getFullYear()===now.getFullYear() && (d.getMonth()+1)=== (now.getMonth()+1);
       }).sort((a,b)=>a.week-b.week);
-      if(weeks.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr>';
-      else tbody.innerHTML = weeks.map(w=>`<tr><td>ہفتہ ${w.week}</td><td>${(w.income||0).toLocaleString()}</td><td>${(w.expense||0).toLocaleString()}</td><td>${(w.bankTransfer||0).toLocaleString()}</td><td>${((w.income||0)-(w.expense||0)).toLocaleString()}</td></tr>`).join('');
+      if(weeks.length===0) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr>';
+      else tbody.innerHTML = weeks.map(w=>`<tr><td>ہفتہ ${w.week}</td><td>${(w.income||0).toLocaleString()}</td><td>${(w.expense||0).toLocaleString()}</td><td>${(w.shopExpense||0).toLocaleString()}</td><td>${(w.bankTransfer||0).toLocaleString()}</td><td>${((w.income||0)-(w.expense||0)).toLocaleString()}</td></tr>`).join('');
     }
 
     function renderBanks(){
@@ -619,7 +636,6 @@
         rec.bankId = bankId;
         rec.bankName = bank.name;
         bank.balance = (bank.balance||0) + amt;
-        // add bank transaction (dated)
         if(!Array.isArray(bank.transactions)) bank.transactions = [];
         bank.transactions.push({ id: 't'+Date.now().toString(36), date: rec.date, timestamp: rec.timestamp, amount: amt, description: desc || 'بینک ٹرانسفر' });
       }
@@ -646,6 +662,7 @@
       const badge = $('type-badge');
       if(v==='income'){ badge.textContent='آمدنی'; badge.className='type-pill pill-income'; $('bank-transfer-group').style.display='none'; }
       else if(v==='expense'){ badge.textContent='خرچ'; badge.className='type-pill pill-expense'; $('bank-transfer-group').style.display='none'; }
+      else if(v==='shop-expense'){ badge.textContent='دکان خرچہ'; badge.className='type-pill pill-shopExpense'; $('bank-transfer-group').style.display='none'; }
       else if(v==='bank-transfer'){ badge.textContent='بینک ٹرانسفر'; badge.className='type-pill pill-bank'; $('bank-transfer-group').style.display='block'; }
       else if(v==='udhar-taken'){ badge.textContent='ادھار لیا'; badge.className='type-pill pill-udharTaken'; $('bank-transfer-group').style.display='none'; }
       else { badge.textContent='ادھار دیا'; badge.className='type-pill pill-udharGiven'; $('bank-transfer-group').style.display='none'; }
@@ -682,7 +699,6 @@
       if(rec.type==='bank-transfer' && rec.bankId){
         const b = banks.find(x=>x.id===rec.bankId);
         if(b){ b.balance -= rec.amount;
-          // also remove bank transaction for same timestamp/amount if exists
           if(Array.isArray(b.transactions)){
             b.transactions = b.transactions.filter(t => !(t.timestamp===rec.timestamp && t.amount===rec.amount));
           }
@@ -716,16 +732,18 @@
     // summaries update
     function updateSummariesOnAdd(rec){
       let week = weeklySummaries.find(w=>w.week===rec.week);
-      if(!week){ week = { week: rec.week, income:0, expense:0, bankTransfer:0, timestamp: Date.now() }; weeklySummaries.push(week); }
+      if(!week){ week = { week: rec.week, income:0, expense:0, bankTransfer:0, shopExpense:0, timestamp: Date.now() }; weeklySummaries.push(week); }
       if(rec.type==='income') week.income += rec.amount;
       else if(rec.type==='expense') week.expense += rec.amount;
       else if(rec.type==='bank-transfer') week.bankTransfer += rec.amount;
+      else if(rec.type==='shop-expense') week.shopExpense += rec.amount;
 
       let month = monthlySummaries.find(m=>m.month===rec.month);
-      if(!month){ month = { month: rec.month, income:0, expense:0, bankTransfer:0, timestamp: Date.now() }; monthlySummaries.push(month); }
+      if(!month){ month = { month: rec.month, income:0, expense:0, bankTransfer:0, shopExpense:0, timestamp: Date.now() }; monthlySummaries.push(month); }
       if(rec.type==='income') month.income += rec.amount;
       else if(rec.type==='expense') month.expense += rec.amount;
       else if(rec.type==='bank-transfer') month.bankTransfer += rec.amount;
+      else if(rec.type==='shop-expense') month.shopExpense += rec.amount;
     }
 
     function updateSummariesOnDelete(rec){
@@ -734,14 +752,16 @@
         if(rec.type==='income') w.income -= rec.amount;
         else if(rec.type==='expense') w.expense -= rec.amount;
         else if(rec.type==='bank-transfer') w.bankTransfer -= rec.amount;
-        if((w.income||0)+(w.expense||0)+(w.bankTransfer||0)===0) weeklySummaries = weeklySummaries.filter(x=>x.week!==rec.week);
+        else if(rec.type==='shop-expense') w.shopExpense -= rec.amount;
+        if((w.income||0)+(w.expense||0)+(w.bankTransfer||0)+(w.shopExpense||0)===0) weeklySummaries = weeklySummaries.filter(x=>x.week!==rec.week);
       }
       const m = monthlySummaries.find(x=>x.month===rec.month);
       if(m){
         if(rec.type==='income') m.income -= rec.amount;
         else if(rec.type==='expense') m.expense -= rec.amount;
         else if(rec.type==='bank-transfer') m.bankTransfer -= rec.amount;
-        if((m.income||0)+(m.expense||0)+(m.bankTransfer||0)===0) monthlySummaries = monthlySummaries.filter(x=>x.month!==rec.month);
+        else if(rec.type==='shop-expense') m.shopExpense -= rec.amount;
+        if((m.income||0)+(m.expense||0)+(m.bankTransfer||0)+(m.shopExpense||0)===0) monthlySummaries = monthlySummaries.filter(x=>x.month!==rec.month);
       }
     }
 
@@ -852,10 +872,8 @@
       const title = $('bank-modal-title');
       title.textContent = bank.name + ' — ہسٹری';
       modalWrap.classList.remove('hidden');
-      // set date to selected bank-view-date or default today
       const bd = $('bank-view-date'); if(bd && !bd.value) bd.value = new Date().toISOString().slice(0,10);
       renderBankTransactions(bankId);
-      // store current shown bank id on modal element for navigation
       modalWrap.dataset.bankId = bankId;
     }
     function closeBankModal(){ const modalWrap = $('bank-modal'); modalWrap.classList.add('hidden'); modalWrap.dataset.bankId=''; }
@@ -919,10 +937,8 @@
 
     function evaluateCalc(){
       try{
-        // safe-ish evaluator: allow digits, parentheses, + - * / . and spaces
         const expr = calcDisplay.value.replace(/×/g,'*').replace(/÷/g,'/');
         if(!/^[0-9+\-*/().\s]+$/.test(expr)) { alert('Invalid expression'); return; }
-        // eslint-disable-next-line no-new-func
         const res = Function('"use strict"; return ('+expr+')')();
         calcDisplay.value = (typeof res === 'number' && isFinite(res)) ? res.toString() : 'Error';
       }catch(e){ calcDisplay.value = 'Error'; }
@@ -932,8 +948,6 @@
 
     // click outside modals to close
     $('calc-backdrop').addEventListener('click', function(e){ if(e.target === this) closeCalc(); });
-
-    // clicking export/import/clear already set up above
 
   </script>
 <!-- ===== Welcome popup (paste before </body>) ===== -->
@@ -952,7 +966,6 @@
 
 <script>
   (function(){
-    // یہاں اپنا نام اردو یا انگریزی شامل کریں:
     const WELCOME_NAME = 'عثمان'; // <-- اپنی مرضی کا نام یہاں لکھیں
 
     const modalWrap = document.getElementById('welcome-modal');
@@ -961,35 +974,14 @@
     const okBtn = document.getElementById('welcome-ok');
     const backdrop = document.getElementById('welcome-backdrop');
 
-    // ٹیکسٹ سیٹ کریں
     if(nameEl) nameEl.textContent = `${WELCOME_NAME} — خوش آمدید`;
-
-    // دکھائیں (اگر پہلے سے کوئی اسٹائل 'hidden' لگا ہوا ہو تو ہٹا دیں)
     if(modalWrap) modalWrap.classList.remove('hidden');
 
-    // کلوز کرنے کے طریقے
-    function closeWelcome(){
-      if(modalWrap) modalWrap.classList.add('hidden');
-    }
+    function closeWelcome(){ if(modalWrap) modalWrap.classList.add('hidden'); }
     closeBtn && closeBtn.addEventListener('click', closeWelcome);
     okBtn && okBtn.addEventListener('click', closeWelcome);
-    // بیک ڈراپ پر کلک سے بند کرنا
-    backdrop && backdrop.addEventListener('click', function(e){
-      if(e.target === this) closeWelcome();
-    });
-    // ESC سے بند کریں
-    window.addEventListener('keydown', function(e){
-      if(e.key === 'Escape') closeWelcome();
-    });
-
-    // اگر آپ چاہیں کہ یہ پاپ اپ صرف پہلی بار دکھے تو یہ لائنیں ان کمینٹس سے ہٹا کے فعال کریں:
-    /*
-    if(localStorage.getItem('welcome_shown_v1')) {
-      modalWrap.classList.add('hidden');
-    } else {
-      localStorage.setItem('welcome_shown_v1','1');
-    }
-    */
+    backdrop && backdrop.addEventListener('click', function(e){ if(e.target === this) closeWelcome(); });
+    window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeWelcome(); });
   })();
 </script>
 <!-- ===== end welcome popup ===== -->
