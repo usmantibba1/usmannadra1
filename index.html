@@ -22,8 +22,6 @@
       --shadow: 0 8px 30px rgba(2,6,23,0.08);
       --glass-blur: none;
     }
-
-    /* dark theme variables (applied when [data-theme="dark"]) */
     :root[data-theme="dark"]{
       --bg-main: linear-gradient(135deg,#0b1720,#071127);
       --page-bg: rgba(18,24,31,0.92);
@@ -37,10 +35,8 @@
       --udhar-given: #a78bfa;
       --shadow: 0 8px 30px rgba(0,0,0,0.6);
     }
-
     *{ box-sizing:border-box; margin:0; padding:0; }
     html,body{ height:100%; font-family: 'Noto Nastaliq Urdu', serif; }
-
     body{
       min-height:100vh;
       background: var(--bg-main);
@@ -49,8 +45,6 @@
       padding:20px;
       display:flex; align-items:flex-start; justify-content:center;
     }
-
-    /* centered app shell */
     .app{
       width:100%;
       max-width:1200px;
@@ -61,30 +55,21 @@
       overflow:hidden;
       backdrop-filter: var(--glass-blur);
     }
-
     header{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 18px;
       background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
     }
     header h1{ font-size:1.15rem; color:var(--text); display:flex; gap:12px; align-items:center; margin:0; }
-    header .brand{
-      display:flex; gap:10px; align-items:center;
-    }
-    .logo{
-      width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#fff,#e6f0ff);
-      display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent);
-    }
+    .brand{ display:flex; gap:10px; align-items:center; }
+    .logo{ width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#fff,#e6f0ff); display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
 
     .top-controls{ display:flex; gap:12px; align-items:center; }
 
     main{ display:grid; grid-template-columns:320px 1fr; gap:18px; padding:18px; }
     @media (max-width:980px){ main{ grid-template-columns:1fr; } }
 
-    /* sidebar */
-    .sidebar{
-      padding:12px; border-radius:10px; background: rgba(255,255,255,0.85); box-shadow:0 6px 18px rgba(4,8,20,0.06);
-    }
+    .sidebar{ padding:12px; border-radius:10px; background: rgba(255,255,255,0.85); box-shadow:0 6px 18px rgba(4,8,20,0.06); }
     :root[data-theme="dark"] .sidebar{ background: rgba(255,255,255,0.02); box-shadow:none; }
 
     .nav{ list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
@@ -93,18 +78,10 @@
 
     .small { font-size:0.85rem; color:var(--muted); margin-top:8px; }
 
-    .swatches{ display:none; /* hidden per request */ gap:8px; flex-wrap:wrap; margin-top:8px; }
-    .swatch{ width:28px; height:28px; border-radius:6px; cursor:pointer; border:1px solid rgba(0,0,0,0.06); }
-
-    .compact-row{ display:flex; gap:8px; align-items:center; margin-top:10px; }
-
-    /* content area */
-    .content{ padding:6px; }
     .card{ background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.98)); padding:12px; border-radius:10px; margin-bottom:12px; box-shadow:0 4px 14px rgba(4,8,20,0.04); }
     :root[data-theme="dark"] .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: none; }
 
     .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
-
     .summary{ padding:10px; border-radius:8px; text-align:center; border-top:4px solid transparent; background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
     :root[data-theme="dark"] .summary{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
     .summary h3{ font-size:0.92rem; color:var(--muted); margin-bottom:6px; }
@@ -151,8 +128,17 @@
 
     footer{ padding:10px 18px; text-align:center; color:var(--muted); font-size:0.9rem; }
 
-    /* small helpers */
     .hidden { display:none !important; }
+
+    /* modal styles (simple) */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:40; }
+    .modal{ width:90%; max-width:760px; background:var(--page-bg); padding:14px; border-radius:10px; box-shadow:var(--shadow); }
+    .modal h3{ margin-bottom:8px; }
+    .modal .close{ float:left; background:transparent; border:none; font-size:1.2rem; cursor:pointer; }
+    .mini-row{ display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .calc-display{ width:100%; padding:12px; font-size:1.25rem; text-align:left; }
+    .calc-keys{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
+    .calc-keys button{ padding:10px; }
   </style>
 </head>
 <body>
@@ -164,7 +150,6 @@
       </div>
 
       <div class="top-controls">
-        <!-- simple theme toggle (visible) — swatches hidden per request -->
         <label style="display:flex;align-items:center;gap:8px;">
           <input id="theme-toggle" type="checkbox" />
           <span class="small" id="theme-label">Light</span>
@@ -176,6 +161,7 @@
           <label><input id="compact-mode" type="checkbox"> Compact</label>
           <label style="margin-left:6px"><input id="blur-mode" type="checkbox"> Blur</label>
         </div>
+        <button class="icon-btn" id="open-calculator" title="Calculator">🧮</button>
       </div>
     </header>
 
@@ -202,15 +188,23 @@
       <section class="content">
         <!-- DAILY -->
         <section id="daily-section" class="card">
-          <h2>آج کا مجموعہ</h2>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <h2>آج کا مجموعہ</h2>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <label class="small">تاریخ دیکھیں:</label>
+              <input type="date" id="view-date" />
+              <button id="prev-day" class="icon-btn" title="پچھلا دن">◀</button>
+              <button id="next-day" class="icon-btn" title="اگلا دن">▶</button>
+            </div>
+          </div>
 
           <div class="summary-grid" style="margin-top:10px;">
-            <div class="summary income"><h3>آج کی آمدنی</h3><p id="today-income">0</p></div>
-            <div class="summary expense"><h3>آج کا خرچ</h3><p id="today-expense">0</p></div>
-            <div class="summary balance"><h3>آج کا بیلنس</h3><p id="today-balance">0</p></div>
+            <div class="summary income"><h3>آمدنی</h3><p id="today-income">0</p></div>
+            <div class="summary expense"><h3>خرچ</h3><p id="today-expense">0</p></div>
+            <div class="summary balance"><h3>بیلنس</h3><p id="today-balance">0</p></div>
             <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="today-bank-transfer">0</p></div>
-            <div class="summary udharTaken"><h3>آج ادھار لیا</h3><p id="today-udhar-taken">0</p></div>
-            <div class="summary udharGiven"><h3>آج ادھار دیا</h3><p id="today-udhar-given">0</p></div>
+            <div class="summary udharTaken"><h3>ادھار لیا</h3><p id="today-udhar-taken">0</p></div>
+            <div class="summary udharGiven"><h3>ادھار دیا</h3><p id="today-udhar-given">0</p></div>
           </div>
 
           <div class="card" style="margin-top:12px;">
@@ -256,7 +250,7 @@
               <thead>
                 <tr><th>وقت</th><th>رقم</th><th>قسم</th><th>تفصیل</th><th>عمل</th></tr>
               </thead>
-              <tbody id="daily-body"><tr><td colspan="5" style="text-align:center">آج کا کوئی ریکارڈ نہیں</td></tr></tbody>
+              <tbody id="daily-body"><tr><td colspan="5" style="text-align:center">کوئی ریکارڈ نہیں</td></tr></tbody>
             </table>
           </div>
         </section>
@@ -300,6 +294,7 @@
         <!-- BANKS -->
         <section id="banks-section" class="card" style="display:none;">
           <h2>بینک اکاؤنٹس</h2>
+
           <div class="summary-grid" style="margin-top:10px;">
             <div class="summary bank"><h3>کل بیلنس</h3><p id="total-bank-balance">0</p></div>
           </div>
@@ -359,6 +354,48 @@
     <footer>نسخہ محفوظ — مقامی طور پر آپ کے براؤزر میں۔ مزید فیچرز کے لیے بتائیں۔</footer>
   </div>
 
+  <!-- Bank details modal -->
+  <div id="bank-modal" class="hidden">
+    <div class="modal-backdrop" id="bank-backdrop">
+      <div class="modal" role="dialog" aria-modal="true">
+        <button class="close" id="close-bank-modal">✖</button>
+        <h3 id="bank-modal-title">بینک ہسٹری</h3>
+        <div class="mini-row">
+          <label class="small">تاریخ:</label>
+          <input type="date" id="bank-view-date" />
+          <button id="bank-prev" class="icon-btn">◀</button>
+          <button id="bank-next" class="icon-btn">▶</button>
+        </div>
+        <div style="margin-top:8px;">
+          <table id="bank-trans-table">
+            <thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th></tr></thead>
+            <tbody id="bank-trans-body"><tr><td colspan="3" style="text-align:center">کوئی ٹرانزیکشن نہیں</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calculator modal -->
+  <div id="calc-modal" class="hidden">
+    <div class="modal-backdrop" id="calc-backdrop">
+      <div class="modal" role="dialog" aria-modal="true">
+        <button class="close" id="close-calc">✖</button>
+        <h3>کیلکولیٹر</h3>
+        <input id="calc-display" class="calc-display" readonly />
+        <div class="calc-keys">
+          <button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button><button data-key="/">÷</button>
+          <button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button><button data-key="*">×</button>
+          <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button data-key="-">−</button>
+          <button data-key="0">0</button><button data-key=".">.</button><button id="calc-eq">=</button><button data-key="+">+</button>
+        </div>
+        <div style="margin-top:8px; display:flex; gap:8px;">
+          <button id="calc-clear">C</button><button id="calc-backspace">⌫</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ---------- Data ----------
     let dailyRecords = [];
@@ -388,14 +425,14 @@
           banks = data.banks || [];
           udhars = data.udhars || [];
         }catch(err){
-          // if parse error, reset to defaults
           dailyRecords = []; weeklySummaries=[]; monthlySummaries=[]; udhars=[];
-          banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+          banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
         }
       } else {
-        banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+        banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
       }
       renderAll();
+      setDefaultViewDate();
     }
 
     // ---------- Render ----------
@@ -408,8 +445,18 @@
       renderUdhars();
     }
 
+    // Use selected view date (so records don't disappear at midnight)
+    function getSelectedViewDateKey(){
+      const el = $('view-date');
+      let d;
+      if(el && el.value) d = new Date(el.value);
+      else d = new Date();
+      // format en-CA (YYYY-MM-DD)
+      return d.toLocaleDateString('en-CA');
+    }
+
     function renderDaily(){
-      const todayKey = new Date().toLocaleDateString('en-CA');
+      const todayKey = getSelectedViewDateKey();
       const todayRecords = dailyRecords.filter(r => r.date === todayKey).sort((a,b)=>b.timestamp-a.timestamp);
 
       const income = todayRecords.filter(r => r.type==='income').reduce((s,r)=>s+r.amount,0);
@@ -428,7 +475,7 @@
 
       const tbody = $('daily-body');
       if(todayRecords.length===0){
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">آج کا کوئی ریکارڈ نہیں</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس تاریخ کا کوئی ریکارڈ نہیں</td></tr>';
       } else {
         tbody.innerHTML = todayRecords.map(r=>{
           const cls = r.type==='income' ? 'row-income' : r.type==='expense' ? 'row-expense' : r.type==='bank-transfer' ? 'row-bank' : r.type==='udhar-taken' ? 'row-udharTaken' : 'row-udharGiven';
@@ -436,7 +483,7 @@
           return `<tr class="${cls}">
             <td>${new Date(r.timestamp).toLocaleTimeString('ur-PK')}</td>
             <td>${r.amount.toLocaleString()}</td>
-            <td><span class="type-pill ${r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTaken':'pill-udharGiven'}">${typeLabel}</span></td>
+            <td><span class="type-pill ${r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTake':'pill-udharGiven'}">${typeLabel}</span></td>
             <td>${r.description || '-' } ${r.bankName ? '('+r.bankName +')' : ''}</td>
             <td><button class="icon-btn" onclick="deleteDailyRecord('${r.id}')">❌</button></td>
           </tr>`;
@@ -499,7 +546,7 @@
       $('total-bank-balance').textContent = banks.reduce((s,b)=>s+(b.balance||0),0).toLocaleString();
       const tbody = $('banks-body');
       if(banks.length===0) tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">کوئی بینک اکاؤنٹ موجود نہیں</td></tr>';
-      else tbody.innerHTML = banks.map(b=>`<tr><td>${b.name}</td><td>${(b.balance||0).toLocaleString()}</td><td><button class="icon-btn" onclick="editBank('${b.id}')">✏️</button><button class="icon-btn" onclick="deleteBank('${b.id}')">🗑️</button></td></tr>`).join('');
+      else tbody.innerHTML = banks.map(b=>`<tr><td>${b.name}</td><td>${(b.balance||0).toLocaleString()}</td><td><button class="icon-btn" onclick="showBankDetails('${b.id}')">📑</button><button class="icon-btn" onclick="editBank('${b.id}')">✏️</button><button class="icon-btn" onclick="deleteBank('${b.id}')">🗑️</button></td></tr>`).join('');
     }
 
     function updateBankDropdown(){
@@ -529,6 +576,23 @@
       return new Date(now.getFullYear(), now.getMonth(), diff);
     }
 
+    function setDefaultViewDate(){
+      const el = $('view-date');
+      if(!el) return;
+      const today = new Date();
+      el.value = today.toISOString().slice(0,10);
+      // bank modal view default
+      const bd = $('bank-view-date'); if(bd) bd.value = today.toISOString().slice(0,10);
+    }
+
+    function shiftViewDate(days){
+      const el = $('view-date'); if(!el) return;
+      const d = el.value ? new Date(el.value) : new Date();
+      d.setDate(d.getDate() + days);
+      el.value = d.toISOString().slice(0,10);
+      renderDaily();
+    }
+
     // ---------- Forms ----------
     $('daily-form').addEventListener('submit', function(e){
       e.preventDefault();
@@ -536,7 +600,8 @@
       const type = $('type').value;
       const desc = $('description').value || '';
       if(!amt || isNaN(amt)){ alert('براہ کرم رقم درج کریں'); return; }
-      const now = new Date();
+      const selectedDateInput = $('view-date').value;
+      const now = selectedDateInput ? new Date(selectedDateInput + 'T' + (new Date()).toTimeString().split(' ')[0]) : new Date();
       const rec = {
         id: 'r'+Date.now().toString(36),
         date: now.toLocaleDateString('en-CA'),
@@ -554,6 +619,9 @@
         rec.bankId = bankId;
         rec.bankName = bank.name;
         bank.balance = (bank.balance||0) + amt;
+        // add bank transaction (dated)
+        if(!Array.isArray(bank.transactions)) bank.transactions = [];
+        bank.transactions.push({ id: 't'+Date.now().toString(36), date: rec.date, timestamp: rec.timestamp, amount: amt, description: desc || 'بینک ٹرانسفر' });
       }
       if(type==='udhar-taken' || type==='udhar-given'){
         const u = {
@@ -589,7 +657,7 @@
       const name = $('bank-name').value.trim();
       const bal = parseFloat($('bank-balance').value);
       if(!name || isNaN(bal)){ alert('درست معلومات درج کریں'); return; }
-      banks.push({ id:'b'+Date.now().toString(36), name, balance:bal });
+      banks.push({ id:'b'+Date.now().toString(36), name, balance:bal, transactions:[{ id:'t'+Date.now().toString(36), date:new Date().toLocaleDateString('en-CA'), timestamp:Date.now(), amount:bal, description:'ابتدائی بیلنس' }] });
       saveData(); renderAll(); this.reset();
     });
 
@@ -613,7 +681,12 @@
       const rec = dailyRecords[idx];
       if(rec.type==='bank-transfer' && rec.bankId){
         const b = banks.find(x=>x.id===rec.bankId);
-        if(b) b.balance -= rec.amount;
+        if(b){ b.balance -= rec.amount;
+          // also remove bank transaction for same timestamp/amount if exists
+          if(Array.isArray(b.transactions)){
+            b.transactions = b.transactions.filter(t => !(t.timestamp===rec.timestamp && t.amount===rec.amount));
+          }
+        }
       }
       updateSummariesOnDelete(rec);
       dailyRecords.splice(idx,1);
@@ -622,7 +695,6 @@
 
     window.deleteBank = function(id){
       if(!confirm('کیا واقعی بینک ہٹانا ہے؟')) return;
-      // when deleting bank, also remove bankId from transfers (no balance changes because already applied)
       dailyRecords = dailyRecords.map(r=> r.bankId===id ? {...r, bankId:null, bankName:'(حذف شدہ بینک)'} : r);
       banks = banks.filter(b=>b.id!==id);
       saveData(); renderAll();
@@ -689,11 +761,9 @@
     $('menu-udhar').addEventListener('click', e=>{ e.preventDefault(); showSection('udhar'); });
 
     // ---------- Theme logic ----------
-    // Keep multiple themes in code, but per request theme-swatches hidden.
     const THEMES = {
       light: { name:'light', accent:'#0b6ef6', bg:'linear-gradient(135deg,#e8f2ff,#f7fbff)', card:'#ffffff' },
       dark: { name:'dark', accent:'#059669', bg:'linear-gradient(135deg,#0b1720,#071127)', card:'rgba(18,24,31,0.92)' }
-      // more themes could be defined here but are not exposed in UI
     };
 
     function applyThemeByName(name){
@@ -709,7 +779,6 @@
       localStorage.setItem('esahulat_theme_v4', JSON.stringify(name));
     }
 
-    // compact + blur toggles
     $('compact-mode').addEventListener('change', function(){
       if(this.checked) document.documentElement.setAttribute('data-compact','true');
       else document.documentElement.removeAttribute('data-compact');
@@ -729,7 +798,6 @@
           applyThemeByName(name);
         }catch(e){ applyThemeByName('light'); }
       } else {
-        // default: light theme
         applyThemeByName('light');
       }
 
@@ -737,10 +805,7 @@
       const b = localStorage.getItem('esahulat_blur_v4'); if(b==='1'){ $('blur-mode').checked = true; document.documentElement.style.setProperty('--glass-blur','blur(10px)'); }
     }
 
-    // theme toggle control
-    $('theme-toggle').addEventListener('change', function(){
-      applyThemeByName(this.checked ? 'dark' : 'light');
-    });
+    $('theme-toggle').addEventListener('change', function(){ applyThemeByName(this.checked ? 'dark' : 'light'); });
 
     // ---------- Export/Import/Clear ----------
     $('export-json').addEventListener('click', ()=>{
@@ -775,16 +840,159 @@
       if(!confirm('کیا آپ سارا مقامی ڈیٹا صاف کرنا چاہتے ہیں؟')) return;
       localStorage.removeItem('usman_esahulat_v4');
       dailyRecords=[]; weeklySummaries=[]; monthlySummaries=[]; banks=[]; udhars=[];
-      banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0 }));
+      banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
       saveData(); renderAll();
     });
+
+    // ---------- Bank details modal logic ----------
+    function showBankDetails(bankId){
+      const bank = banks.find(b=>b.id===bankId);
+      if(!bank) return;
+      const modalWrap = $('bank-modal');
+      const title = $('bank-modal-title');
+      title.textContent = bank.name + ' — ہسٹری';
+      modalWrap.classList.remove('hidden');
+      // set date to selected bank-view-date or default today
+      const bd = $('bank-view-date'); if(bd && !bd.value) bd.value = new Date().toISOString().slice(0,10);
+      renderBankTransactions(bankId);
+      // store current shown bank id on modal element for navigation
+      modalWrap.dataset.bankId = bankId;
+    }
+    function closeBankModal(){ const modalWrap = $('bank-modal'); modalWrap.classList.add('hidden'); modalWrap.dataset.bankId=''; }
+    $('close-bank-modal').addEventListener('click', closeBankModal);
+    $('bank-backdrop').addEventListener('click', function(e){ if(e.target === this) closeBankModal(); });
+
+    function renderBankTransactions(bankId){
+      const bank = banks.find(b=>b.id===bankId);
+      if(!bank) return;
+      const dateFilter = $('bank-view-date').value;
+      let trans = Array.isArray(bank.transactions) ? bank.transactions.slice().sort((a,b)=>b.timestamp-a.timestamp) : [];
+      if(dateFilter){
+        const key = new Date(dateFilter).toLocaleDateString('en-CA');
+        trans = trans.filter(t=>t.date===key);
+      }
+      const tbody = $('bank-trans-body');
+      if(trans.length===0) tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">کوئی ٹرانزیکشن نہیں</td></tr>';
+      else tbody.innerHTML = trans.map(t=>`<tr><td>${new Date(t.timestamp).toLocaleTimeString('ur-PK')}</td><td>${t.amount.toLocaleString()}</td><td>${t.description||''}</td></tr>`).join('');
+    }
+    $('bank-view-date').addEventListener('change', ()=>{ const id = $('bank-modal').dataset.bankId; if(id) renderBankTransactions(id); });
+    $('bank-prev').addEventListener('click', ()=>{ shiftBankModalDate(-1); });
+    $('bank-next').addEventListener('click', ()=>{ shiftBankModalDate(1); });
+    function shiftBankModalDate(days){
+      const el = $('bank-view-date'); if(!el) return;
+      const d = el.value ? new Date(el.value) : new Date();
+      d.setDate(d.getDate() + days);
+      el.value = d.toISOString().slice(0,10);
+      const id = $('bank-modal').dataset.bankId; if(id) renderBankTransactions(id);
+    }
 
     // ---------- Init ----------
     loadPrefs();
     loadData();
     setInterval(()=>{ renderAll(); }, 30000);
-    // initialize UI badge
     if($('type')) $('type').dispatchEvent(new Event('change'));
+
+    // view-date controls (so daily records don't vanish at midnight)
+    $('view-date').addEventListener('change', renderDaily);
+    $('prev-day').addEventListener('click', ()=>shiftViewDate(-1));
+    $('next-day').addEventListener('click', ()=>shiftViewDate(1));
+
+    // ---------- bank modal prev/next via daily arrows ----------
+    $('prev-day').addEventListener('click', ()=>{ /* already handled above */ });
+    $('next-day').addEventListener('click', ()=>{ /* already handled above */ });
+
+    // ---------- bank modal close on escape ----------
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(!$('bank-modal').classList.contains('hidden')) closeBankModal(); if(!$('calc-modal').classList.contains('hidden')) closeCalc(); } });
+
+    // ---------- Calculator logic ----------
+    const calcModal = $('calc-modal');
+    const calcDisplay = $('calc-display');
+    const calcKeys = Array.from(document.querySelectorAll('.calc-keys button'));
+    document.getElementById('open-calculator').addEventListener('click', ()=>{ calcModal.classList.remove('hidden'); if(calcDisplay) calcDisplay.value=''; });
+    document.getElementById('close-calc').addEventListener('click', closeCalc);
+    document.getElementById('calc-clear').addEventListener('click', ()=>{ calcDisplay.value=''; });
+    document.getElementById('calc-backspace').addEventListener('click', ()=>{ calcDisplay.value = calcDisplay.value.slice(0,-1); });
+    calcKeys.forEach(b=>{
+      b.addEventListener('click', ()=>{ const k = b.dataset.key; if(k) calcDisplay.value += k; });
+    });
+    document.getElementById('calc-eq').addEventListener('click', ()=>{ evaluateCalc(); });
+
+    function evaluateCalc(){
+      try{
+        // safe-ish evaluator: allow digits, parentheses, + - * / . and spaces
+        const expr = calcDisplay.value.replace(/×/g,'*').replace(/÷/g,'/');
+        if(!/^[0-9+\-*/().\s]+$/.test(expr)) { alert('Invalid expression'); return; }
+        // eslint-disable-next-line no-new-func
+        const res = Function('"use strict"; return ('+expr+')')();
+        calcDisplay.value = (typeof res === 'number' && isFinite(res)) ? res.toString() : 'Error';
+      }catch(e){ calcDisplay.value = 'Error'; }
+    }
+
+    function closeCalc(){ calcModal.classList.add('hidden'); }
+
+    // click outside modals to close
+    $('calc-backdrop').addEventListener('click', function(e){ if(e.target === this) closeCalc(); });
+
+    // clicking export/import/clear already set up above
+
   </script>
+<!-- ===== Welcome popup (paste before </body>) ===== -->
+<div id="welcome-modal">
+  <div class="modal-backdrop" id="welcome-backdrop" style="display:flex;align-items:center;justify-content:center;">
+    <div class="modal" role="dialog" aria-modal="true" style="text-align:center;">
+      <button class="close" id="close-welcome">✖</button>
+      <h3 style="font-size:1.4rem; margin-top:6px;">بِسْمِ اللہِ الرَّحْمٰنِ الرَّحِیْم</h3>
+      <p id="welcome-name" style="font-size:1.25rem; margin-top:8px; font-weight:700;">اسم — خوش آمدید</p>
+      <div style="margin-top:10px;">
+        <button id="welcome-ok" style="padding:8px 14px; border-radius:8px; border:none; background:var(--accent); color:#fff; cursor:pointer;">ٹھیک ہے</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    // یہاں اپنا نام اردو یا انگریزی شامل کریں:
+    const WELCOME_NAME = 'عثمان'; // <-- اپنی مرضی کا نام یہاں لکھیں
+
+    const modalWrap = document.getElementById('welcome-modal');
+    const nameEl = document.getElementById('welcome-name');
+    const closeBtn = document.getElementById('close-welcome');
+    const okBtn = document.getElementById('welcome-ok');
+    const backdrop = document.getElementById('welcome-backdrop');
+
+    // ٹیکسٹ سیٹ کریں
+    if(nameEl) nameEl.textContent = `${WELCOME_NAME} — خوش آمدید`;
+
+    // دکھائیں (اگر پہلے سے کوئی اسٹائل 'hidden' لگا ہوا ہو تو ہٹا دیں)
+    if(modalWrap) modalWrap.classList.remove('hidden');
+
+    // کلوز کرنے کے طریقے
+    function closeWelcome(){
+      if(modalWrap) modalWrap.classList.add('hidden');
+    }
+    closeBtn && closeBtn.addEventListener('click', closeWelcome);
+    okBtn && okBtn.addEventListener('click', closeWelcome);
+    // بیک ڈراپ پر کلک سے بند کرنا
+    backdrop && backdrop.addEventListener('click', function(e){
+      if(e.target === this) closeWelcome();
+    });
+    // ESC سے بند کریں
+    window.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeWelcome();
+    });
+
+    // اگر آپ چاہیں کہ یہ پاپ اپ صرف پہلی بار دکھے تو یہ لائنیں ان کمینٹس سے ہٹا کے فعال کریں:
+    /*
+    if(localStorage.getItem('welcome_shown_v1')) {
+      modalWrap.classList.add('hidden');
+    } else {
+      localStorage.setItem('welcome_shown_v1','1');
+    }
+    */
+  })();
+</script>
+<!-- ===== end welcome popup ===== -->
+
 </body>
 </html>
