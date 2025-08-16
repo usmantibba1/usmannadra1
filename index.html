@@ -1,990 +1,2164 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+
+<html dir="ltr" lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>عثمان نادرا ای سہولت — آمدنی/خرچہ/دکان خرچہ/ادھار</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Muhammad Usman — Usman NADRA e-Sahulat (Fixed &amp; Themed)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&amp;family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+/* ---------- THEME (image-like: light-blue/teal + deep navy) ---------- */
+:root{
+  --bg-grad: linear-gradient(135deg,#07142a 0%, #083053 35%, #0b3f6a 65%, #094a6f 100%);
+  --text: #eaf6ff;
+  --muted: #bcdff6;
+  --accent: #3bd3ff;    /* bright cyan */
+  --accent2:#5be7b3;    /* teal */
+  --card-foil-1: rgba(255,255,255,0.06);
+  --card-foil-2: rgba(255,255,255,0.03);
+  --stroke: rgba(255,255,255,0.08);
+  --shadow: 0 18px 50px rgba(2,11,26,0.6);
+  --income: #3bd3ff;
+  --expense:#ff7d6b;
+  --shop:#ffd27a;
+  --bank:#a7f3d0;
+  --toast-bg: rgba(5,24,49,0.88);
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+/* Theme variants kept for selector (kept simple) */
+body[data-theme="luxury"]{ /* mapped to teal/blue image theme */ }
+body[data-theme="navy"]{ --bg-grad: linear-gradient(135deg,#041026,#06264a); }
+body[data-theme="mint"]{ --bg-grad: linear-gradient(135deg,#042f2a,#0a5b4b); --accent:#5df2b3; --accent2:#88ffd2;}
+body[data-theme="amoled"]{ --bg-grad: linear-gradient(135deg,#000,#051428); --accent:#3bd3ff; --accent2:#7dd3ff; --stroke:rgba(255,255,255,0.06); }
 
-  <style>
-    :root{
-      --bg-main: linear-gradient(135deg,#e8f2ff,#f7fbff);
-      --page-bg: rgba(255,255,255,0.98);
-      --text: #17202a;
-      --muted: #566074;
-      --accent: #0b63d8;
-      --income: #16a34a;
-      --expense: #ef4444;
-      --bank: #f59e0b;
-      --udhar-taken: #0ea5e9;
-      --udhar-given: #8b5cf6;
-      --shop-expense: #d97706; /* نارنجی / دکان خرچہ */
-      --shadow: 0 8px 30px rgba(2,6,23,0.08);
-      --glass-blur: none;
-    }
-    :root[data-theme="dark"]{
-      --bg-main: linear-gradient(135deg,#0b1720,#071127);
-      --page-bg: rgba(18,24,31,0.92);
-      --text: #e6eef8;
-      --muted: #9fb0c8;
-      --accent: #059669;
-      --income: #10b981;
-      --expense: #f87171;
-      --bank: #f59e0b;
-      --udhar-taken: #38bdf8;
-      --udhar-given: #a78bfa;
-      --shop-expense: #f59e0b;
-      --shadow: 0 8px 30px rgba(0,0,0,0.6);
-    }
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html,body{ height:100%; font-family: 'Noto Nastaliq Urdu', serif; }
-    body{
-      min-height:100vh;
-      background: var(--bg-main);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      padding:20px;
-      display:flex; align-items:flex-start; justify-content:center;
-    }
-    .app{
-      width:100%;
-      max-width:1200px;
-      margin:10px;
-      background:var(--page-bg);
-      border-radius:14px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      backdrop-filter: var(--glass-blur);
-    }
-    header{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    }
-    header h1{ font-size:1.15rem; color:var(--text); display:flex; gap:12px; align-items:center; margin:0; }
-    .brand{ display:flex; gap:10px; align-items:center; }
-    .logo{ width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#fff,#e6f0ff); display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg-grad);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  padding:16px;
+}
 
-    .top-controls{ display:flex; gap:12px; align-items:center; }
+/* app layout */
+.app{max-width:1300px;margin:0 auto; display:grid; grid-template-columns:260px 1fr; gap:16px}
+@media(max-width:1000px){ .app{grid-template-columns:1fr} }
 
-    main{ display:grid; grid-template-columns:320px 1fr; gap:18px; padding:18px; }
-    @media (max-width:980px){ main{ grid-template-columns:1fr; } }
+/* sidebar */
+.sidebar{
+  background:linear-gradient(180deg,var(--card-foil-1),var(--card-foil-2));
+  border:1px solid var(--stroke); border-radius:12px; padding:12px; box-shadow:var(--shadow); position:sticky; top:16px;
+}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.logo{width:48px;height:48px;border-radius:10px;background:radial-gradient(circle at 30% 20%, #ffffff, var(--accent) 40%, #0b394a 100%);display:flex;align-items:center;justify-content:center;color:#042; font-weight:900}
+.brand h1{font-size:1rem}
+.brand small{color:var(--muted)}
+.nav{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.nav a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text);padding:10px;border-radius:10px;border:1px solid var(--stroke);background:rgba(255,255,255,0.02)}
+.nav a:hover{box-shadow:0 0 0 3px rgba(59,211,255,0.06) inset}
+.nav a.active{background:linear-gradient(90deg,var(--accent,.3), rgba(255,255,255,0.06));color:#001523;font-weight:800;border-color:transparent}
 
-    .sidebar{ padding:12px; border-radius:10px; background: rgba(255,255,255,0.85); box-shadow:0 6px 18px rgba(4,8,20,0.06); }
-    :root[data-theme="dark"] .sidebar{ background: rgba(255,255,255,0.02); box-shadow:none; }
+/* header */
+.topbar{
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); padding:10px;border-radius:10px;border:1px solid var(--stroke);
+}
+.chip{padding:6px 10px;border-radius:8px;border:1px solid var(--stroke);color:var(--muted)}
+select.theme{padding:8px;border-radius:8px;border:1px solid var(--stroke);background:rgba(255,255,255,0.03);color:var(--text)}
+.icon-btn{background:transparent;border:1px solid var(--stroke);padding:8px;border-radius:8px;cursor:pointer;color:var(--text)}
 
-    .nav{ list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
-    .nav a{ text-decoration:none; padding:10px; border-radius:8px; color:var(--text); display:block; }
-    .nav a.active{ background:var(--accent); color:#fff; }
+/* content */
+.content{display:flex;flex-direction:column;gap:12px}
+.card{background:linear-gradient(180deg,var(--card-foil-1),var(--card-foil-2));border-radius:10px;padding:12px;border:1px solid var(--stroke);box-shadow:var(--shadow);overflow:hidden}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px}
 
-    .small { font-size:0.85rem; color:var(--muted); margin-top:8px; }
+/* summary */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:1100px){ .summary-grid{grid-template-columns:repeat(2,1fr)} }
+.summary{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)); text-align:center}
+.summary h3{color:var(--muted);font-size:0.95rem;margin-bottom:6px}
+.summary p{font-weight:900;font-size:1.25rem}
 
-    .card{ background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.98)); padding:12px; border-radius:10px; margin-bottom:12px; box-shadow:0 4px 14px rgba(4,8,20,0.04); }
-    :root[data-theme="dark"] .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: none; }
+/* forms & tables */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:600px){ .row{grid-template-columns:1fr} }
+input,select,textarea,button{padding:10px;border-radius:8px;border:1px solid var(--stroke);background:rgba(255,255,255,0.02);color:var(--text);font-size:1rem}
+button.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;color:#001722;font-weight:800;padding:10px 12px;border-radius:8px}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.95rem}
+th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.06);text-align:left}
+th{background:linear-gradient(90deg,var(--accent),rgba(255,255,255,0.04));color:#08142f}
 
-    .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
-    .summary{ padding:10px; border-radius:8px; text-align:center; border-top:4px solid transparent; background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); }
-    :root[data-theme="dark"] .summary{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-    .summary h3{ font-size:0.92rem; color:var(--muted); margin-bottom:6px; }
-    .summary p{ font-size:1.05rem; font-weight:700; margin:0; }
+/* canvas */
+canvas{width:100%;height:240px;display:block}
 
-    .summary.income{ border-top-color:var(--income); }
-    .summary.expense{ border-top-color:var(--expense); }
-    .summary.balance{ border-top-color:var(--accent); }
-    .summary.bank{ border-top-color:var(--bank); }
-    .summary.udharTaken{ border-top-color:var(--udhar-taken); }
-    .summary.udharGiven{ border-top-color:var(--udhar-given); }
-    .summary.shopExpense{ border-top-color:var(--shop-expense); }
+/* toast */
+.toast{
+  position:fixed; top:18px; left:50%; transform:translateX(-50%); background:var(--toast-bg); color:var(--text);
+  padding:10px 14px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.6); display:none; z-index:9999; font-weight:700;
+}
 
-    form .row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
-    @media (max-width:600px){ form .row{ grid-template-columns:1fr; } }
+/* modal calc */
+.modal-backdrop{position:fixed;inset:0;background:linear-gradient(135deg,#07142a 0%, #083053 35%, #0b3f6a 65%, #094a6f 100%);display:none;align-items:center;justify-content:center;z-index:60}
+.modal{width:100%;max-width:none;height:100%;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(180deg,var(--card-foil-1),var(--card-foil-2));padding:12px;border-radius:10px;border:1px solid var(--stroke)}
 
-    input, select, textarea, button{
-      padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:0.95rem; width:100%;
-      background:transparent; color:var(--text);
-    }
-    :root[data-theme="dark"] input, :root[data-theme="dark"] select, :root[data-theme="dark"] textarea{ border-color: rgba(255,255,255,0.06); }
+/* helpers */
+.right{display:flex;gap:8px;align-items:center}
+.hidden{display:none!important}
+.footer{font-size:0.9rem;color:var(--muted);text-align:center;padding:10px}
 
-    button{ background:var(--accent); color:#fff; border:none; cursor:pointer; }
+button, .icon-btn, .primary {
+  font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
+}
 
-    table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:0.95rem; }
-    th,td{ padding:10px; text-align:right; border-bottom:1px solid rgba(0,0,0,0.06); }
-    :root[data-theme="dark"] th, :root[data-theme="dark"] td{ border-bottom:1px solid rgba(255,255,255,0.03); }
-    th{ background:var(--accent); color:#fff; font-weight:normal; }
+/* --- Neon Glow & Animations --- */
+button, .icon-btn, .primary, .nav a {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+button:hover, .icon-btn:hover, .primary:hover, .nav a:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+button:active, .icon-btn:active, .primary:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+}
+.card {
+  animation: fadeInUp 0.8s ease both;
+}
+.nav a.active {
+  box-shadow: 0 0 12px var(--accent), 0 0 25px var(--accent2);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sidebar {
+  animation: slideInLeft 0.8s ease both;
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
-    .type-pill{ padding:6px 10px; border-radius:18px; color:#fff; font-weight:700; display:inline-block; min-width:100px; text-align:center; }
-    .pill-income{ background:var(--income); }
-    .pill-expense{ background:var(--expense); }
-    .pill-bank{ background:var(--bank); }
-    .pill-udharTaken{ background:var(--udhar-taken); }
-    .pill-udharGiven{ background:var(--udhar-given); }
-    .pill-shopExpense{ background:var(--shop-expense); }
+/* --- Neon Ripple Glow Effect --- */
+.neon-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: rippleFade 1.2s ease-out forwards;
+  z-index: 999999;
+}
+@keyframes rippleFade {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
 
-    .row-income td{ background: linear-gradient(90deg, rgba(22,163,74,0.06), rgba(22,163,74,0.02)); }
-    .row-expense td{ background: linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02)); }
-    .row-bank td{ background: linear-gradient(90deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02)); }
-    .row-udharTaken td{ background: linear-gradient(90deg, rgba(14,165,233,0.06), rgba(14,165,233,0.02)); }
-    .row-udharGiven td{ background: linear-gradient(90deg, rgba(139,92,246,0.06), rgba(139,92,246,0.02)); }
-    .row-shopExpense td{ background: linear-gradient(90deg, rgba(217,119,6,0.06), rgba(217,119,6,0.02)); }
+/* --- Neon Glow for Summary Cards --- */
+.summary {
+  transition: all 0.3s ease-in-out;
+}
+.summary:hover {
+  box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent2), 0 0 45px var(--accent);
+  transform: translateY(-3px) scale(1.03);
+}
 
-    .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-    .icon-btn{ background:transparent; border:none; cursor:pointer; font-size:1.05rem; padding:6px; color:var(--text); }
+.neon-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: rippleFade 1.2s ease-out forwards;
+  z-index: 999999;
+}
 
-    footer{ padding:10px 18px; text-align:center; color:var(--muted); font-size:0.9rem; }
+/* --- Falling Islamic Text + Confetti Animation --- */
+.falling-text, .falling-confetti {
+  position: fixed;
+  top: -50px;
+  pointer-events: none;
+  z-index: 99999;
+  animation: fallDownText linear forwards;
+}
+.falling-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent2);
+}
+.falling-confetti {
+  width: 10px;
+  height: 10px;
+  background: var(--accent2);
+  opacity: 0.8;
+}
+@keyframes fallDownText {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
 
-    .hidden { display:none !important; }
+<style>
+@keyframes slideInColor {
+  0% { transform: translateX(-100vw) scale(0.8); opacity: 0; background: linear-gradient(90deg, red, orange); }
+  25% { background: linear-gradient(90deg, orange, yellow); }
+  50% { background: linear-gradient(90deg, yellow, green); }
+  75% { background: linear-gradient(90deg, green, blue); }
+  100% { transform: translateX(0) scale(1); opacity: 1; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); }
+}
+#hover-welcome-popup .popup-box-animated {
+  animation: slideInColor 1s ease forwards;
+}
 
-    /* modal styles (simple) */
-    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:40; }
-    .modal{ width:90%; max-width:760px; background:var(--page-bg); padding:14px; border-radius:10px; box-shadow:var(--shadow); }
-    .modal h3{ margin-bottom:8px; }
-    .modal .close{ float:left; background:transparent; border:none; font-size:1.2rem; cursor:pointer; }
-    .mini-row{ display:flex; gap:8px; align-items:center; margin-top:8px; }
-    .calc-display{ width:100%; padding:12px; font-size:1.25rem; text-align:left; }
-    .calc-keys{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
-    .calc-keys button{ padding:10px; }
-  </style>
+<style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
+}
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
+}
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
+.arabic-text { font-family: 'Noto Nastaliq Urdu', serif !important; }
+</style>
+
+
+<style id="auto-arabic-nastaliq">
+  body {
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Nastaliq Urdu", serif;
+  }
+</style>
+
+
+<style id="nastaliq-global-override">
+/* Force Nastaliq everywhere */
+html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, td, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Nastaliq Urdu', serif !important;
+  letter-spacing: 0 !important;
+  font-feature-settings: "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+}
+/* Convenient utility if you only want Nastaliq on specific blocks later */
+.urdu, :lang(ur), [dir="rtl"] { font-family: 'Noto Nastaliq Urdu', serif !important; }
+</style>
+
+<style>
+@media(max-width: 768px) {
+  body {
+    background: linear-gradient(180deg, #07142a, #0b3f6a) !important; /* clean simple gradient */
+  }
+
+  .app {
+    grid-template-columns: 1fr !important; /* single column layout */
+  }
+
+  .sidebar {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    flex-wrap: wrap !important;
+    padding: 6px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .sidebar .brand, 
+  .sidebar .small, 
+  .sidebar div[style*="margin-top"] {
+    display: none !important; /* hide brand, storage info on mobile */
+  }
+
+  .nav {
+    flex-direction: row !important;
+    gap: 6px !important;
+    width: 100% !important;
+    justify-content: space-around !important;
+  }
+
+  .nav a {
+    flex: 1 !important;
+    text-align: center !important;
+    font-size: 0.75rem !important;
+    padding: 6px !important;
+    border-radius: 8px !important;
+  }
+}
+</style>
+
+
+<style>
+@media(max-width: 768px) {
+  .sidebar, .card {
+    box-shadow: none !important;
+    background: rgba(255,255,255,0.05) !important;
+  }
+
+  body {
+    background: linear-gradient(180deg, #06182f, #0b3f6a) !important;
+  }
+}
+</style>
+
 </head>
-<body>
-  <div class="app" role="application" aria-label="Usman NADRA e-Sahulat">
-    <header>
-      <div class="brand">
-        <div class="logo">N</div>
-        <h1>عثمان نادرا ای سہولت</h1>
-      </div>
-
-      <div class="top-controls">
-        <label style="display:flex;align-items:center;gap:8px;">
-          <input id="theme-toggle" type="checkbox" />
-          <span class="small" id="theme-label">Light</span>
-        </label>
-
-        <div style="color:var(--muted);margin-right:6px">تھیم</div>
-
-        <div class="compact-row">
-          <label><input id="compact-mode" type="checkbox"> Compact</label>
-          <label style="margin-left:6px"><input id="blur-mode" type="checkbox"> Blur</label>
-        </div>
-        <button class="icon-btn" id="open-calculator" title="Calculator">🧮</button>
-      </div>
-    </header>
-
-    <main>
-      <aside class="sidebar">
-        <nav>
-          <ul class="nav">
-            <li><a href="#" id="menu-daily" class="active">روزانہ</a></li>
-            <li><a href="#" id="menu-weekly">ہفتہ وار</a></li>
-            <li><a href="#" id="menu-monthly">ماہانہ</a></li>
-            <li><a href="#" id="menu-banks">بینک اکاؤنٹس</a></li>
-            <li><a href="#" id="menu-udhar">ادھار</a></li>
-          </ul>
-        </nav>
-
-        <div class="small">تیز رفتار کیلئے Compact آن کریں۔</div>
-        <div style="margin-top:10px" class="controls">
-          <button class="icon-btn" id="export-json" title="Export JSON">⬇️</button>
-          <button class="icon-btn" id="import-json" title="Import JSON">⬆️</button>
-          <button class="icon-btn" id="clear-data" title="Clear Data">🗑️</button>
-        </div>
-      </aside>
-
-      <section class="content">
-        <!-- DAILY -->
-        <section id="daily-section" class="card">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <h2>آج کا مجموعہ</h2>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <label class="small">تاریخ دیکھیں:</label>
-              <input type="date" id="view-date" />
-              <button id="prev-day" class="icon-btn" title="پچھلا دن">◀</button>
-              <button id="next-day" class="icon-btn" title="اگلا دن">▶</button>
-            </div>
-          </div>
-
-          <div class="summary-grid" style="margin-top:10px;">
-            <div class="summary income"><h3>آمدنی</h3><p id="today-income">0</p></div>
-            <div class="summary expense"><h3>خرچ</h3><p id="today-expense">0</p></div>
-            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="today-shop-expense">0</p></div>
-            <div class="summary balance"><h3>بیلنس</h3><p id="today-balance">0</p></div>
-            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="today-bank-transfer">0</p></div>
-            <div class="summary udharTaken"><h3>ادھار لیا</h3><p id="today-udhar-taken">0</p></div>
-            <div class="summary udharGiven"><h3>ادھار دیا</h3><p id="today-udhar-given">0</p></div>
-          </div>
-
-          <div class="card" style="margin-top:12px;">
-            <h3>نیا ریکارڈ شامل کریں</h3>
-            <form id="daily-form" style="margin-top:8px;">
-              <div class="row">
-                <div>
-                  <label>رقم</label>
-                  <input id="amount" type="number" required />
-                </div>
-                <div>
-                  <label>قسم</label>
-                  <select id="type">
-                    <option value="income">آمدنی</option>
-                    <option value="expense">خرچ</option>
-                    <option value="shop-expense">دکان خرچہ</option>
-                    <option value="bank-transfer">بینک ٹرانسفر</option>
-                    <option value="udhar-taken">ادھار — لیا</option>
-                    <option value="udhar-given">ادھار — دیا</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="row" style="margin-top:8px;">
-                <div id="bank-transfer-group" style="display:none;">
-                  <label>بینک اکاؤنٹ</label>
-                  <select id="bank-account"></select>
-                </div>
-                <div>
-                  <label>تفصیل</label>
-                  <textarea id="description" rows="1"></textarea>
-                </div>
-              </div>
-
-              <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
-                <button type="submit" class="small-btn">محفوظ کریں</button>
-                <span id="type-badge" class="type-pill" style="background:transparent;color:#000"></span>
-              </div>
-            </form>
-          </div>
-
-          <div class="card" style="margin-top:12px;">
-            <table id="daily-table" aria-live="polite">
-              <thead>
-                <tr><th>وقت</th><th>رقم</th><th>قسم</th><th>تفصیل</th><th>عمل</th></tr>
-              </thead>
-              <tbody id="daily-body"><tr><td colspan="5" style="text-align:center">کوئی ریکارڈ نہیں</td></tr></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- WEEKLY -->
-        <section id="weekly-section" class="card" style="display:none;">
-          <h2>ہفتہ وار رپورٹ</h2>
-          <div class="summary-grid" style="margin-top:10px;">
-            <div class="summary"><h3>ہفتے کی آمدنی</h3><p id="weekly-income">0</p></div>
-            <div class="summary"><h3>ہفتے کا خرچ</h3><p id="weekly-expense">0</p></div>
-            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="weekly-shop-expense">0</p></div>
-            <div class="summary"><h3>ہفتے کا بیلنس</h3><p id="weekly-balance">0</p></div>
-            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="weekly-bank-transfer">0</p></div>
-          </div>
-
-          <div class="card" style="margin-top:10px;">
-            <table id="weekly-table">
-              <thead><tr><th>تاریخ</th><th>آمدنی</th><th>خرچ</th><th>دکان خرچہ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
-              <tbody id="weekly-body"><tr><td colspan="6" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- MONTHLY -->
-        <section id="monthly-section" class="card" style="display:none;">
-          <h2>ماہانہ رپورٹ</h2>
-          <div class="summary-grid" style="margin-top:10px;">
-            <div class="summary"><h3>ماہ کی آمدنی</h3><p id="monthly-income">0</p></div>
-            <div class="summary"><h3>ماہ کا خرچ</h3><p id="monthly-expense">0</p></div>
-            <div class="summary shopExpense"><h3>دکان خرچہ</h3><p id="monthly-shop-expense">0</p></div>
-            <div class="summary"><h3>ماہ کا بیلنس</h3><p id="monthly-balance">0</p></div>
-            <div class="summary bank"><h3>بینک ٹرانسفر</h3><p id="monthly-bank-transfer">0</p></div>
-          </div>
-
-          <div class="card" style="margin-top:10px;">
-            <table id="monthly-table">
-              <thead><tr><th>ہفتہ</th><th>آمدنی</th><th>خرچ</th><th>دکان خرچہ</th><th>بینک ٹرانسفر</th><th>بیلنس</th></tr></thead>
-              <tbody id="monthly-body"><tr><td colspan="6" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- BANKS -->
-        <section id="banks-section" class="card" style="display:none;">
-          <h2>بینک اکاؤنٹس</h2>
-
-          <div class="summary-grid" style="margin-top:10px;">
-            <div class="summary bank"><h3>کل بیلنس</h3><p id="total-bank-balance">0</p></div>
-          </div>
-
-          <form id="bank-form" style="margin-top:10px;">
-            <div class="row">
-              <div><label>بینک کا نام</label><input id="bank-name" type="text" required /></div>
-              <div><label>ابتدائی بیلنس</label><input id="bank-balance" type="number" required /></div>
-            </div>
-            <div style="margin-top:8px;"><button type="submit">بینک شامل کریں</button></div>
-          </form>
-
-          <div class="card" style="margin-top:10px;">
-            <table id="banks-table">
-              <thead><tr><th>بینک کا نام</th><th>بیلنس</th><th>عمل</th></tr></thead>
-              <tbody id="banks-body"><tr><td colspan="3" style="text-align:center">کوئی بینک اکاؤنٹ موجود نہیں</td></tr></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- UDHAR -->
-        <section id="udhar-section" class="card" style="display:none;">
-          <h2>ادھار مینجمنٹ</h2>
-
-          <div class="card" style="margin-top:6px;">
-            <h3>نیا ادھار ریکارڈ</h3>
-            <form id="udhar-form" style="margin-top:8px;">
-              <div class="row">
-                <div><label>کس کا نام</label><input id="udhar-name" type="text" required/></div>
-                <div>
-                  <label>قسم</label>
-                  <select id="udhar-type">
-                    <option value="taken">ادھار لیا</option>
-                    <option value="given">ادھار دیا</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row" style="margin-top:8px;">
-                <div><label>رقم</label><input id="udhar-amount" type="number" required/></div>
-                <div><label>تاریخ (اختیاری)</label><input id="udhar-date" type="date"/></div>
-              </div>
-              <div style="margin-top:8px;"><button type="submit">ادھار شامل کریں</button></div>
-            </form>
-          </div>
-
-          <div class="card" style="margin-top:10px;">
-            <table id="udhar-table">
-              <thead><tr><th>نام</th><th>قسم</th><th>رقم</th><th>تاریخ</th><th>عمل</th></tr></thead>
-              <tbody id="udhar-body"><tr><td colspan="5" style="text-align:center">کوئی ادھار ریکارڈ نہیں</td></tr></tbody>
-            </table>
-          </div>
-        </section>
-
-      </section>
-    </main>
-
-    <footer>نسخہ محفوظ — مقامی طور پر آپ کے براؤزر میں۔ مزید فیچرز کے لیے بتائیں۔</footer>
-  </div>
-
-  <!-- Bank details modal -->
-  <div id="bank-modal" class="hidden">
-    <div class="modal-backdrop" id="bank-backdrop">
-      <div class="modal" role="dialog" aria-modal="true">
-        <button class="close" id="close-bank-modal">✖</button>
-        <h3 id="bank-modal-title">بینک ہسٹری</h3>
-        <div class="mini-row">
-          <label class="small">تاریخ:</label>
-          <input type="date" id="bank-view-date" />
-          <button id="bank-prev" class="icon-btn">◀</button>
-          <button id="bank-next" class="icon-btn">▶</button>
-        </div>
-        <div style="margin-top:8px;">
-          <table id="bank-trans-table">
-            <thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th></tr></thead>
-            <tbody id="bank-trans-body"><tr><td colspan="3" style="text-align:center">کوئی ٹرانزیکشن نہیں</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Calculator modal -->
-  <div id="calc-modal" class="hidden">
-    <div class="modal-backdrop" id="calc-backdrop">
-      <div class="modal" role="dialog" aria-modal="true">
-        <button class="close" id="close-calc">✖</button>
-        <h3>کیلکولیٹر</h3>
-        <input id="calc-display" class="calc-display" readonly />
-        <div class="calc-keys">
-          <button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button><button data-key="/">÷</button>
-          <button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button><button data-key="*">×</button>
-          <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button data-key="-">−</button>
-          <button data-key="0">0</button><button data-key=".">.</button><button id="calc-eq">=</button><button data-key="+">+</button>
-        </div>
-        <div style="margin-top:8px; display:flex; gap:8px;">
-          <button id="calc-clear">C</button><button id="calc-backspace">⌫</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // ---------- Data ----------
-    let dailyRecords = [];
-    let weeklySummaries = [];
-    let monthlySummaries = [];
-    let banks = [];
-    let udhars = [];
-
-    const BANK_NAMES_PRESET = ["الحبیب","نادرا","نقلِ فرد","اومنی","جاز کیش","ایزیپہسہ","یو پیسہ (گلے میں)","یو بی ایل"];
-    const $ = id => document.getElementById(id);
-
-    // ---------- Persistence ----------
-    function saveData(){
-      try{
-        localStorage.setItem('usman_esahulat_v4', JSON.stringify({ dailyRecords, weeklySummaries, monthlySummaries, banks, udhars }));
-      }catch(e){ console.warn('Could not save', e); }
-    }
-
-    function loadData(){
-      const raw = localStorage.getItem('usman_esahulat_v4');
-      if(raw){
-        try{
-          const data = JSON.parse(raw);
-          dailyRecords = data.dailyRecords || [];
-          weeklySummaries = data.weeklySummaries || [];
-          monthlySummaries = data.monthlySummaries || [];
-          banks = data.banks || [];
-          udhars = data.udhars || [];
-        }catch(err){
-          dailyRecords = []; weeklySummaries=[]; monthlySummaries=[]; udhars=[];
-          banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
-        }
-      } else {
-        banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
-      }
-      renderAll();
-      setDefaultViewDate();
-    }
-
-    // ---------- Render ----------
-    function renderAll(){
-      renderDaily();
-      renderWeekly();
-      renderMonthly();
-      renderBanks();
-      updateBankDropdown();
-      renderUdhars();
-    }
-
-    // Use selected view date (so records don't disappear at midnight)
-    function getSelectedViewDateKey(){
-      const el = $('view-date');
-      let d;
-      if(el && el.value) d = new Date(el.value);
-      else d = new Date();
-      // format en-CA (YYYY-MM-DD)
-      return d.toLocaleDateString('en-CA');
-    }
-
-    function renderDaily(){
-      const todayKey = getSelectedViewDateKey();
-      const todayRecords = dailyRecords.filter(r => r.date === todayKey).sort((a,b)=>b.timestamp-a.timestamp);
-
-      const income = todayRecords.filter(r => r.type==='income').reduce((s,r)=>s+r.amount,0);
-      const expense = todayRecords.filter(r => r.type==='expense').reduce((s,r)=>s+r.amount,0);
-      const shopExpense = todayRecords.filter(r => r.type==='shop-expense').reduce((s,r)=>s+r.amount,0);
-      const bankTransfer = todayRecords.filter(r => r.type==='bank-transfer').reduce((s,r)=>s+r.amount,0);
-      const udharTaken = todayRecords.filter(r => r.type==='udhar-taken').reduce((s,r)=>s+r.amount,0);
-      const udharGiven = todayRecords.filter(r => r.type==='udhar-given').reduce((s,r)=>s+r.amount,0);
-      // Balance *should not* include shopExpense (as per request)
-      const balance = income - expense;
-
-      $('today-income').textContent = income.toLocaleString();
-      $('today-expense').textContent = expense.toLocaleString();
-      $('today-shop-expense').textContent = shopExpense.toLocaleString();
-      $('today-bank-transfer').textContent = bankTransfer.toLocaleString();
-      $('today-udhar-taken').textContent = udharTaken.toLocaleString();
-      $('today-udhar-given').textContent = udharGiven.toLocaleString();
-      $('today-balance').textContent = balance.toLocaleString();
-
-      const tbody = $('daily-body');
-      if(todayRecords.length===0){
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">اس تاریخ کا کوئی ریکارڈ نہیں</td></tr>';
-      } else {
-        tbody.innerHTML = todayRecords.map(r=>{
-          const cls = r.type==='income' ? 'row-income' : r.type==='expense' ? 'row-expense' : r.type==='bank-transfer' ? 'row-bank' : r.type==='udhar-taken' ? 'row-udharTaken' : r.type==='udhar-given' ? 'row-udharGiven' : 'row-shopExpense';
-          const typeLabel = r.type==='income' ? 'آمدنی' : r.type==='expense' ? 'خرچ' : r.type==='bank-transfer' ? 'بینک ٹرانسفر' : r.type==='udhar-taken' ? 'ادھار لیا' : r.type==='udhar-given' ? 'ادھار دیا' : 'دکان خرچہ';
-          const pillClass = r.type==='income'?'pill-income':r.type==='expense'?'pill-expense':r.type==='bank-transfer'?'pill-bank':r.type==='udhar-taken'?'pill-udharTaken':r.type==='udhar-given'?'pill-udharGiven':'pill-shopExpense';
-          return `<tr class="${cls}">
-            <td>${new Date(r.timestamp).toLocaleTimeString('ur-PK')}</td>
-            <td>${r.amount.toLocaleString()}</td>
-            <td><span class="type-pill ${pillClass}">${typeLabel}</span></td>
-            <td>${r.description || '-' } ${r.bankName ? '('+r.bankName +')' : ''}</td>
-            <td><button class="icon-btn" onclick="deleteDailyRecord('${r.id}')">❌</button></td>
-          </tr>`;
-        }).join('');
-      }
-    }
-
-    function renderWeekly(){
-      const nowWeek = getCurrentWeekNumber();
-      const week = weeklySummaries.find(w=>w.week===nowWeek) || { income:0,expense:0,bankTransfer:0,shopExpense:0 };
-      $('weekly-income').textContent = (week.income||0).toLocaleString();
-      $('weekly-expense').textContent = (week.expense||0).toLocaleString();
-      $('weekly-shop-expense').textContent = (week.shopExpense||0).toLocaleString();
-      $('weekly-bank-transfer').textContent = (week.bankTransfer||0).toLocaleString();
-      $('weekly-balance').textContent = ((week.income||0)-(week.expense||0)).toLocaleString();
-
-      const weekStart = getStartOfWeek();
-      const weekRecords = dailyRecords.filter(r => new Date(r.timestamp) >= weekStart);
-      const dailyMap = {};
-      weekRecords.forEach(r=>{
-        if(!dailyMap[r.date]) dailyMap[r.date]={income:0,expense:0,bankTransfer:0,shopExpense:0};
-        if(r.type==='income') dailyMap[r.date].income += r.amount;
-        else if(r.type==='expense') dailyMap[r.date].expense += r.amount;
-        else if(r.type==='bank-transfer') dailyMap[r.date].bankTransfer += r.amount;
-        else if(r.type==='shop-expense') dailyMap[r.date].shopExpense += r.amount;
-      });
-
-      const tbody = $('weekly-body');
-      const keys = Object.keys(dailyMap).sort();
-      if(keys.length===0) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">اس ہفتے کا کوئی ریکارڈ نہیں</td></tr>';
-      else tbody.innerHTML = keys.map(d=>{
-        const day = dailyMap[d];
-        return `<tr>
-          <td>${new Date(d).toLocaleDateString('ur-PK')}</td>
-          <td>${(day.income||0).toLocaleString()}</td>
-          <td>${(day.expense||0).toLocaleString()}</td>
-          <td>${(day.shopExpense||0).toLocaleString()}</td>
-          <td>${(day.bankTransfer||0).toLocaleString()}</td>
-          <td>${((day.income||0)-(day.expense||0)).toLocaleString()}</td>
-        </tr>`;
-      }).join('');
-    }
-
-    function renderMonthly(){
-      const now = new Date();
-      const key = `${now.getFullYear()}-${now.getMonth()+1}`;
-      const m = monthlySummaries.find(m=>m.month===key) || { income:0,expense:0,bankTransfer:0,shopExpense:0 };
-      $('monthly-income').textContent = (m.income||0).toLocaleString();
-      $('monthly-expense').textContent = (m.expense||0).toLocaleString();
-      $('monthly-shop-expense').textContent = (m.shopExpense||0).toLocaleString();
-      $('monthly-bank-transfer').textContent = (m.bankTransfer||0).toLocaleString();
-      $('monthly-balance').textContent = ((m.income||0)-(m.expense||0)).toLocaleString();
-
-      const tbody = $('monthly-body');
-      const weeks = weeklySummaries.filter(w=>{
-        const d = new Date(w.timestamp||Date.now());
-        return d.getFullYear()===now.getFullYear() && (d.getMonth()+1)=== (now.getMonth()+1);
-      }).sort((a,b)=>a.week-b.week);
-      if(weeks.length===0) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">اس ماہ کا کوئی ریکارڈ نہیں</td></tr>';
-      else tbody.innerHTML = weeks.map(w=>`<tr><td>ہفتہ ${w.week}</td><td>${(w.income||0).toLocaleString()}</td><td>${(w.expense||0).toLocaleString()}</td><td>${(w.shopExpense||0).toLocaleString()}</td><td>${(w.bankTransfer||0).toLocaleString()}</td><td>${((w.income||0)-(w.expense||0)).toLocaleString()}</td></tr>`).join('');
-    }
-
-    function renderBanks(){
-      $('total-bank-balance').textContent = banks.reduce((s,b)=>s+(b.balance||0),0).toLocaleString();
-      const tbody = $('banks-body');
-      if(banks.length===0) tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">کوئی بینک اکاؤنٹ موجود نہیں</td></tr>';
-      else tbody.innerHTML = banks.map(b=>`<tr><td>${b.name}</td><td>${(b.balance||0).toLocaleString()}</td><td><button class="icon-btn" onclick="showBankDetails('${b.id}')">📑</button><button class="icon-btn" onclick="editBank('${b.id}')">✏️</button><button class="icon-btn" onclick="deleteBank('${b.id}')">🗑️</button></td></tr>`).join('');
-    }
-
-    function updateBankDropdown(){
-      const sel = $('bank-account');
-      if(!sel) return;
-      if(banks.length===0) sel.innerHTML = '<option value="">کوئی بینک نہیں</option>';
-      else sel.innerHTML = banks.map(b=>`<option value="${b.id}">${b.name} (${(b.balance||0).toLocaleString()})</option>`).join('');
-    }
-
-    function renderUdhars(){
-      const tbody = $('udhar-body');
-      if(udhars.length===0) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">کوئی ادھار ریکارڈ نہیں</td></tr>';
-      else tbody.innerHTML = udhars.map(u=>`<tr><td>${u.name}</td><td>${u.type==='taken'?'ادھار لیا':'ادھار دیا'}</td><td>${u.amount.toLocaleString()}</td><td>${u.date||''}</td><td><button class="icon-btn" onclick="deleteUdhar('${u.id}')">🗑️</button></td></tr>`).join('');
-    }
-
-    // ---------- Helpers ----------
-    function getCurrentWeekNumber(){
-      const now = new Date();
-      const start = new Date(now.getFullYear(),0,1);
-      const diff = Math.floor((now - start) / 86400000);
-      return Math.ceil((diff + start.getDay()+1)/7);
-    }
-    function getStartOfWeek(){
-      const now = new Date();
-      const day = now.getDay();
-      const diff = now.getDate() - day;
-      return new Date(now.getFullYear(), now.getMonth(), diff);
-    }
-
-    function setDefaultViewDate(){
-      const el = $('view-date');
-      if(!el) return;
-      const today = new Date();
-      el.value = today.toISOString().slice(0,10);
-      // bank modal view default
-      const bd = $('bank-view-date'); if(bd) bd.value = today.toISOString().slice(0,10);
-    }
-
-    function shiftViewDate(days){
-      const el = $('view-date'); if(!el) return;
-      const d = el.value ? new Date(el.value) : new Date();
-      d.setDate(d.getDate() + days);
-      el.value = d.toISOString().slice(0,10);
-      renderDaily();
-    }
-
-    // ---------- Forms ----------
-    $('daily-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const amt = parseFloat($('amount').value);
-      const type = $('type').value;
-      const desc = $('description').value || '';
-      if(!amt || isNaN(amt)){ alert('براہ کرم رقم درج کریں'); return; }
-      const selectedDateInput = $('view-date').value;
-      const now = selectedDateInput ? new Date(selectedDateInput + 'T' + (new Date()).toTimeString().split(' ')[0]) : new Date();
-      const rec = {
-        id: 'r'+Date.now().toString(36),
-        date: now.toLocaleDateString('en-CA'),
-        timestamp: now.getTime(),
-        amount: amt,
-        type,
-        description: desc,
-        week: getCurrentWeekNumber(),
-        month: `${now.getFullYear()}-${now.getMonth()+1}`
-      };
-      if(type==='bank-transfer'){
-        const bankId = $('bank-account').value;
-        const bank = banks.find(b=>b.id===bankId);
-        if(!bank){ alert('براہ کرم بینک منتخب کریں'); return; }
-        rec.bankId = bankId;
-        rec.bankName = bank.name;
-        bank.balance = (bank.balance||0) + amt;
-        if(!Array.isArray(bank.transactions)) bank.transactions = [];
-        bank.transactions.push({ id: 't'+Date.now().toString(36), date: rec.date, timestamp: rec.timestamp, amount: amt, description: desc || 'بینک ٹرانسفر' });
-      }
-      if(type==='udhar-taken' || type==='udhar-given'){
-        const u = {
-          id: 'u'+Date.now().toString(36),
-          name: desc || 'نام غیر معلوم',
-          type: type==='udhar-taken' ? 'taken' : 'given',
-          amount: amt,
-          date: new Date().toLocaleDateString('en-CA')
-        };
-        udhars.push(u);
-      }
-      dailyRecords.push(rec);
-      updateSummariesOnAdd(rec);
-      saveData();
-      renderAll();
-      this.reset();
-      $('type-badge').textContent='';
-    });
-
-    $('type').addEventListener('change', function(){
-      const v = this.value;
-      const badge = $('type-badge');
-      if(v==='income'){ badge.textContent='آمدنی'; badge.className='type-pill pill-income'; $('bank-transfer-group').style.display='none'; }
-      else if(v==='expense'){ badge.textContent='خرچ'; badge.className='type-pill pill-expense'; $('bank-transfer-group').style.display='none'; }
-      else if(v==='shop-expense'){ badge.textContent='دکان خرچہ'; badge.className='type-pill pill-shopExpense'; $('bank-transfer-group').style.display='none'; }
-      else if(v==='bank-transfer'){ badge.textContent='بینک ٹرانسفر'; badge.className='type-pill pill-bank'; $('bank-transfer-group').style.display='block'; }
-      else if(v==='udhar-taken'){ badge.textContent='ادھار لیا'; badge.className='type-pill pill-udharTaken'; $('bank-transfer-group').style.display='none'; }
-      else { badge.textContent='ادھار دیا'; badge.className='type-pill pill-udharGiven'; $('bank-transfer-group').style.display='none'; }
-    });
-
-    // bank form
-    $('bank-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = $('bank-name').value.trim();
-      const bal = parseFloat($('bank-balance').value);
-      if(!name || isNaN(bal)){ alert('درست معلومات درج کریں'); return; }
-      banks.push({ id:'b'+Date.now().toString(36), name, balance:bal, transactions:[{ id:'t'+Date.now().toString(36), date:new Date().toLocaleDateString('en-CA'), timestamp:Date.now(), amount:bal, description:'ابتدائی بیلنس' }] });
-      saveData(); renderAll(); this.reset();
-    });
-
-    // udhar form
-    $('udhar-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = $('udhar-name').value.trim();
-      const type = $('udhar-type').value;
-      const amount = parseFloat($('udhar-amount').value);
-      const date = $('udhar-date').value || new Date().toLocaleDateString('en-CA');
-      if(!name || isNaN(amount)){ alert('درست معلومات درج کریں'); return; }
-      udhars.push({ id:'u'+Date.now().toString(36), name, type, amount, date });
-      saveData(); renderUdhars(); this.reset();
-    });
-
-    // delete/edit
-    window.deleteDailyRecord = function(id){
-      if(!confirm('کیا حذف کرنا چاہتے ہیں؟')) return;
-      const idx = dailyRecords.findIndex(r=>r.id===id);
-      if(idx===-1) return;
-      const rec = dailyRecords[idx];
-      if(rec.type==='bank-transfer' && rec.bankId){
-        const b = banks.find(x=>x.id===rec.bankId);
-        if(b){ b.balance -= rec.amount;
-          if(Array.isArray(b.transactions)){
-            b.transactions = b.transactions.filter(t => !(t.timestamp===rec.timestamp && t.amount===rec.amount));
-          }
-        }
-      }
-      updateSummariesOnDelete(rec);
-      dailyRecords.splice(idx,1);
-      saveData(); renderAll();
-    };
-
-    window.deleteBank = function(id){
-      if(!confirm('کیا واقعی بینک ہٹانا ہے؟')) return;
-      dailyRecords = dailyRecords.map(r=> r.bankId===id ? {...r, bankId:null, bankName:'(حذف شدہ بینک)'} : r);
-      banks = banks.filter(b=>b.id!==id);
-      saveData(); renderAll();
-    };
-
-    window.editBank = function(id){
-      const b = banks.find(x=>x.id===id);
-      if(!b) return;
-      const val = prompt('نیا بیلنس درج کریں: ' + b.name, b.balance||0);
-      if(val!==null && !isNaN(parseFloat(val))){ b.balance = parseFloat(val); saveData(); renderAll(); }
-    };
-
-    window.deleteUdhar = function(id){
-      if(!confirm('کیا واقعی ادھار ریکارڈ ہٹانا ہے؟')) return;
-      udhars = udhars.filter(u=>u.id!==id);
-      saveData(); renderUdhars();
-    };
-
-    // summaries update
-    function updateSummariesOnAdd(rec){
-      let week = weeklySummaries.find(w=>w.week===rec.week);
-      if(!week){ week = { week: rec.week, income:0, expense:0, bankTransfer:0, shopExpense:0, timestamp: Date.now() }; weeklySummaries.push(week); }
-      if(rec.type==='income') week.income += rec.amount;
-      else if(rec.type==='expense') week.expense += rec.amount;
-      else if(rec.type==='bank-transfer') week.bankTransfer += rec.amount;
-      else if(rec.type==='shop-expense') week.shopExpense += rec.amount;
-
-      let month = monthlySummaries.find(m=>m.month===rec.month);
-      if(!month){ month = { month: rec.month, income:0, expense:0, bankTransfer:0, shopExpense:0, timestamp: Date.now() }; monthlySummaries.push(month); }
-      if(rec.type==='income') month.income += rec.amount;
-      else if(rec.type==='expense') month.expense += rec.amount;
-      else if(rec.type==='bank-transfer') month.bankTransfer += rec.amount;
-      else if(rec.type==='shop-expense') month.shopExpense += rec.amount;
-    }
-
-    function updateSummariesOnDelete(rec){
-      const w = weeklySummaries.find(x=>x.week===rec.week);
-      if(w){
-        if(rec.type==='income') w.income -= rec.amount;
-        else if(rec.type==='expense') w.expense -= rec.amount;
-        else if(rec.type==='bank-transfer') w.bankTransfer -= rec.amount;
-        else if(rec.type==='shop-expense') w.shopExpense -= rec.amount;
-        if((w.income||0)+(w.expense||0)+(w.bankTransfer||0)+(w.shopExpense||0)===0) weeklySummaries = weeklySummaries.filter(x=>x.week!==rec.week);
-      }
-      const m = monthlySummaries.find(x=>x.month===rec.month);
-      if(m){
-        if(rec.type==='income') m.income -= rec.amount;
-        else if(rec.type==='expense') m.expense -= rec.amount;
-        else if(rec.type==='bank-transfer') m.bankTransfer -= rec.amount;
-        else if(rec.type==='shop-expense') m.shopExpense -= rec.amount;
-        if((m.income||0)+(m.expense||0)+(m.bankTransfer||0)+(m.shopExpense||0)===0) monthlySummaries = monthlySummaries.filter(x=>x.month!==rec.month);
-      }
-    }
-
-    // navigation
-    function showSection(id){
-      ['daily','weekly','monthly','banks','udhar'].forEach(s=>{
-        const el = document.getElementById(s+'-section');
-        if(el) el.style.display = (s===id ? 'block' : 'none');
-        const link = document.getElementById('menu-'+s);
-        if(link) link.classList.toggle('active', s===id);
-      });
-    }
-    $('menu-daily').addEventListener('click', e=>{ e.preventDefault(); showSection('daily'); });
-    $('menu-weekly').addEventListener('click', e=>{ e.preventDefault(); showSection('weekly'); });
-    $('menu-monthly').addEventListener('click', e=>{ e.preventDefault(); showSection('monthly'); });
-    $('menu-banks').addEventListener('click', e=>{ e.preventDefault(); showSection('banks'); });
-    $('menu-udhar').addEventListener('click', e=>{ e.preventDefault(); showSection('udhar'); });
-
-    // ---------- Theme logic ----------
-    const THEMES = {
-      light: { name:'light', accent:'#0b6ef6', bg:'linear-gradient(135deg,#e8f2ff,#f7fbff)', card:'#ffffff' },
-      dark: { name:'dark', accent:'#059669', bg:'linear-gradient(135deg,#0b1720,#071127)', card:'rgba(18,24,31,0.92)' }
-    };
-
-    function applyThemeByName(name){
-      if(name==='dark'){
-        document.documentElement.setAttribute('data-theme','dark');
-        $('theme-toggle').checked = true;
-        $('theme-label').textContent = 'Dark';
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-        $('theme-toggle').checked = false;
-        $('theme-label').textContent = 'Light';
-      }
-      localStorage.setItem('esahulat_theme_v4', JSON.stringify(name));
-    }
-
-    $('compact-mode').addEventListener('change', function(){
-      if(this.checked) document.documentElement.setAttribute('data-compact','true');
-      else document.documentElement.removeAttribute('data-compact');
-      localStorage.setItem('esahulat_compact_v4', this.checked ? '1' : '0');
-    });
-    $('blur-mode').addEventListener('change', function(){
-      if(this.checked) document.documentElement.style.setProperty('--glass-blur','blur(10px)');
-      else document.documentElement.style.setProperty('--glass-blur','none');
-      localStorage.setItem('esahulat_blur_v4', this.checked ? '1' : '0');
-    });
-
-    function loadPrefs(){
-      const t = localStorage.getItem('esahulat_theme_v4');
-      if(t){
-        try{
-          const name = JSON.parse(t);
-          applyThemeByName(name);
-        }catch(e){ applyThemeByName('light'); }
-      } else {
-        applyThemeByName('light');
-      }
-
-      const c = localStorage.getItem('esahulat_compact_v4'); if(c==='1'){ $('compact-mode').checked = true; document.documentElement.setAttribute('data-compact','true'); }
-      const b = localStorage.getItem('esahulat_blur_v4'); if(b==='1'){ $('blur-mode').checked = true; document.documentElement.style.setProperty('--glass-blur','blur(10px)'); }
-    }
-
-    $('theme-toggle').addEventListener('change', function(){ applyThemeByName(this.checked ? 'dark' : 'light'); });
-
-    // ---------- Export/Import/Clear ----------
-    $('export-json').addEventListener('click', ()=>{
-      const data = JSON.stringify({ dailyRecords, weeklySummaries, monthlySummaries, banks, udhars }, null, 2);
-      const blob = new Blob([data],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'usman_esahulat_backup.json'; a.click(); URL.revokeObjectURL(url);
-    });
-
-    $('import-json').addEventListener('click', ()=>{
-      const input = document.createElement('input'); input.type='file'; input.accept='application/json';
-      input.onchange = e => {
-        const f = e.target.files[0]; if(!f) return;
-        const reader = new FileReader();
-        reader.onload = ev => {
-          try{
-            const obj = JSON.parse(ev.target.result);
-            dailyRecords = obj.dailyRecords || dailyRecords;
-            weeklySummaries = obj.weeklySummaries || weeklySummaries;
-            monthlySummaries = obj.monthlySummaries || monthlySummaries;
-            banks = obj.banks || banks;
-            udhars = obj.udhars || udhars;
-            saveData(); renderAll(); alert('ڈیٹا امپورٹ ہو گیا');
-          }catch(err){ alert('فائل پڑھنے میں مسئلہ'); }
-        };
-        reader.readAsText(f);
-      };
-      input.click();
-    });
-
-    $('clear-data').addEventListener('click', ()=>{
-      if(!confirm('کیا آپ سارا مقامی ڈیٹا صاف کرنا چاہتے ہیں؟')) return;
-      localStorage.removeItem('usman_esahulat_v4');
-      dailyRecords=[]; weeklySummaries=[]; monthlySummaries=[]; banks=[]; udhars=[];
-      banks = BANK_NAMES_PRESET.map(name => ({ id: 'b'+Math.random().toString(36).slice(2,9), name, balance:0, transactions:[] }));
-      saveData(); renderAll();
-    });
-
-    // ---------- Bank details modal logic ----------
-    function showBankDetails(bankId){
-      const bank = banks.find(b=>b.id===bankId);
-      if(!bank) return;
-      const modalWrap = $('bank-modal');
-      const title = $('bank-modal-title');
-      title.textContent = bank.name + ' — ہسٹری';
-      modalWrap.classList.remove('hidden');
-      const bd = $('bank-view-date'); if(bd && !bd.value) bd.value = new Date().toISOString().slice(0,10);
-      renderBankTransactions(bankId);
-      modalWrap.dataset.bankId = bankId;
-    }
-    function closeBankModal(){ const modalWrap = $('bank-modal'); modalWrap.classList.add('hidden'); modalWrap.dataset.bankId=''; }
-    $('close-bank-modal').addEventListener('click', closeBankModal);
-    $('bank-backdrop').addEventListener('click', function(e){ if(e.target === this) closeBankModal(); });
-
-    function renderBankTransactions(bankId){
-      const bank = banks.find(b=>b.id===bankId);
-      if(!bank) return;
-      const dateFilter = $('bank-view-date').value;
-      let trans = Array.isArray(bank.transactions) ? bank.transactions.slice().sort((a,b)=>b.timestamp-a.timestamp) : [];
-      if(dateFilter){
-        const key = new Date(dateFilter).toLocaleDateString('en-CA');
-        trans = trans.filter(t=>t.date===key);
-      }
-      const tbody = $('bank-trans-body');
-      if(trans.length===0) tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">کوئی ٹرانزیکشن نہیں</td></tr>';
-      else tbody.innerHTML = trans.map(t=>`<tr><td>${new Date(t.timestamp).toLocaleTimeString('ur-PK')}</td><td>${t.amount.toLocaleString()}</td><td>${t.description||''}</td></tr>`).join('');
-    }
-    $('bank-view-date').addEventListener('change', ()=>{ const id = $('bank-modal').dataset.bankId; if(id) renderBankTransactions(id); });
-    $('bank-prev').addEventListener('click', ()=>{ shiftBankModalDate(-1); });
-    $('bank-next').addEventListener('click', ()=>{ shiftBankModalDate(1); });
-    function shiftBankModalDate(days){
-      const el = $('bank-view-date'); if(!el) return;
-      const d = el.value ? new Date(el.value) : new Date();
-      d.setDate(d.getDate() + days);
-      el.value = d.toISOString().slice(0,10);
-      const id = $('bank-modal').dataset.bankId; if(id) renderBankTransactions(id);
-    }
-
-    // ---------- Init ----------
-    loadPrefs();
-    loadData();
-    setInterval(()=>{ renderAll(); }, 30000);
-    if($('type')) $('type').dispatchEvent(new Event('change'));
-
-    // view-date controls (so daily records don't vanish at midnight)
-    $('view-date').addEventListener('change', renderDaily);
-    $('prev-day').addEventListener('click', ()=>shiftViewDate(-1));
-    $('next-day').addEventListener('click', ()=>shiftViewDate(1));
-
-    // ---------- bank modal prev/next via daily arrows ----------
-    $('prev-day').addEventListener('click', ()=>{ /* already handled above */ });
-    $('next-day').addEventListener('click', ()=>{ /* already handled above */ });
-
-    // ---------- bank modal close on escape ----------
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(!$('bank-modal').classList.contains('hidden')) closeBankModal(); if(!$('calc-modal').classList.contains('hidden')) closeCalc(); } });
-
-    // ---------- Calculator logic ----------
-    const calcModal = $('calc-modal');
-    const calcDisplay = $('calc-display');
-    const calcKeys = Array.from(document.querySelectorAll('.calc-keys button'));
-    document.getElementById('open-calculator').addEventListener('click', ()=>{ calcModal.classList.remove('hidden'); if(calcDisplay) calcDisplay.value=''; });
-    document.getElementById('close-calc').addEventListener('click', closeCalc);
-    document.getElementById('calc-clear').addEventListener('click', ()=>{ calcDisplay.value=''; });
-    document.getElementById('calc-backspace').addEventListener('click', ()=>{ calcDisplay.value = calcDisplay.value.slice(0,-1); });
-    calcKeys.forEach(b=>{
-      b.addEventListener('click', ()=>{ const k = b.dataset.key; if(k) calcDisplay.value += k; });
-    });
-    document.getElementById('calc-eq').addEventListener('click', ()=>{ evaluateCalc(); });
-
-    function evaluateCalc(){
-      try{
-        const expr = calcDisplay.value.replace(/×/g,'*').replace(/÷/g,'/');
-        if(!/^[0-9+\-*/().\s]+$/.test(expr)) { alert('Invalid expression'); return; }
-        const res = Function('"use strict"; return ('+expr+')')();
-        calcDisplay.value = (typeof res === 'number' && isFinite(res)) ? res.toString() : 'Error';
-      }catch(e){ calcDisplay.value = 'Error'; }
-    }
-
-    function closeCalc(){ calcModal.classList.add('hidden'); }
-
-    // click outside modals to close
-    $('calc-backdrop').addEventListener('click', function(e){ if(e.target === this) closeCalc(); });
-
-  </script>
-<!-- ===== Welcome popup (paste before </body>) ===== -->
-<div id="welcome-modal">
-  <div class="modal-backdrop" id="welcome-backdrop" style="display:flex;align-items:center;justify-content:center;">
-    <div class="modal" role="dialog" aria-modal="true" style="text-align:center;">
-      <button class="close" id="close-welcome">✖</button>
-      <h3 style="font-size:1.4rem; margin-top:6px;">بِسْمِ اللہِ الرَّحْمٰنِ الرَّحِیْم</h3>
-      <p id="welcome-name" style="font-size:1.25rem; margin-top:8px; font-weight:700;">اسم — خوش آمدید</p>
-      <div style="margin-top:10px;">
-        <button id="welcome-ok" style="padding:8px 14px; border-radius:8px; border:none; background:var(--accent); color:#fff; cursor:pointer;">ٹھیک ہے</button>
-      </div>
-    </div>
-  </div>
+<body data-theme="luxury">
+<div id="welcome-popup" style="
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center;
+  z-index: 99999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center;">
+<div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
+<h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
+<h2 style="margin-top: 15px;">Muhammad Usman</h2>
+<p id="popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
+<h3 style="margin-top: 15px;">Welcome</h3>
+<button onclick="document.getElementById('welcome-popup').style.display='none'" style="margin-top: 20px; padding: 10px 20px; background: #3bd3ff; border:none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Continue</button>
+</div>
 </div>
 
+<div class="app">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+<div class="brand">
+<div class="logo">MU</div>
+<div>
+<h1>Muhammad Usman</h1>
+<small>Usman NADRA e-Sahulat</small>
+</div>
+</div>
+<ul class="nav" id="menu">
+<li><a class="active" data-page="home" href="#">Home ⌂</a></li>
+<li><a data-page="income" href="#">Income ₨+</a></li>
+<li><a data-page="expense" href="#">Expense ₨−</a></li>
+<li><a data-page="shop" href="#">Shop Expense 🏪</a></li>
+<li><a data-page="udhar" href="#">Loans ↔︎</a></li>
+<li><a data-page="banks" href="#">Banks 🏦</a></li>
+<li><a data-page="weekly" href="#">Weekly 7d</a></li>
+<li><a data-page="monthly" href="#">Monthly 30d</a></li>
+</ul>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="icon-btn" id="export-json">JSON ⬇</button>
+<button class="icon-btn" id="export-csv">CSV ⬇</button>
+<button class="icon-btn" id="import-json">JSON ⬆</button>
+<button class="icon-btn" id="import-csv">CSV ⬆</button>
+</div>
+<div class="small" style="margin-top:12px">مقامی اسٹوریج: <strong>usman_esahulat_final</strong></div>
+</aside>
+<!-- MAIN -->
+<main class="content" id="main">
+<!-- TOPBAR -->
+<div class="topbar card">
+<div class="chip">Pro Dashboard</div>
+<div style="display:flex;gap:8px;align-items:center">
+<label class="small">Theme:</label>
+<select class="theme" id="theme-picker">
+<option value="luxury">Dashboard (Image)</option>
+<option value="navy">Navy</option>
+<option value="mint">Mint</option>
+<option value="amoled">AMOLED</option>
+</select>
+</div>
+<div style="margin-left:auto;display:flex;gap:8px">
+<button class="icon-btn" id="open-calculator">🧮 Calculator</button>
+<button class="icon-btn" id="print-page">🖨️ Print</button>
+<button class="icon-btn" id="clear-data">🗑️ Clear</button>
+</div>
+</div>
+<!-- DASHBOARD -->
+<section class="card" id="home-section">
+<div class="section-title">
+<h2>Dashboard — Summary</h2>
+<div class="right">
+<label class="small">Date:</label>
+<input id="dash-from" type="date"/>
+<input id="dash-to" type="date"/>
+<button class="primary" id="dash-refresh">Refresh</button>
+</div>
+</div>
+<div class="summary-grid" style="margin-top:12px">
+<div class="summary"><h3>Income</h3><p id="dash-income">0</p></div>
+<div class="summary"><h3>Expense</h3><p id="dash-expense">0</p></div>
+<div class="summary"><h3>دکان Expenseہ</h3><p id="dash-shop">0</p></div>
+<div class="summary"><h3>Net Balance</h3><p id="dash-balance">0</p></div>
+<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div></div>
+<div class="card" style="margin-top:12px">
+<div class="section-title"><h3>Chart — Sales vs Expense</h3></div>
+<canvas id="barChart"></canvas>
+</div>
+<div class="card" style="padding:12px">
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+<div>
+<h3>Daily Trend</h3>
+<canvas id="lineChart"></canvas>
+</div>
+<div>
+<h3>Composition</h3>
+<canvas id="pieChart"></canvas>
+<div style="margin-top:8px;font-size:0.9rem;color:var(--muted)">Pie: Income / Expense / دکان / Bank / ادھار</div>
+</div>
+</div>
+</div>
+</section>
+<!-- INCOME -->
+<section class="card hidden" id="income-section">
+<div class="section-title">
+<h2>Income — مینج</h2>
+<div class="right">
+<input id="income-date" type="date"/>
+<button class="primary" id="add-income-btn">نئی Income</button>
+<button class="icon-btn page-print" data-page="income">🖨️</button>
+</div>
+</div>
+<div class="card" style="margin-top:10px">
+<form id="income-form">
+<div class="row">
+<div><label>رقم</label><input id="income-amount" required="" type="number"/></div>
+<div><label>تفصیل</label><input id="income-desc" type="text"/></div>
+</div>
+<div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
+</form>
+</div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+<tbody id="income-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- EXPENSE -->
+<section class="card hidden" id="expense-section">
+<div class="section-title">
+<h2>Expense — مینج</h2>
+<div class="right">
+<input id="expense-date" type="date"/>
+<button class="primary" id="add-expense-btn">نیا Expense</button>
+<button class="icon-btn page-print" data-page="expense">🖨️</button>
+</div>
+</div>
+<div class="card" style="margin-top:10px">
+<form id="expense-form">
+<div class="row">
+<div><label>رقم</label><input id="expense-amount" required="" type="number"/></div>
+<div><label>تفصیل</label><input id="expense-desc" type="text"/></div>
+</div>
+<div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
+</form>
+</div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+<tbody id="expense-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- SHOP -->
+<section class="card hidden" id="shop-section">
+<div class="section-title">
+<h2>دکان Expenseہ — مینج</h2>
+<div class="right">
+<input id="shop-date" type="date"/>
+<button class="primary" id="add-shop-btn">نیا دکان Expenseہ</button>
+<button class="icon-btn page-print" data-page="shop">🖨️</button>
+</div>
+</div>
+<div class="card" style="margin-top:10px">
+<form id="shop-form">
+<div class="row">
+<div><label>رقم</label><input id="shop-amount" required="" type="number"/></div>
+<div><label>تفصیل</label><input id="shop-desc" type="text"/></div>
+</div>
+<div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
+</form>
+</div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+<tbody id="shop-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- UDHAR -->
+<section class="card hidden" id="udhar-section">
+<div class="section-title">
+<h2>ادھار مینجمنٹ</h2>
+<div class="right">
+<select id="udhar-filter">
+<option value="all">سب</option><option value="taken">Loan Taken</option><option value="given">Loan Given</option>
+</select>
+<button class="primary" id="add-udhar-btn">نیا ادھار</button>
+<button class="icon-btn page-print" data-page="udhar">🖨️</button>
+</div>
+</div>
+<div class="card" style="margin-top:10px">
+<form id="udhar-form">
+<div class="row">
+<div><label>نام</label><input id="udhar-name" required="" type="text"/></div>
+<div><label>قسم</label><select id="udhar-type"><option value="taken">Loan Taken</option><option value="given">Loan Given</option></select></div>
+</div>
+<div class="row" style="margin-top:8px">
+<div><label>رقم</label><input id="udhar-amount" required="" type="number"/></div>
+<div><label>تاریخ</label><input id="udhar-date" type="date"/></div>
+</div>
+<div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
+</form>
+</div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>نام</th><th>قسم</th><th>رقم</th><th>تاریخ</th><th>عمل</th></tr></thead>
+<tbody id="udhar-table"><tr><td colspan="5" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- BANKS -->
+<section class="card hidden" id="banks-section">
+<div class="section-title">
+<h2>Bank اکاؤنٹس</h2>
+<div class="right">
+<button class="primary" id="add-bank-btn">نیا Bank</button>
+<button class="icon-btn page-print" data-page="banks">🖨️</button>
+</div>
+</div>
+<div class="card" style="margin-top:10px">
+<form id="bank-form">
+<div class="row">
+<div><label>Bank کا نام</label><input id="bank-name" required="" type="text"/></div>
+<div><label>ابتدائی Balance</label><input id="bank-balance" required="" type="number"/></div>
+</div>
+<div style="margin-top:8px"><button class="primary" type="submit">شامل کریں</button></div>
+</form>
+</div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>Bank کا نام</th><th>Balance</th><th>عمل</th></tr></thead>
+<tbody id="banks-table"><tr><td colspan="3" style="text-align:center">No banks</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- WEEKLY -->
+<section class="card hidden" id="weekly-section">
+<div class="section-title"><h2>Weekly Report</h2><div class="right"><button class="icon-btn page-print" data-page="weekly">🖨️</button></div></div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>تاریخ</th><th>Income</th><th>Expense</th><th>دکان Expenseہ</th><th>Balance</th></tr></thead>
+<tbody id="weekly-table"><tr><td colspan="5" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<!-- MONTHLY -->
+<section class="card hidden" id="monthly-section">
+<div class="section-title"><h2>Monthly Report</h2><div class="right"><button class="icon-btn page-print" data-page="monthly">🖨️</button></div></div>
+<div class="card" style="margin-top:10px">
+<table>
+<thead><tr><th>Month</th><th>Income</th><th>Expense</th><th>دکان Expenseہ</th><th>Balance</th></tr></thead>
+<tbody id="monthly-table"><tr><td colspan="5" style="text-align:center">No records</td></tr></tbody>
+</table>
+</div>
+</section>
+<div class="footer card">Saved: Local Browser Storage | Built by: Muhammad Usman — Usman NADRA e-Sahulat</div>
+</main>
+</div>
+<!-- toast -->
+<div class="toast" id="toast">Record saved</div>
+<!-- calculator modal -->
+<div class="modal-backdrop" id="calc-modal"><div class="modal">
+<button id="close-calc" style="float:left">✖</button>
+<h3>Calculator</h3>
+<input id="calc-display" readonly="" style="width:100%;padding:8px;margin-top:6px;font-size:1.1rem"/>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px">
+<button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button><button data-key="/">÷</button>
+<button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button><button data-key="*">×</button>
+<button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button data-key="-">−</button>
+<button data-key="0">0</button><button data-key=".">.</button><button id="calc-eq">=</button><button data-key="+">+</button>
+</div>
+<div style="display:flex;gap:8px;margin-top:8px"><button id="calc-clear">C</button><button id="calc-backspace">⌫</button></div>
+</div></div>
+<input class="hidden" id="file-input" type="file"/>
 <script>
-  (function(){
-    const WELCOME_NAME = 'عثمان'; // <-- اپنی مرضی کا نام یہاں لکھیں
+// Show current date/time/day in popup
+(function(){
+  var now = new Date();
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var formatted = days[now.getDay()] + ' - ' +
+                  now.toLocaleDateString('en-US') + ' - ' +
+                  now.toLocaleTimeString('en-US');
+  document.getElementById('popup-datetime').textContent = formatted;
+})();
 
-    const modalWrap = document.getElementById('welcome-modal');
-    const nameEl = document.getElementById('welcome-name');
-    const closeBtn = document.getElementById('close-welcome');
-    const okBtn = document.getElementById('welcome-ok');
-    const backdrop = document.getElementById('welcome-backdrop');
 
-    if(nameEl) nameEl.textContent = `${WELCOME_NAME} — خوش آمدید`;
-    if(modalWrap) modalWrap.classList.remove('hidden');
+/* -------------- Storage keys -------------- */
+const STORAGE_KEY = 'usman_esahulat_final';
+const THEME_KEY = 'usman_theme_final';
 
-    function closeWelcome(){ if(modalWrap) modalWrap.classList.add('hidden'); }
-    closeBtn && closeBtn.addEventListener('click', closeWelcome);
-    okBtn && okBtn.addEventListener('click', closeWelcome);
-    backdrop && backdrop.addEventListener('click', function(e){ if(e.target === this) closeWelcome(); });
-    window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeWelcome(); });
-  })();
+/* -------------- Data stores -------------- */
+let dailyRecords = [], banks = [], udhars = [], weeklySummaries = [], monthlySummaries = [];
+
+/* helpers */
+const $ = id => document.getElementById(id);
+function saveAll(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({dailyRecords,banks,udhars,weeklySummaries,monthlySummaries})); }catch(e){ console.warn(e); } }
+function loadAll(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{
+      const obj = JSON.parse(raw);
+      dailyRecords = obj.dailyRecords || [];
+      banks = obj.banks || [];
+      udhars = obj.udhars || [];
+      weeklySummaries = obj.weeklySummaries || [];
+      monthlySummaries = obj.monthlySummaries || [];
+    }catch(e){ console.warn('parse err', e); initPresets(); }
+  } else initPresets();
+}
+function initPresets(){
+  if(!banks.length){
+    const names = ["الحبیب","نادرا","اومنی","جاز کیش"];
+    banks = names.map(n=>({id:'b'+Math.random().toString(36).slice(2), name:n, balance:0, transactions:[]}));
+  }
+}
+
+/* -------------- Theme -------------- */
+function applyTheme(v){ document.body.setAttribute('data-theme', v||'luxury'); localStorage.setItem(THEME_KEY, v||'luxury'); }
+function initTheme(){ const s = localStorage.getItem(THEME_KEY) || 'luxury'; $('theme-picker').value = s; applyTheme(s); }
+$('theme-picker').addEventListener('change', ()=> applyTheme($('theme-picker').value));
+
+/* -------------- Page navigation -------------- */
+function showPage(id){
+  const pages = ['home','income','expense','shop','udhar','banks','weekly','monthly'];
+  pages.forEach(p=>{
+    const el = $(p + '-section');
+    if(el) el.classList.toggle('hidden', p !== id);
+    const link = document.querySelector('#menu a[data-page="'+p+'"]');
+    if(link) link.classList.toggle('active', p === id);
+  });
+  renderAll();
+}
+document.querySelectorAll('#menu a').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    showPage(a.dataset.page);
+  });
+});
+
+/* -------------- Dates -------------- */
+function setDefaultDates(){
+  const today = new Date().toISOString().slice(0,10);
+  const before = new Date(); before.setDate(before.getDate()-6);
+  const from = before.toISOString().slice(0,10);
+  if($('dash-from')) $('dash-from').value = from;
+  if($('dash-to')) $('dash-to').value = today;
+  ['income-date','expense-date','shop-date'].forEach(id=>{ if($(id)) $(id).value = today; });
+}
+function fmt(n){ return (n||0).toLocaleString('en-US'); }
+
+/* -------------- UI Toast -------------- */
+function showToast(msg='Record saved'){
+  const t = $('toast'); t.textContent = msg; t.style.display = 'block'; t.style.opacity = '1';
+  clearTimeout(t._hide);
+  t._hide = setTimeout(()=>{ t.style.transition = 'opacity .45s'; t.style.opacity = '0'; setTimeout(()=> t.style.display='none',450); }, 1600);
+}
+
+/* -------------- Render dashboard & charts -------------- */
+function sliceByRange(records, from, to){
+  const f = new Date(from); f.setHours(0,0,0,0);
+  const t = new Date(to); t.setHours(23,59,59,999);
+  return records.filter(r=>{
+    const d = new Date(r.date + 'T00:00:00');
+    return d >= f && d <= t;
+  });
+}
+
+function renderDashboard(){
+  const from = $('dash-from').value || new Date().toISOString().slice(0,10);
+  const to = $('dash-to').value || new Date().toISOString().slice(0,10);
+  const slice = sliceByRange(dailyRecords, from, to);
+  const income = slice.filter(s=>s.type==='income').reduce((s,r)=>s+r.amount,0);
+  const shop = slice.filter(s=>s.type==='shop-expense').reduce((s,r)=>s+r.amount,0);
+  const expense = slice.filter(s=> s.type==='expense' || s.type==='shop-expense').reduce((s,r)=>s+r.amount,0);
+  const balance = income - expense;
+  $('dash-income').textContent = fmt(income);
+  $('dash-expense').textContent = fmt(expense);
+  $('dash-shop').textContent = fmt(shop);
+  $('dash-balance').textContent = fmt(balance);
+
+  
+  const udharTaken = udhars.filter(u => u.type === 'taken').reduce((s,u) => s+u.amount, 0);
+  const udharGiven = udhars.filter(u => u.type === 'given').reduce((s,u) => s+u.amount, 0);
+  $('dash-udhar-taken').textContent = fmt(udharTaken);
+  $('dash-udhar-given').textContent = fmt(udharGiven);
+renderCharts(slice);
+}
+
+function renderCharts(slice){
+  // group by date
+  const map = {};
+  slice.forEach(r=>{ if(!map[r.date]) map[r.date]={income:0,expense:0}; if(r.type==='income') map[r.date].income += r.amount; if(r.type==='expense' || r.type==='shop-expense') map[r.date].expense += r.amount; });
+  const keys = Object.keys(map).sort();
+  const labels = keys.map(k=> (new Date(k)).toLocaleDateString('ur-PK',{day:'2-digit',month:'short'}));
+  const incomes = keys.map(k=>map[k].income);
+  const expenses = keys.map(k=>map[k].expense);
+
+  // bar
+  const bar = $('barChart'); bar.width = bar.clientWidth*2; bar.height = 240*2;
+  const bctx = bar.getContext('2d'); bctx.setTransform(1,0,0,1,0,0); bctx.scale(2,2); drawBar(bctx, incomes, expenses, labels);
+
+  // line
+  const ln = $('lineChart'); ln.width = ln.clientWidth*2; ln.height = 240*2;
+  const lctx = ln.getContext('2d'); lctx.setTransform(1,0,0,1,0,0); lctx.scale(2,2); drawLine(lctx, incomes.map((v,i)=>v - (expenses[i]||0)), labels);
+
+  // pie
+  const pie = $('pieChart'); pie.width = pie.clientWidth*2; pie.height = 240*2;
+  const pctx = pie.getContext('2d'); pctx.setTransform(1,0,0,1,0,0); pctx.scale(2,2);
+  const types = ['income','expense','shop-expense','bank-transfer','udhar-taken','udhar-given'];
+  const sums = types.map(t=> slice.filter(r=>r.type===t).reduce((s,r)=>s+r.amount,0));
+  drawPie(pctx, sums);
+}
+
+/* -------------- Canvas Draw Helpers -------------- */
+function drawBar(ctx, arrA, arrB, labels){
+  const W = ctx.canvas.width/2, H = ctx.canvas.height/2;
+  ctx.clearRect(0,0,W,H);
+  if(!labels.length){ labels=['']; arrA=[0]; arrB=[0]; }
+  const max = Math.max(1, ...arrA, ...arrB);
+  const n = labels.length, gap = Math.max(20, (W-80)/n);
+  ctx.font = '12px Inter';
+  for(let i=0;i<n;i++){
+    const x = 40 + i*gap;
+    const hA = (H-60) * (arrA[i]/max || 0);
+    const hB = (H-60) * (arrB[i]/max || 0);
+    ctx.fillStyle = '#3bd3ff'; ctx.fillRect(x+4, H-30-hA, (gap/2)-8, hA);
+    ctx.fillStyle = '#ff7d6b'; ctx.fillRect(x + gap/2 +4, H-30-hB, (gap/2)-8, hB);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.textAlign='center'; ctx.fillText(labels[i]||'', x+gap/2, H-10);
+  }
+}
+
+function drawLine(ctx, points, labels){
+  const W = ctx.canvas.width/2, H = ctx.canvas.height/2;
+  ctx.clearRect(0,0,W,H);
+  const max = Math.max(1, ...points);
+  const n = points.length || 1; const step = (W-80)/(n-1||1);
+  ctx.beginPath(); ctx.lineWidth = 3; ctx.strokeStyle = '#5be7b3';
+  for(let i=0;i<n;i++){
+    const x = 40 + i*step; const y = H-30 - (H-60)*(points[i]/max || 0);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    ctx.fillStyle = '#5be7b3'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+  }
+  ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,0.9)'; ctx.font='12px Inter'; ctx.textAlign='center';
+  for(let i=0;i<n;i++){ const x=40+i*step; ctx.fillText(labels[i]||'', x, H-10); }
+}
+
+function drawPie(ctx, vals){
+  const W = ctx.canvas.width/2, H = ctx.canvas.height/2; ctx.clearRect(0,0,W,H);
+  const cx = W/2, cy = H/2, r = Math.min(W,H)/2 - 10;
+  const colors = ['#3bd3ff','#ff7d6b','#ffd27a','#a7f3d0','#9a8cff','#5ad1ff'];
+  const total = vals.reduce((a,b)=>a+b,0) || 1;
+  let a = -Math.PI/2;
+  for(let i=0;i<vals.length;i++){
+    const ang = (vals[i]/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,a,a+ang); ctx.closePath();
+    ctx.fillStyle = colors[i%colors.length]; ctx.fill();
+    a += ang;
+  }
+}
+
+/* -------------- Render pages -------------- */
+function renderIncomePage(){
+  const date = $('income-date').value || new Date().toISOString().slice(0,10);
+  const list = dailyRecords.filter(r=> r.type==='income' && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('income-table');
+  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+
+function renderExpensePage(){
+  const date = $('expense-date').value || new Date().toISOString().slice(0,10);
+  const list = dailyRecords.filter(r=> (r.type==='expense') && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('expense-table');
+  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+
+function renderShopPage(){
+  const date = $('shop-date').value || new Date().toISOString().slice(0,10);
+  const list = dailyRecords.filter(r=> (r.type==='shop-expense') && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('shop-table');
+  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+
+function renderUdhars(){
+  const filter = $('udhar-filter').value || 'all';
+  const list = udhars.filter(u=> filter==='all' || u.type===filter).sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('udhar-table');
+  tbody.innerHTML = list.length ? list.map(u=>`<tr><td>${u.name}</td><td>${u.type==='taken'?'Loan Taken':'Loan Given'}</td><td>${fmt(u.amount)}</td><td>${u.date||''}</td><td><button onclick="deleteUdhar('${u.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
+}
+
+function renderBanks(){
+  const tbody = $('banks-table');
+  tbody.innerHTML = banks.length ? banks.map(b=>`<tr><td>${b.name}</td><td>${fmt(b.balance)}</td><td><button onclick="viewBank('${b.id}')">📑</button> <button onclick="editBank('${b.id}')">✏️</button> <button onclick="deleteBank('${b.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="3" style="text-align:center">No banks</td></tr>';
+}
+
+function renderWeekly(){
+  const arr = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date(); d.setDate(d.getDate()-i); const key = d.toLocaleDateString('en-CA');
+    const income = dailyRecords.filter(r=> r.date===key && r.type==='income').reduce((s,r)=>s+r.amount,0);
+    const expense = dailyRecords.filter(r=> r.date===key && (r.type==='expense' || r.type==='shop-expense')).reduce((s,r)=>s+r.amount,0);
+    const shop = dailyRecords.filter(r=> r.date===key && r.type==='shop-expense').reduce((s,r)=>s+r.amount,0);
+    arr.push({date:key,income,expense,shop});
+  }
+  const tbody = $('weekly-table');
+  tbody.innerHTML = arr.map(a=>`<tr><td>${new Date(a.date).toLocaleDateString('en-US')}</td><td>${fmt(a.income)}</td><td>${fmt(a.expense)}</td><td>${fmt(a.shop)}</td><td>${fmt(a.income-a.expense)}</td></tr>`).join('');
+}
+
+function renderMonthly(){
+  const map = {};
+  dailyRecords.forEach(r=>{ const d=new Date(r.date); const key = d.getFullYear() + '-' + (d.getMonth()+1); if(!map[key]) map[key]={income:0,expense:0,shop:0}; if(r.type==='income') map[key].income += r.amount; if(r.type==='expense') map[key].expense += r.amount; if(r.type==='shop-expense') map[key].shop += r.amount; });
+  const keys = Object.keys(map).sort();
+  const tbody = $('monthly-table');
+  tbody.innerHTML = keys.length ? keys.map(k=>`<tr><td>${k}</td><td>${fmt(map[k].income)}</td><td>${fmt(map[k].expense)}</td><td>${fmt(map[k].shop)}</td><td>${fmt(map[k].income - map[k].expense)}</td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
+}
+
+/* -------------- CRUD actions -------------- */
+function addRecord(obj){
+  obj.id = 'r' + Date.now().toString(36);
+  obj.timestamp = Date.now();
+  obj.date = obj.date || new Date().toLocaleDateString('en-CA');
+  dailyRecords.push(obj);
+  if(obj.type==='bank-transfer' && obj.bankId){
+    const b = banks.find(x=>x.id===obj.bankId); if(b){ b.balance = (b.balance||0) + obj.amount; (b.transactions = b.transactions||[]).push({ id:'t'+Date.now().toString(36), date:obj.date, timestamp:obj.timestamp, amount:obj.amount, description:obj.description||'' }); }
+  }
+  saveAll();
+  // immediate UI feedback & render
+  showToast('Record saved');
+  
+  // Call the specific render function based on record type
+  if(obj.type === 'income') {
+    renderIncomePage();
+  } else if(obj.type === 'expense') {
+    renderExpensePage();
+  } else if(obj.type === 'shop-expense') {
+    renderShopPage();
+  }
+  
+  // Also update dashboard
+  renderDashboard();
+}
+
+function deleteRecord(id){
+  if(!confirm('کیا آپ واقعی ریکارڈ حذف کرنا چاہتے ہیں؟')) return;
+  const idx = dailyRecords.findIndex(r=>r.id===id); if(idx===-1) return;
+  const rec = dailyRecords[idx];
+  if(rec.type==='bank-transfer' && rec.bankId){ const b = banks.find(x=>x.id===rec.bankId); if(b) b.balance -= rec.amount; }
+  dailyRecords.splice(idx,1);
+  saveAll();
+  
+  // Call the specific render function based on record type
+  if(rec.type === 'income') {
+    renderIncomePage();
+  } else if(rec.type === 'expense') {
+    renderExpensePage();
+  } else if(rec.type === 'shop-expense') {
+    renderShopPage();
+  }
+  
+  // Also update dashboard
+  renderDashboard();
+}
+
+function addUdhar(u){ u.id='u'+Date.now().toString(36); u.timestamp = Date.now(); u.date = u.date || new Date().toLocaleDateString('en-CA'); udhars.push(u); saveAll(); showToast('ادھار Saved'); renderUdhars(); renderDashboard(); }
+function deleteUdhar(id){ if(!confirm('کیا حذف کریں؟')) return; udhars = udhars.filter(u=>u.id!==id); saveAll(); renderUdhars(); renderDashboard(); }
+
+function addBank(b){ b.id='b'+Date.now().toString(36); b.transactions = []; banks.push(b); saveAll(); renderBanks(); renderDashboard(); }
+function deleteBank(id){ if(!confirm('کیا واقعی Bank حذف کریں؟')) return; banks = banks.filter(b=>b.id!==id); dailyRecords = dailyRecords.map(r=> r.bankId===id? ({...r, bankId:null, bankName:'(حذف شدہ Bank)'}): r); saveAll(); renderBanks(); renderDashboard(); }
+function editBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; const v = prompt('نیا نام: ' + b.name, b.name); if(v){ b.name = v; saveAll(); renderBanks(); } }
+function viewBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; alert('Bank: '+b.name + '\nBalance: '+fmt(b.balance) + '\nٹرانزیکشنز: ' + (b.transactions? b.transactions.length : 0)); }
+
+/* -------------- Forms binding -------------- */
+$('income-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const amt = parseFloat($('income-amount').value||0);
+  const desc = $('income-desc').value||'';
+  if(!amt){ alert('رقم درج کریں'); return; }
+  addRecord({ amount: amt, type:'income', description: desc, date: $('income-date').value || new Date().toLocaleDateString('en-CA') });
+  $('income-form').reset();
+  $('income-amount').focus();
+});
+
+$('expense-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const amt = parseFloat($('expense-amount').value||0);
+  const desc = $('expense-desc').value||'';
+  if(!amt){ alert('رقم درج کریں'); return; }
+  addRecord({ amount: amt, type:'expense', description: desc, date: $('expense-date').value || new Date().toLocaleDateString('en-CA') });
+  $('expense-form').reset();
+  $('expense-amount').focus();
+});
+
+$('shop-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const amt = parseFloat($('shop-amount').value||0);
+  const desc = $('shop-desc').value||'';
+  if(!amt){ alert('رقم درج کریں'); return; }
+  addRecord({ amount: amt, type:'shop-expense', description: desc, date: $('shop-date').value || new Date().toLocaleDateString('en-CA') });
+  $('shop-form').reset();
+  $('shop-amount').focus();
+});
+
+$('udhar-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = $('udhar-name').value.trim(); const type = $('udhar-type').value; const amount = parseFloat($('udhar-amount').value||0);
+  const date = $('udhar-date').value || new Date().toLocaleDateString('en-CA');
+  if(!name || !amount){ alert('درست معلومات درج کریں'); return; }
+  addUdhar({ name, type: type==='taken' ? 'taken' : 'given', amount, date });
+  $('udhar-form').reset();
+});
+
+/* banks form */
+$('bank-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = $('bank-name').value.trim(); const bal = parseFloat($('bank-balance').value||0);
+  if(!name){ alert('Please enter a bank name'); return; }
+  addBank({ name, balance: bal, transactions: [] });
+  $('bank-form').reset();
+});
+
+/* -------------- Quick nav buttons -------------- */
+$('add-income-btn').addEventListener('click', ()=> showPage('income'));
+$('add-expense-btn').addEventListener('click', ()=> showPage('expense'));
+$('add-shop-btn').addEventListener('click', ()=> showPage('shop'));
+$('add-udhar-btn').addEventListener('click', ()=> showPage('udhar'));
+$('add-bank-btn').addEventListener('click', ()=> showPage('banks'));
+
+/* -------------- Import/Export JSON & CSV -------------- */
+$('export-json').addEventListener('click', ()=>{
+  const data = JSON.stringify({ dailyRecords, banks, udhars, weeklySummaries, monthlySummaries }, null, 2);
+  const blob = new Blob([data], { type:'application/json' }); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'usman_esahulat_backup.json'; a.click(); URL.revokeObjectURL(url);
+});
+
+$('import-json').addEventListener('click', ()=>{ const inp = $('file-input'); inp.accept='application/json'; inp.onchange = handleImportJson; inp.click(); });
+function handleImportJson(e){
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload = function(ev){ try{ const obj = JSON.parse(ev.target.result); dailyRecords = obj.dailyRecords || dailyRecords; banks = obj.banks || banks; udhars = obj.udhars || udhars; saveAll(); renderAll(); alert('JSON imported'); }catch(err){ alert('Error reading file'); } };
+  r.readAsText(f); e.target.value='';
+}
+
+$('export-csv').addEventListener('click', ()=>{
+  if(!dailyRecords.length){ alert('No records'); return; }
+  const hdr = ['id','date','time','type','amount','description'];
+  const rows = dailyRecords.map(r => [r.id, r.date, new Date(r.timestamp).toLocaleTimeString(), r.type, r.amount, (r.description||'').replace(/,/g,' ')]);
+  const csv = [hdr.join(','), ...rows.map(r=>r.join(','))].join('\n');
+  const blob = new Blob([csv], { type:'text/csv' }); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'usman_records.csv'; a.click(); URL.revokeObjectURL(url);
+});
+
+$('import-csv').addEventListener('click', ()=>{ const inp = $('file-input'); inp.accept='.csv,text/csv'; inp.onchange = handleImportCsv; inp.click(); });
+function handleImportCsv(e){
+  const f = e.target.files[0]; if(!f) return; const r = new FileReader();
+  r.onload = function(ev){
+    const txt = ev.target.result; const lines = txt.split(/\r?\n/).filter(Boolean);
+    const hdr = lines.shift().split(',');
+    const idxDate = hdr.indexOf('date'), idxType = hdr.indexOf('type'), idxAmount = hdr.indexOf('amount'), idxDesc = hdr.indexOf('description');
+    lines.forEach(l=>{
+      const parts = l.split(',');
+      const obj = { id: parts[0] || 'r'+Date.now().toString(36), date: parts[idxDate] || new Date().toLocaleDateString('en-CA'), timestamp: Date.now(), type: parts[idxType] || 'income', amount: parseFloat(parts[idxAmount]||0), description: parts[idxDesc] || '' };
+      dailyRecords.push(obj);
+    });
+    saveAll(); renderAll(); alert('CSV imported');
+  }; r.readAsText(f); e.target.value='';
+}
+
+/* -------------- Print & clear -------------- */
+$('print-page').addEventListener('click', ()=> window.print());
+document.querySelectorAll('.page-print').forEach(btn => btn.addEventListener('click', e=>{ const p = btn.dataset.page; showPage(p); setTimeout(()=> window.print(), 250); }));
+
+$('clear-data').addEventListener('click', ()=>{ if(!confirm('Do you want to clear all local data?')) return; localStorage.removeItem(STORAGE_KEY); dailyRecords=[]; banks=[]; udhars=[]; weeklySummaries=[]; monthlySummaries=[]; initPresets(); saveAll(); renderAll(); });
+
+/* -------------- Calculator binding -------------- */
+
+$('calc-eq').addEventListener('click', ()=>{ try{ const expr = $('calc-display').value.replace(/×/g,'*').replace(/÷/g,'/'); const res = Function("'use strict'; return ("+expr+")")(); $('calc-display').value = (typeof res==='number' && isFinite(res)) ? res : 'Error'; }catch(e){ $('calc-display').value='Error'; } });
+$('open-calculator').addEventListener('click', ()=> $('calc-modal').style.display='flex');
+$('close-calc').addEventListener('click', ()=> $('calc-modal').style.display='none');
+document.querySelectorAll('#calc-modal button[data-key]').forEach(b=> b.addEventListener('click', ()=> $('calc-display').value += b.dataset.key ));
+$('calc-clear').addEventListener('click', ()=> $('calc-display').value='');
+$('calc-backspace').addEventListener('click', ()=> $('calc-display').value = $('calc-display').value.slice(0,-1));
+// removed broken calc-eq listener (fixed) // ()=>{ try{ const expr = $('calc-display').value.replace(/×/g,'*').replace(/÷/g,'/'); const res = Function('"use strict"; return ('+expr+')')(); $('calc-display').value = (typeof res==='number' && isFinite(res)) ? res : 'Error'; }catch(e){ $('calc-display').value='Error'; } });
+
+/* -------------- Init & Render All -------------- */
+function renderAll(){
+  renderDashboard(); renderIncomePage(); renderExpensePage(); renderShopPage(); renderUdhars(); renderBanks(); renderWeekly(); renderMonthly();
+}
+loadAll(); initTheme(); setDefaultDates(); renderAll();
+
+/* refresh dashboard */
+$('dash-refresh').addEventListener('click', renderDashboard);
+
+/* date triggers */
+['dash-from','dash-to'].forEach(id=>{ if($(id)) $(id).addEventListener('change', renderDashboard); });
+['income-date','expense-date','shop-date'].forEach(id=>{ if($(id)) $(id).addEventListener('change', ()=>{ if(id==='income-date') renderIncomePage(); if(id==='expense-date') renderExpensePage(); if(id==='shop-date') renderShopPage(); }); });
+$('udhar-filter')?.addEventListener('change', renderUdhars);
+
+/* autosave every 20s (no heavy render) */
+setInterval(()=> saveAll(), 20000);
+
+/* expose delete funcs globally for buttons in table */
+window.deleteRecord = deleteRecord;
+window.deleteUdhar = deleteUdhar;
+window.deleteBank = deleteBank;
+window.editBank = editBank;
+window.viewBank = viewBank;
+
+
+// --- Neon Ripple Effect with Darood ---
+document.addEventListener('mousemove', e => {
+  const ripple = document.createElement('div');
+  ripple.classList.add('neon-ripple');
+  ripple.style.left = e.clientX + 'px';
+  ripple.style.top = e.clientY + 'px';
+  ripple.style.width = '50px';
+  ripple.style.height = '50px';
+  ripple.textContent = 'ﷺ';
+  document.body.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+});
+
+// --- Falling Text + Confetti for 5 seconds ---
+function startFallingEffects() {
+  const texts = ['اللّٰہ', 'ﷺ', 'إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرٗا'];
+  const endTime = Date.now() + 5000; // run for 5 seconds
+  const interval = setInterval(() => {
+    if (Date.now() > endTime) {
+      clearInterval(interval);
+      return;
+    }
+    // Create text element
+    const el = document.createElement('div');
+    el.className = 'falling-text';
+    el.textContent = texts[Math.floor(Math.random() * texts.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.color = `hsl(${Math.random() * 360}, 80%, 70%)`;
+    el.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+
+    // Create confetti element
+    const cf = document.createElement('div');
+    cf.className = 'falling-confetti';
+    cf.style.left = Math.random() * 100 + 'vw';
+    cf.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    cf.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    document.body.appendChild(cf);
+    setTimeout(() => cf.remove(), 4000);
+  }, 150);
+}
+
+// Hook into welcome popup close button
+document.querySelector('#welcome-popup button')?.addEventListener('click', () => {
+  setTimeout(startFallingEffects, 500); // start after popup closes
+});
+
+// --- Keyboard input for calculator ---
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('calc-modal').style.display === 'flex') {
+    if (!isNaN(e.key) || ['+', '-', '*', '/', '.', '×', '÷'].includes(e.key)) {
+      document.getElementById('calc-display').value += e.key.replace('*','×').replace('/','÷');
+    } else if (e.key === 'Enter') {
+      document.getElementById('calc-eq').click();
+    } else if (e.key === 'Backspace') {
+      document.getElementById('calc-backspace').click();
+    } else if (e.key.toLowerCase() === 'c') {
+      document.getElementById('calc-clear').click();
+    } else if (e.key === 'Escape') {
+      document.getElementById('close-calc').click();
+    }
+  }
+});
+
+
+// --- Hover on name to show popup ---
+document.querySelectorAll('.brand h1').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const popup = document.getElementById('hover-popup');
+    popup.style.display = 'block';
+    setTimeout(() => { popup.style.display = 'none'; }, 2000);
+  });
+});
+
+
+// --- Hover Welcome Popup Trigger ---
+document.querySelectorAll('.brand h1').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const popup = document.getElementById('hover-welcome-popup');
+    document.getElementById('hover-popup-datetime').textContent = new Date().toLocaleString('en-US');
+    popup.style.display = 'flex';
+    setTimeout(() => { popup.style.display = 'none'; }, 3000);
+  });
+});
+
 </script>
-<!-- ===== end welcome popup ===== -->
+
+
+
+
+<style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
+}
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<!-- Hover Welcome Popup -->
+<div id="hover-welcome-popup" style="
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center;
+  z-index: 999999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center;
+  animation: fadeIn 0.5s ease;
+">
+  <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
+    <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
+    <h2 style="margin-top: 15px;">Muhammad Usman</h2>
+    <p id="hover-popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
+    <h3 style="margin-top: 15px;">Welcome</h3>
+  </div>
+</div>
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+<style>
+@keyframes slideInColor {
+  0% { transform: translateX(-100vw) scale(0.8); opacity: 0; background: linear-gradient(90deg, red, orange); }
+  25% { background: linear-gradient(90deg, orange, yellow); }
+  50% { background: linear-gradient(90deg, yellow, green); }
+  75% { background: linear-gradient(90deg, green, blue); }
+  100% { transform: translateX(0) scale(1); opacity: 1; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); }
+}
+#hover-welcome-popup .popup-box-animated {
+  animation: slideInColor 1s ease forwards;
+}
+
+<style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
+}
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
+}
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
+
+
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style>
+
+</style>
 
 </body>
 </html>
