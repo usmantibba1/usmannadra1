@@ -143,18 +143,7 @@ button:active, .icon-btn:active, .primary:active {
 }
 
 /* --- Neon Ripple Glow Effect --- */
-.neon-ripple {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-  opacity: 0.7;
-  animation: rippleFade 1.2s ease-out forwards;
-  z-index: 999999;
-}
-@keyframes rippleFade {
-  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+
   100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
   100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
@@ -171,37 +160,9 @@ button:active, .icon-btn:active, .primary:active {
   transform: translateY(-3px) scale(1.03);
 }
 
-.neon-ripple {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-  opacity: 0.7;
-  animation: rippleFade 1.2s ease-out forwards;
-  z-index: 999999;
-}
-
 /* --- Falling Islamic Text + Confetti Animation --- */
-.falling-text, .falling-confetti {
-  position: fixed;
-  top: -50px;
-  pointer-events: none;
-  z-index: 99999;
-  animation: fallDownText linear forwards;
-}
-.falling-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent);
-  text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent2);
-}
-.falling-confetti {
-  width: 10px;
-  height: 10px;
-  background: var(--accent2);
-  opacity: 0.8;
-}
+.falling-text, 
+
 @keyframes fallDownText {
   to {
     transform: translateY(110vh);
@@ -276,7 +237,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -290,7 +250,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -316,7 +275,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -330,7 +288,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 input, select, textarea {
@@ -371,7 +328,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -385,7 +341,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -411,7 +366,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -425,7 +379,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 #calc-modal .modal {
@@ -482,7 +435,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -496,7 +448,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -522,7 +473,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -536,7 +486,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 input, select, textarea {
@@ -577,7 +526,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -591,7 +539,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -617,7 +564,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -637,13 +583,11 @@ input, select, textarea {
 .arabic-text { font-family: 'Noto Nastaliq Urdu', serif !important; }
 </style>
 
-
 <style id="auto-arabic-nastaliq">
   body {
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Nastaliq Urdu", serif;
   }
 </style>
-
 
 <style id="nastaliq-global-override">
 /* Force Nastaliq everywhere */
@@ -701,7 +645,6 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 }
 </style>
 
-
 <style>
 @media(max-width: 768px) {
   .sidebar, .card {
@@ -723,7 +666,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
   z-index: 99999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center;">
 <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
 <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
-<h2 style="margin-top: 15px;">Muhammad Usman</h2>
+<h2 style="margin-top: 15px;" class="dynamic-name">Muhammad Usman</h2>
 <p id="popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
 <h3 style="margin-top: 15px;">Welcome</h3>
 <button onclick="document.getElementById('welcome-popup').style.display='none'" style="margin-top: 20px; padding: 10px 20px; background: #3bd3ff; border:none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Continue</button>
@@ -736,7 +679,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <div class="brand">
 <div class="logo">MU</div>
 <div>
-<h1>Muhammad Usman</h1>
+<h1 class="dynamic-name">Muhammad Usman</h1>
 <small>Usman NADRA e-Sahulat</small>
 </div>
 </div>
@@ -747,8 +690,10 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <li><a data-page="shop" href="#">Shop Expense 🏪</a></li>
 <li><a data-page="udhar" href="#">Loans ↔︎</a></li>
 <li><a data-page="banks" href="#">Banks 🏦</a></li>
+<li><a data-page="abu" href="#">ابو کا خرچ 👤</a></li>
 <li><a data-page="weekly" href="#">Weekly 7d</a></li>
 <li><a data-page="monthly" href="#">Monthly 30d</a></li>
+<li><a data-page="settings" href="#">⚙️ Settings</a></li>
 </ul>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
 <button class="icon-btn" id="export-json">JSON ⬇</button>
@@ -794,7 +739,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <div class="summary"><h3>Expense</h3><p id="dash-expense">0</p></div>
 <div class="summary"><h3>دکان Expenseہ</h3><p id="dash-shop">0</p></div>
 <div class="summary"><h3>Net Balance</h3><p id="dash-balance">0</p></div>
-<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div></div>
+<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div><div class="summary"><h3>ابو کا خرچ</h3><p id="dash-abu">0</p></div></div>
 <div class="card" style="margin-top:12px">
 <div class="section-title"><h3>Chart — Sales vs Expense</h3></div>
 <canvas id="barChart"></canvas>
@@ -865,6 +810,34 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </table>
 </div>
 </section>
+
+<!-- ABU EXPENSE -->
+<section class="card hidden" id="abu-section">
+  <div class="section-title">
+    <h2>ابو کا خرچ — مینج</h2>
+    <div class="right">
+      <input id="abu-date" type="date"/>
+      <button class="primary" id="add-abu-btn">نیا ابو خرچ</button>
+      <button class="icon-btn page-print" data-page="abu">🖨️</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <form id="abu-form">
+      <div class="row">
+        <div><label>رقم</label><input id="abu-amount" type="number" required></div>
+        <div><label>تفصیل</label><input id="abu-desc" type="text"></div>
+      </div>
+      <div style="margin-top:8px"><button type="submit" class="primary">Saved کریں</button></div>
+    </form>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <table>
+      <thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+      <tbody id="abu-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
 <!-- SHOP -->
 <section class="card hidden" id="shop-section">
 <div class="section-title">
@@ -968,7 +941,26 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </table>
 </div>
 </section>
-<div class="footer card">Saved: Local Browser Storage | Built by: Muhammad Usman — Usman NADRA e-Sahulat</div>
+
+<!-- SETTINGS -->
+<section class="card hidden" id="settings-section">
+  <div class="section-title"><h2>⚙️ Settings</h2></div>
+  <div class="card" style="margin-top:10px">
+    <form id="settings-form">
+      <div class="row">
+        <div>
+          <label>آپ کا نام</label>
+          <input id="user-name" type="text" placeholder="مثال: محمد عثمان"/>
+        </div>
+      </div>
+      <div style="margin-top:8px">
+        <button type="submit" class="primary">Save کریں</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="footer card">Saved: Local Browser Storage | Built by: <span class="dynamic-name">Muhammad Usman</span> — Usman NADRA e-Sahulat</div>
 </main>
 </div>
 <!-- toast -->
@@ -997,7 +989,6 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
                   now.toLocaleTimeString('en-US');
   document.getElementById('popup-datetime').textContent = formatted;
 })();
-
 
 /* -------------- Storage keys -------------- */
 const STORAGE_KEY = 'usman_esahulat_final';
@@ -1036,7 +1027,7 @@ $('theme-picker').addEventListener('change', ()=> applyTheme($('theme-picker').v
 
 /* -------------- Page navigation -------------- */
 function showPage(id){
-  const pages = ['home','income','expense','shop','udhar','banks','weekly','monthly'];
+  const pages = ['home','income','expense','shop','udhar','banks','weekly','monthly','abu','settings'];
   pages.forEach(p=>{
     const el = $(p + '-section');
     if(el) el.classList.toggle('hidden', p !== id);
@@ -1098,7 +1089,9 @@ function renderDashboard(){
   const udharGiven = udhars.filter(u => u.type === 'given').reduce((s,u) => s+u.amount, 0);
   $('dash-udhar-taken').textContent = fmt(udharTaken);
   $('dash-udhar-given').textContent = fmt(udharGiven);
-renderCharts(slice);
+const abu = slice.filter(s=> s.type==='abu-expense').reduce((s,r)=>s+r.amount,0);
+  $('dash-abu').textContent = fmt(abu);
+  renderCharts(slice);
 }
 
 function renderCharts(slice){
@@ -1251,6 +1244,12 @@ function addRecord(obj){
     renderShopPage();
   }
   
+  else if(obj.type === 'abu-expense') {
+    renderAbuPage();
+  }
+  else if(rec.type === 'abu-expense') {
+    renderAbuPage();
+  }
   // Also update dashboard
   renderDashboard();
 }
@@ -1272,6 +1271,9 @@ function deleteRecord(id){
     renderShopPage();
   }
   
+  else if(obj.type === 'abu-expense') {
+    renderAbuPage();
+  }
   // Also update dashboard
   renderDashboard();
 }
@@ -1283,6 +1285,24 @@ function addBank(b){ b.id='b'+Date.now().toString(36); b.transactions = []; bank
 function deleteBank(id){ if(!confirm('کیا واقعی Bank حذف کریں؟')) return; banks = banks.filter(b=>b.id!==id); dailyRecords = dailyRecords.map(r=> r.bankId===id? ({...r, bankId:null, bankName:'(حذف شدہ Bank)'}): r); saveAll(); renderBanks(); renderDashboard(); }
 function editBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; const v = prompt('نیا نام: ' + b.name, b.name); if(v){ b.name = v; saveAll(); renderBanks(); } }
 function viewBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; alert('Bank: '+b.name + '\nBalance: '+fmt(b.balance) + '\nٹرانزیکشنز: ' + (b.transactions? b.transactions.length : 0)); }
+
+
+function renderAbuPage(){
+  const date = $('abu-date').value || new Date().toISOString().slice(0,10);
+  const list = dailyRecords.filter(r=> r.type==='abu-expense' && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('abu-table');
+  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+
+$('abu-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const amt = parseFloat($('abu-amount').value||0);
+  const desc = $('abu-desc').value||'';
+  if(!amt){ alert('رقم درج کریں'); return; }
+  addRecord({ amount: amt, type:'abu-expense', description: desc, date: $('abu-date').value || new Date().toLocaleDateString('en-CA') });
+  $('abu-form').reset();
+  $('abu-amount').focus();
+});
 
 /* -------------- Forms binding -------------- */
 $('income-form').addEventListener('submit', e=>{
@@ -1419,20 +1439,6 @@ window.deleteBank = deleteBank;
 window.editBank = editBank;
 window.viewBank = viewBank;
 
-
-// --- Neon Ripple Effect with Darood ---
-document.addEventListener('mousemove', e => {
-  const ripple = document.createElement('div');
-  ripple.classList.add('neon-ripple');
-  ripple.style.left = e.clientX + 'px';
-  ripple.style.top = e.clientY + 'px';
-  ripple.style.width = '50px';
-  ripple.style.height = '50px';
-  ripple.textContent = 'ﷺ';
-  document.body.appendChild(ripple);
-  setTimeout(() => ripple.remove(), 600);
-});
-
 // --- Falling Text + Confetti for 5 seconds ---
 function startFallingEffects() {
   const texts = ['اللّٰہ', 'ﷺ', 'إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرٗا'];
@@ -1485,7 +1491,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-
 // --- Hover on name to show popup ---
 document.querySelectorAll('.brand h1').forEach(el => {
   el.addEventListener('mouseenter', () => {
@@ -1494,7 +1499,6 @@ document.querySelectorAll('.brand h1').forEach(el => {
     setTimeout(() => { popup.style.display = 'none'; }, 2000);
   });
 });
-
 
 // --- Hover Welcome Popup Trigger ---
 document.querySelectorAll('.brand h1').forEach(el => {
@@ -1506,10 +1510,36 @@ document.querySelectorAll('.brand h1').forEach(el => {
   });
 });
 
+
+/* -------------- Settings Name Save/Load -------------- */
+const NAME_KEY = 'usman_name';
+
+function applyName(name){
+  document.querySelectorAll('.dynamic-name').forEach(el => el.textContent = name || "Muhammad Usman");
+}
+
+function initName(){
+  const saved = localStorage.getItem(NAME_KEY) || "Muhammad Usman";
+  applyName(saved);
+  const input = document.getElementById('user-name');
+  if(input) input.value = saved;
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  initName();
+  const form = document.getElementById('settings-form');
+  if(form){
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const name = document.getElementById('user-name').value.trim() || "Muhammad Usman";
+      localStorage.setItem(NAME_KEY, name);
+      applyName(name);
+      showToast("Name Saved");
+    });
+  }
+});
+
 </script>
-
-
-
 
 <style>
 #calc-modal .modal {
@@ -1566,7 +1596,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1580,7 +1609,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -1606,7 +1634,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1620,7 +1647,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 input, select, textarea {
@@ -1661,7 +1687,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1675,7 +1700,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -1701,7 +1725,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1716,7 +1739,6 @@ input, select, textarea {
 
 </style>
 
-
 <!-- Hover Welcome Popup -->
 <div id="hover-welcome-popup" style="
   position: fixed; top:0; left:0; width:100%; height:100%;
@@ -1726,7 +1748,7 @@ input, select, textarea {
 ">
   <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
     <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
-    <h2 style="margin-top: 15px;">Muhammad Usman</h2>
+    <h2 style="margin-top: 15px;" class="dynamic-name">Muhammad Usman</h2>
     <p id="hover-popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
     <h3 style="margin-top: 15px;">Welcome</h3>
   </div>
@@ -1804,7 +1826,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1818,7 +1839,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -1844,7 +1864,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1858,7 +1877,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 input, select, textarea {
@@ -1899,7 +1917,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1913,7 +1930,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -1939,7 +1955,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1953,7 +1968,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 #calc-modal .modal {
@@ -2010,7 +2024,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2024,7 +2037,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -2050,7 +2062,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2064,7 +2075,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 input, select, textarea {
@@ -2105,7 +2115,6 @@ input, select, textarea {
 
 </style>
 
-
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2119,7 +2128,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes borderGlow {
@@ -2144,7 +2152,6 @@ input, select, textarea {
 </style>
 
 </style>
-
 
 <style>
 @keyframes summaryBorderGlow {
