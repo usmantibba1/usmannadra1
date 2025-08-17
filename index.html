@@ -143,8 +143,7 @@ button:active, .icon-btn:active, .primary:active {
 }
 
 /* --- Neon Ripple Glow Effect --- */
-
-  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
   100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
@@ -161,8 +160,25 @@ button:active, .icon-btn:active, .primary:active {
 }
 
 /* --- Falling Islamic Text + Confetti Animation --- */
-.falling-text, 
-
+.falling-text, .falling-confetti {
+  position: fixed;
+  top: -50px;
+  pointer-events: none;
+  z-index: 99999;
+  animation: fallDownText linear forwards;
+}
+.falling-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent2);
+}
+.falling-confetti {
+  width: 10px;
+  height: 10px;
+  background: var(--accent2);
+  opacity: 0.8;
+}
 @keyframes fallDownText {
   to {
     transform: translateY(110vh);
@@ -237,6 +253,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -250,6 +267,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -275,6 +293,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -288,6 +307,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 input, select, textarea {
@@ -328,6 +348,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -341,6 +362,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -366,6 +388,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -379,6 +402,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 #calc-modal .modal {
@@ -435,6 +459,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -448,6 +473,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -473,6 +499,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -486,6 +513,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 input, select, textarea {
@@ -526,6 +554,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -539,6 +568,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -564,6 +594,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -583,11 +614,13 @@ input, select, textarea {
 .arabic-text { font-family: 'Noto Nastaliq Urdu', serif !important; }
 </style>
 
+
 <style id="auto-arabic-nastaliq">
   body {
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Nastaliq Urdu", serif;
   }
 </style>
+
 
 <style id="nastaliq-global-override">
 /* Force Nastaliq everywhere */
@@ -645,6 +678,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 }
 </style>
 
+
 <style>
 @media(max-width: 768px) {
   .sidebar, .card {
@@ -658,6 +692,68 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 }
 </style>
 
+
+<style>
+@media(max-width: 768px) {
+  .card, .summary, .nav a.active {
+    box-shadow: none !important;
+    animation: none !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(0,0,0,0.25) !important;
+  }
+
+  button, .icon-btn, .primary, .nav a {
+    transition: all 0.15s ease-in-out !important;
+  }
+}
+</style>
+
+
+<style>
+@media(max-width: 768px) {
+  /* Sidebar Hide */
+  .sidebar {
+    display: none !important;
+  }
+
+  /* App Layout single column */
+  .app {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Mobile Nav Topbar */
+  .mobile-nav {
+    display: flex !important;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(0,0,0,0.7);
+    padding: 8px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .mobile-nav a {
+    flex: 1;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 6px;
+    border-radius: 6px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* Push content below navbar */
+  .main-content {
+    margin-top: 60px !important;
+    padding: 10px !important;
+  }
+}
+</style>
+
 </head>
 <body data-theme="luxury">
 <div id="welcome-popup" style="
@@ -666,7 +762,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
   z-index: 99999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center;">
 <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
 <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
-<h2 style="margin-top: 15px;" class="dynamic-name">Muhammad Usman</h2>
+<h2 style="margin-top: 15px;">Muhammad Usman</h2>
 <p id="popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
 <h3 style="margin-top: 15px;">Welcome</h3>
 <button onclick="document.getElementById('welcome-popup').style.display='none'" style="margin-top: 20px; padding: 10px 20px; background: #3bd3ff; border:none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Continue</button>
@@ -679,7 +775,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <div class="brand">
 <div class="logo">MU</div>
 <div>
-<h1 class="dynamic-name">Muhammad Usman</h1>
+<h1>Muhammad Usman</h1>
 <small>Usman NADRA e-Sahulat</small>
 </div>
 </div>
@@ -689,11 +785,10 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <li><a data-page="expense" href="#">Expense ₨−</a></li>
 <li><a data-page="shop" href="#">Shop Expense 🏪</a></li>
 <li><a data-page="udhar" href="#">Loans ↔︎</a></li>
+<li><a data-page="abu" href="#">Abu ↔︎</a></li>
 <li><a data-page="banks" href="#">Banks 🏦</a></li>
-<li><a data-page="abu" href="#">ابو کا خرچ 👤</a></li>
 <li><a data-page="weekly" href="#">Weekly 7d</a></li>
 <li><a data-page="monthly" href="#">Monthly 30d</a></li>
-<li><a data-page="settings" href="#">⚙️ Settings</a></li>
 </ul>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
 <button class="icon-btn" id="export-json">JSON ⬇</button>
@@ -735,11 +830,21 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </div>
 </div>
 <div class="summary-grid" style="margin-top:12px">
+
+<div class="summary" data-summary="abu-dena">
+  <h3>ابو کو دینا</h3>
+  <p id="total-abu-dena">0</p>
+</div>
+<div class="summary" data-summary="abu-lena">
+  <h3>ابو سے لینا</h3>
+  <p id="total-abu-lena">0</p>
+</div>
+
 <div class="summary"><h3>Income</h3><p id="dash-income">0</p></div>
 <div class="summary"><h3>Expense</h3><p id="dash-expense">0</p></div>
 <div class="summary"><h3>دکان Expenseہ</h3><p id="dash-shop">0</p></div>
 <div class="summary"><h3>Net Balance</h3><p id="dash-balance">0</p></div>
-<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div><div class="summary"><h3>ابو کا خرچ</h3><p id="dash-abu">0</p></div></div>
+<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div></div>
 <div class="card" style="margin-top:12px">
 <div class="section-title"><h3>Chart — Sales vs Expense</h3></div>
 <canvas id="barChart"></canvas>
@@ -810,34 +915,6 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </table>
 </div>
 </section>
-
-<!-- ABU EXPENSE -->
-<section class="card hidden" id="abu-section">
-  <div class="section-title">
-    <h2>ابو کا خرچ — مینج</h2>
-    <div class="right">
-      <input id="abu-date" type="date"/>
-      <button class="primary" id="add-abu-btn">نیا ابو خرچ</button>
-      <button class="icon-btn page-print" data-page="abu">🖨️</button>
-    </div>
-  </div>
-  <div class="card" style="margin-top:10px">
-    <form id="abu-form">
-      <div class="row">
-        <div><label>رقم</label><input id="abu-amount" type="number" required></div>
-        <div><label>تفصیل</label><input id="abu-desc" type="text"></div>
-      </div>
-      <div style="margin-top:8px"><button type="submit" class="primary">Saved کریں</button></div>
-    </form>
-  </div>
-  <div class="card" style="margin-top:10px">
-    <table>
-      <thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
-      <tbody id="abu-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
-    </table>
-  </div>
-</section>
-
 <!-- SHOP -->
 <section class="card hidden" id="shop-section">
 <div class="section-title">
@@ -942,25 +1019,59 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </div>
 </section>
 
-<!-- SETTINGS -->
-<section class="card hidden" id="settings-section">
-  <div class="section-title"><h2>⚙️ Settings</h2></div>
+<!-- ABU (Combined) -->
+<section class="card hidden" id="abu-section">
+  <div class="section-title">
+    <h2>Abu — ریکارڈ</h2>
+    <div class="right">
+      <button class="icon-btn page-print" data-page="abu">🖨️</button>
+    </div>
+  </div>
+
   <div class="card" style="margin-top:10px">
-    <form id="settings-form">
+    <form id="abu-form">
       <div class="row">
         <div>
-          <label>آپ کا نام</label>
-          <input id="user-name" type="text" placeholder="مثال: محمد عثمان"/>
+          <label>قسم</label>
+          <select id="abu-type">
+            <option value="lena">ابو سے لینا</option>
+            <option value="dena">ابو کو دینا</option>
+          </select>
+        </div>
+        <div>
+          <label>تاریخ</label>
+          <input type="date" id="abu-date" required />
         </div>
       </div>
-      <div style="margin-top:8px">
-        <button type="submit" class="primary">Save کریں</button>
+      <div class="row" style="margin-top:8px">
+        <div><label>رقم</label><input type="number" id="abu-amount" required /></div>
+        <div><label>تفصیل</label><input type="text" id="abu-note" /></div>
       </div>
+      <div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
     </form>
+  </div>
+
+  <div class="card" style="margin-top:10px">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div class="chip">Total ابو کو دینا: <strong id="total-abu-dena">0</strong></div>
+      <div class="chip">Total ابو سے لینا: <strong id="total-abu-lena">0</strong></div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <label class="small">فلٹر</label>
+        <select id="abu-filter">
+          <option value="all">سب</option>
+          <option value="dena">صرف دینا</option>
+          <option value="lena">صرف لینا</option>
+        </select>
+      </div>
+    </div>
+    <table style="margin-top:10px">
+      <thead><tr><th>تاریخ</th><th>قسم</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+      <tbody id="abu-table"><tr><td colspan="5" style="text-align:center">No records</td></tr></tbody>
+    </table>
   </div>
 </section>
 
-<div class="footer card">Saved: Local Browser Storage | Built by: <span class="dynamic-name">Muhammad Usman</span> — Usman NADRA e-Sahulat</div>
+<div class="footer card">Saved: Local Browser Storage | Built by: Muhammad Usman — Usman NADRA e-Sahulat</div>
 </main>
 </div>
 <!-- toast -->
@@ -989,6 +1100,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
                   now.toLocaleTimeString('en-US');
   document.getElementById('popup-datetime').textContent = formatted;
 })();
+
 
 /* -------------- Storage keys -------------- */
 const STORAGE_KEY = 'usman_esahulat_final';
@@ -1027,7 +1139,7 @@ $('theme-picker').addEventListener('change', ()=> applyTheme($('theme-picker').v
 
 /* -------------- Page navigation -------------- */
 function showPage(id){
-  const pages = ['home','income','expense','shop','udhar','banks','weekly','monthly','abu','settings'];
+  const pages = ['home','income','expense','shop','udhar','abu','banks','weekly','monthly'];
   pages.forEach(p=>{
     const el = $(p + '-section');
     if(el) el.classList.toggle('hidden', p !== id);
@@ -1050,7 +1162,7 @@ function setDefaultDates(){
   const from = before.toISOString().slice(0,10);
   if($('dash-from')) $('dash-from').value = from;
   if($('dash-to')) $('dash-to').value = today;
-  ['income-date','expense-date','shop-date'].forEach(id=>{ if($(id)) $(id).value = today; });
+  (['income-date','expense-date','shop-date','abu-date'].forEach)(id=>{ if($(id)) $(id).value = today; });
 }
 function fmt(n){ return (n||0).toLocaleString('en-US'); }
 
@@ -1089,9 +1201,7 @@ function renderDashboard(){
   const udharGiven = udhars.filter(u => u.type === 'given').reduce((s,u) => s+u.amount, 0);
   $('dash-udhar-taken').textContent = fmt(udharTaken);
   $('dash-udhar-given').textContent = fmt(udharGiven);
-const abu = slice.filter(s=> s.type==='abu-expense').reduce((s,r)=>s+r.amount,0);
-  $('dash-abu').textContent = fmt(abu);
-  renderCharts(slice);
+renderCharts(slice);
 }
 
 function renderCharts(slice){
@@ -1244,12 +1354,6 @@ function addRecord(obj){
     renderShopPage();
   }
   
-  else if(obj.type === 'abu-expense') {
-    renderAbuPage();
-  }
-  else if(rec.type === 'abu-expense') {
-    renderAbuPage();
-  }
   // Also update dashboard
   renderDashboard();
 }
@@ -1271,9 +1375,6 @@ function deleteRecord(id){
     renderShopPage();
   }
   
-  else if(obj.type === 'abu-expense') {
-    renderAbuPage();
-  }
   // Also update dashboard
   renderDashboard();
 }
@@ -1285,24 +1386,6 @@ function addBank(b){ b.id='b'+Date.now().toString(36); b.transactions = []; bank
 function deleteBank(id){ if(!confirm('کیا واقعی Bank حذف کریں؟')) return; banks = banks.filter(b=>b.id!==id); dailyRecords = dailyRecords.map(r=> r.bankId===id? ({...r, bankId:null, bankName:'(حذف شدہ Bank)'}): r); saveAll(); renderBanks(); renderDashboard(); }
 function editBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; const v = prompt('نیا نام: ' + b.name, b.name); if(v){ b.name = v; saveAll(); renderBanks(); } }
 function viewBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; alert('Bank: '+b.name + '\nBalance: '+fmt(b.balance) + '\nٹرانزیکشنز: ' + (b.transactions? b.transactions.length : 0)); }
-
-
-function renderAbuPage(){
-  const date = $('abu-date').value || new Date().toISOString().slice(0,10);
-  const list = dailyRecords.filter(r=> r.type==='abu-expense' && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
-  const tbody = $('abu-table');
-  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
-}
-
-$('abu-form').addEventListener('submit', e=>{
-  e.preventDefault();
-  const amt = parseFloat($('abu-amount').value||0);
-  const desc = $('abu-desc').value||'';
-  if(!amt){ alert('رقم درج کریں'); return; }
-  addRecord({ amount: amt, type:'abu-expense', description: desc, date: $('abu-date').value || new Date().toLocaleDateString('en-CA') });
-  $('abu-form').reset();
-  $('abu-amount').focus();
-});
 
 /* -------------- Forms binding -------------- */
 $('income-form').addEventListener('submit', e=>{
@@ -1426,7 +1509,7 @@ $('dash-refresh').addEventListener('click', renderDashboard);
 
 /* date triggers */
 ['dash-from','dash-to'].forEach(id=>{ if($(id)) $(id).addEventListener('change', renderDashboard); });
-['income-date','expense-date','shop-date'].forEach(id=>{ if($(id)) $(id).addEventListener('change', ()=>{ if(id==='income-date') renderIncomePage(); if(id==='expense-date') renderExpensePage(); if(id==='shop-date') renderShopPage(); }); });
+(['income-date','expense-date','shop-date','abu-date'].forEach)(id=>{ if($(id)) $(id).addEventListener('change', ()=>{ if(id==='income-date') renderIncomePage(); if(id==='expense-date') renderExpensePage(); if(id==='shop-date') renderShopPage(); }); });
 $('udhar-filter')?.addEventListener('change', renderUdhars);
 
 /* autosave every 20s (no heavy render) */
@@ -1438,6 +1521,7 @@ window.deleteUdhar = deleteUdhar;
 window.deleteBank = deleteBank;
 window.editBank = editBank;
 window.viewBank = viewBank;
+
 
 // --- Falling Text + Confetti for 5 seconds ---
 function startFallingEffects() {
@@ -1491,6 +1575,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+
 // --- Hover on name to show popup ---
 document.querySelectorAll('.brand h1').forEach(el => {
   el.addEventListener('mouseenter', () => {
@@ -1499,6 +1584,7 @@ document.querySelectorAll('.brand h1').forEach(el => {
     setTimeout(() => { popup.style.display = 'none'; }, 2000);
   });
 });
+
 
 // --- Hover Welcome Popup Trigger ---
 document.querySelectorAll('.brand h1').forEach(el => {
@@ -1510,36 +1596,10 @@ document.querySelectorAll('.brand h1').forEach(el => {
   });
 });
 
-
-/* -------------- Settings Name Save/Load -------------- */
-const NAME_KEY = 'usman_name';
-
-function applyName(name){
-  document.querySelectorAll('.dynamic-name').forEach(el => el.textContent = name || "Muhammad Usman");
-}
-
-function initName(){
-  const saved = localStorage.getItem(NAME_KEY) || "Muhammad Usman";
-  applyName(saved);
-  const input = document.getElementById('user-name');
-  if(input) input.value = saved;
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  initName();
-  const form = document.getElementById('settings-form');
-  if(form){
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      const name = document.getElementById('user-name').value.trim() || "Muhammad Usman";
-      localStorage.setItem(NAME_KEY, name);
-      applyName(name);
-      showToast("Name Saved");
-    });
-  }
-});
-
 </script>
+
+
+
 
 <style>
 #calc-modal .modal {
@@ -1596,6 +1656,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1609,6 +1670,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -1634,6 +1696,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1647,6 +1710,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 input, select, textarea {
@@ -1687,6 +1751,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1700,6 +1765,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -1725,6 +1791,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1739,6 +1806,7 @@ input, select, textarea {
 
 </style>
 
+
 <!-- Hover Welcome Popup -->
 <div id="hover-welcome-popup" style="
   position: fixed; top:0; left:0; width:100%; height:100%;
@@ -1748,7 +1816,7 @@ input, select, textarea {
 ">
   <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
     <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
-    <h2 style="margin-top: 15px;" class="dynamic-name">Muhammad Usman</h2>
+    <h2 style="margin-top: 15px;">Muhammad Usman</h2>
     <p id="hover-popup-datetime" style="margin-top: 10px; font-size: 1.2rem;"></p>
     <h3 style="margin-top: 15px;">Welcome</h3>
   </div>
@@ -1826,6 +1894,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1839,6 +1908,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -1864,6 +1934,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1877,6 +1948,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 input, select, textarea {
@@ -1917,6 +1989,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1930,6 +2003,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -1955,6 +2029,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -1968,6 +2043,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 #calc-modal .modal {
@@ -2024,6 +2100,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2037,6 +2114,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -2062,6 +2140,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2075,6 +2154,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 input, select, textarea {
@@ -2115,6 +2195,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2128,6 +2209,7 @@ input, select, textarea {
 </style>
 
 </style>
+
 
 <style>
 @keyframes borderGlow {
@@ -2153,6 +2235,7 @@ input, select, textarea {
 
 </style>
 
+
 <style>
 @keyframes summaryBorderGlow {
   0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
@@ -2166,6 +2249,132 @@ input, select, textarea {
 </style>
 
 </style>
+
+<script>
+// --- Abu combined page logic ---
+(function(){
+  const KEY_ABU_DENA = 'records_abu_dena';
+  const KEY_ABU_LENA = 'records_abu_lena';
+
+  function load(key){
+    try{ return JSON.parse(localStorage.getItem(key) || '[]'); }catch(e){ return []; }
+  }
+  function save(key, arr){
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+  function fmt(n){
+    try{ return new Intl.NumberFormat('ur-PK', { maximumFractionDigits: 0 }).format(Number(n||0)); }
+    catch(e){ return String(Math.round(Number(n||0))); }
+  }
+
+  function totals(){
+    const dena = load(KEY_ABU_DENA).reduce((s,r)=>s+Number(r.amount||0),0);
+    const lena = load(KEY_ABU_LENA).reduce((s,r)=>s+Number(r.amount||0),0);
+    const t1 = document.getElementById('total-abu-dena');
+    const t2 = document.getElementById('total-abu-lena');
+    if(t1) t1.textContent = fmt(dena);
+    if(t2) t2.textContent = fmt(lena);
+  }
+
+  function merged(filter='all'){
+    const d = load(KEY_ABU_DENA).map((r,i)=>({type:'dena', idx:i, date:r.date||'', amount:Number(r.amount||0), note:r.note||'', timestamp:r.timestamp||0}));
+    const l = load(KEY_ABU_LENA).map((r,i)=>({type:'lena', idx:i, date:r.date||'', amount:Number(r.amount||0), note:r.note||'', timestamp:r.timestamp||0}));
+    let arr = d.concat(l);
+    // sort by date desc then by timestamp desc
+    arr.sort((a,b)=>{
+      if(a.date===b.date) return (b.timestamp||0)-(a.timestamp||0);
+      return (b.date||'').localeCompare(a.date||'');
+    });
+    if(filter!=='all') arr = arr.filter(x=>x.type===filter);
+    return arr;
+  }
+
+  function renderTable(){
+    const tbody = document.getElementById('abu-table');
+    if(!tbody) return;
+    const filter = (document.getElementById('abu-filter')?.value)||'all';
+    const rows = merged(filter);
+    if(!rows.length){
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(r=>{
+      const typeLabel = r.type==='dena' ? 'ابو کو دینا' : 'ابو سے لینا';
+      return `<tr>
+        <td>${r.date||''}</td>
+        <td>${typeLabel}</td>
+        <td>${fmt(r.amount)}</td>
+        <td>${r.note||''}</td>
+        <td><button class="abu-del" data-type="${r.type}" data-idx="${r.idx}">🗑️</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function rerender(){ totals(); renderTable(); }
+
+  function addRecord(data){
+    const {type, date, amount, note} = data;
+    const key = (type==='dena') ? KEY_ABU_DENA : KEY_ABU_LENA;
+    const list = load(key);
+    list.unshift({
+      date: date,
+      amount: amount,
+      note: note,
+      timestamp: Date.now()
+    });
+    save(key, list);
+    rerender();
+  }
+
+  // Form submit
+  document.addEventListener('submit', function(e){
+    const form = e.target.closest('#abu-form');
+    if(!form) return;
+    e.preventDefault();
+    const type = document.getElementById('abu-type').value;
+    const date = document.getElementById('abu-date').value;
+    const amount = document.getElementById('abu-amount').value;
+    const note = document.getElementById('abu-note').value;
+    if(!date || !amount) return;
+    addRecord({type, date, amount, note});
+    form.reset();
+  });
+
+  // Delete handler
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('button.abu-del');
+    if(!btn) return;
+    const type = btn.getAttribute('data-type');
+    const idx = Number(btn.getAttribute('data-idx'));
+    const key = (type==='dena') ? KEY_ABU_DENA : KEY_ABU_LENA;
+    const list = load(key);
+    if(idx>=0 && idx<list.length){
+      list.splice(idx,1);
+      save(key, list);
+      rerender();
+    }
+  });
+
+  // Filter change
+  document.addEventListener('change', function(e){
+    if(e.target && e.target.id==='abu-filter'){ renderTable(); }
+  });
+
+  // Initialize defaults
+  document.addEventListener('DOMContentLoaded', function(){
+    const d = document.getElementById('abu-date');
+    if(d && !d.value){ d.value = new Date().toISOString().slice(0,10); }
+    rerender();
+  });
+  if(document.readyState==='complete' || document.readyState==='interactive'){
+    setTimeout(()=>{
+      const d = document.getElementById('abu-date');
+      if(d && !d.value){ d.value = new Date().toISOString().slice(0,10); }
+      rerender();
+    },0);
+  }
+})();
+</script>
 
 </body>
 </html>
