@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <html dir="ltr" lang="en">
-<head>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Muhammad Usman — Usman NADRA e-Sahulat (Fixed &amp; Themed)</title>
@@ -143,7 +145,19 @@ button:active, .icon-btn:active, .primary:active {
 }
 
 /* --- Neon Ripple Glow Effect --- */
-100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+.neon-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: rippleFade 1.2s ease-out forwards;
+  z-index: 999999;
+}
+@keyframes rippleFade {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
   100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
@@ -157,6 +171,17 @@ button:active, .icon-btn:active, .primary:active {
 .summary:hover {
   box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent2), 0 0 45px var(--accent);
   transform: translateY(-3px) scale(1.03);
+}
+
+.neon-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: rippleFade 1.2s ease-out forwards;
+  z-index: 999999;
 }
 
 /* --- Falling Islamic Text + Confetti Animation --- */
@@ -249,10 +274,32 @@ input, select, textarea {
   animation: summaryBorderGlow 2s infinite ease-in-out;
   border: 1px solid var(--accent);
 }
-</style>
 
+/* Remove all animations/transitions from sidebar */
+.sidebar, .sidebar * {
+  animation: none !important;
+  transition: none !important;
+}
 </style>
-
+<style>
+@keyframes summaryBorderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+.summary {
+  animation: summaryBorderGlow 2s infinite ease-in-out;
+  border: 1px solid var(--accent);
+}
+</style><style>
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
+  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+}
+input, select, textarea {
+  animation: borderGlow 2s infinite ease-in-out;
+}
 
 <style>
 @keyframes summaryBorderGlow {
@@ -264,10 +311,20 @@ input, select, textarea {
   animation: summaryBorderGlow 2s infinite ease-in-out;
   border: 1px solid var(--accent);
 }
-</style>
-
-</style>
-
+</style><style>
+input, select, textarea {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0px transparent;
+}
+input:hover, select:hover, textarea:hover {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
+  transform: translateY(-2px) scale(1.03);
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
+  transform: scale(1.02);
+  outline: none;
+}
 
 <style>
 @keyframes borderGlow {
@@ -289,25 +346,21 @@ input, select, textarea {
   animation: summaryBorderGlow 2s infinite ease-in-out;
   border: 1px solid var(--accent);
 }
-</style>
-
-</style>
-
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+</style><style>
+#calc-modal .modal {
+  animation: slideInColor 1s ease forwards;
 }
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
+#calc-modal {
+  align-items: center !important;
+  justify-content: center !important;
 }
-</style>
-
-</style>
-
+#calc-display {
+  font-size: 2rem !important;
+}
+#calc-modal button {
+  font-size: 1.5rem !important;
+  padding: 15px !important;
+}
 
 <style>
 input, select, textarea {
@@ -344,65 +397,114 @@ input, select, textarea {
   animation: summaryBorderGlow 2s infinite ease-in-out;
   border: 1px solid var(--accent);
 }
+</style><style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
+.arabic-text { font-family: 'Noto Nastaliq Urdu', serif !important; }
+</style><style id="auto-arabic-nastaliq">
+  body {
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Nastaliq Urdu", serif;
+  }
+</style><style id="nastaliq-global-override">
+/* Force Nastaliq everywhere */
+html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, td, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Nastaliq Urdu', serif !important;
+  letter-spacing: 0 !important;
+  font-feature-settings: "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+}
+/* Convenient utility if you only want Nastaliq on specific blocks later */
+.urdu, :lang(ur), [dir="rtl"] { font-family: 'Noto Nastaliq Urdu', serif !important; }
+</style><style>
+@media(max-width: 768px) {
+  body {
+    background: linear-gradient(180deg, #07142a, #0b3f6a) !important; /* clean simple gradient */
+  }
+
+  .app {
+    grid-template-columns: 1fr !important; /* single column layout */
+  }
+
+  .sidebar {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    flex-wrap: wrap !important;
+    padding: 6px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .sidebar .brand, 
+  .sidebar .small, 
+  .sidebar div[style*="margin-top"] {
+    display: none !important; /* hide brand, storage info on mobile */
+  }
+
+  .nav {
+    flex-direction: row !important;
+    gap: 6px !important;
+    width: 100% !important;
+    justify-content: space-around !important;
+  }
+
+  .nav a {
+    flex: 1 !important;
+    text-align: center !important;
+    font-size: 0.75rem !important;
+    padding: 6px !important;
+    border-radius: 8px !important;
+  }
+}
+</style><style>
+@media(max-width: 768px) {
+  .sidebar, .card {
+    box-shadow: none !important;
+    background: rgba(255,255,255,0.05) !important;
+  }
+
+  body {
+    background: linear-gradient(180deg, #06182f, #0b3f6a) !important;
+  }
+}
 </style>
 
+<style id="perf-boost">
+/* --- Full Clean Mode: No animations, no lighting --- */
+* {
+  text-shadow: none !important;
+  animation: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+}
+:root { --shadow: none !important; }
+.card, .sidebar, .nav a, .content, .section-title, .summary {
+  content-visibility: auto;
+  contain-intrinsic-size: 600px 800px;
+  box-shadow: none !important;
+}
+.neon-ripple, .falling-text, .falling-confetti {
+  display: none !important;
+}
 </style>
-
 
 <style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
-
-</style>
-
-
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 <style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
+@keyframes slideInColor {
+  0% { transform: translateX(-100vw) scale(0.8); opacity: 0; background: linear-gradient(90deg, red, orange); }
+  25% { background: linear-gradient(90deg, orange, yellow); }
+  50% { background: linear-gradient(90deg, yellow, green); }
+  75% { background: linear-gradient(90deg, green, blue); }
+  100% { transform: translateX(0) scale(1); opacity: 1; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); }
 }
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
+#hover-welcome-popup .popup-box-animated {
+  animation: slideInColor 1s ease forwards;
 }
-</style>
-
-</style>
-
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
-
-</style>
-
 
 <style>
 #calc-modal .modal {
@@ -460,306 +562,110 @@ input, select, textarea {
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
+/* ===== Loan icons (Taken = green down, Given = red up) ===== */
+.loan-icon{display:inline-flex;align-items:center;justify-content:center;width:1.15em;height:1.15em;border-radius:9999px;font-size:0.75em;line-height:1;vertical-align:middle;margin-right:0.35em;user-select:none;}
+.loan-icon-taken{background:#16a34a;color:#ffffff;}
+.loan-icon-taken::before{content:"\2193";}
+.loan-icon-given{background:#dc2626;color:#ffffff;}
+.loan-icon-given::before{content:"\2191";}
 </style>
-
-</style>
-
-
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
-
-</style>
-
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
-
-</style>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
-.arabic-text { font-family: 'Noto Nastaliq Urdu', serif !important; }
-</style>
-
-
-<style id="auto-arabic-nastaliq">
-  body {
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Nastaliq Urdu", serif;
-  }
-</style>
-
-
-<style id="nastaliq-global-override">
-/* Force Nastaliq everywhere */
-html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, td, h1, h2, h3, h4, h5, h6 {
-  font-family: 'Noto Nastaliq Urdu', serif !important;
-  letter-spacing: 0 !important;
-  font-feature-settings: "liga" 1, "calt" 1;
-  -webkit-font-smoothing: antialiased;
-}
-/* Convenient utility if you only want Nastaliq on specific blocks later */
-.urdu, :lang(ur), [dir="rtl"] { font-family: 'Noto Nastaliq Urdu', serif !important; }
-</style>
-
-<style>
-@media(max-width: 768px) {
-  body {
-    background: linear-gradient(180deg, #07142a, #0b3f6a) !important; /* clean simple gradient */
-  }
-
-  .app {
-    grid-template-columns: 1fr !important; /* single column layout */
-  }
-
-  .sidebar {
-    position: relative !important;
-    top: 0 !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    flex-wrap: wrap !important;
-    padding: 6px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .sidebar .brand, 
-  .sidebar .small, 
-  .sidebar div[style*="margin-top"] {
-    display: none !important; /* hide brand, storage info on mobile */
-  }
-
-  .nav {
-    flex-direction: row !important;
-    gap: 6px !important;
-    width: 100% !important;
-    justify-content: space-around !important;
-  }
-
-  .nav a {
-    flex: 1 !important;
-    text-align: center !important;
-    font-size: 0.75rem !important;
-    padding: 6px !important;
-    border-radius: 8px !important;
-  }
-}
-</style>
-
-
-<style>
-@media(max-width: 768px) {
-  .sidebar, .card {
-    box-shadow: none !important;
-    background: rgba(255,255,255,0.05) !important;
-  }
-
-  body {
-    background: linear-gradient(180deg, #06182f, #0b3f6a) !important;
-  }
-}
-</style>
-
-
-<style>
-@media(max-width: 768px) {
-  .card, .summary, .nav a.active {
-    box-shadow: none !important;
-    animation: none !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    background: rgba(0,0,0,0.25) !important;
-  }
-
-  button, .icon-btn, .primary, .nav a {
-    transition: all 0.15s ease-in-out !important;
-  }
-}
-</style>
-
-
-<style>
-@media(max-width: 768px) {
-  /* Sidebar Hide */
-  .sidebar {
-    display: none !important;
-  }
-
-  /* App Layout single column */
-  .app {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  /* Mobile Nav Topbar */
-  .mobile-nav {
-    display: flex !important;
-    justify-content: space-around;
-    align-items: center;
-    background: rgba(0,0,0,0.7);
-    padding: 8px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  .mobile-nav a {
-    flex: 1;
-    text-align: center;
-    font-size: 0.8rem;
-    padding: 6px;
-    border-radius: 6px;
-    color: #fff;
-    text-decoration: none;
-  }
-
-  /* Push content below navbar */
-  .main-content {
-    margin-top: 60px !important;
-    padding: 10px !important;
-  }
-}
-</style>
-
 </head>
 <body data-theme="luxury">
-<div id="welcome-popup" style="
-  position: fixed; top:0; left:0; width:100%; height:100%;
+<div id="welcome-popup" style="position: fixed; top:0; left:0; width:100%; height:100%;
   background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center;
-  z-index: 99999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center;">
+  z-index: 99999; font-family: 'Noto Nastaliq Urdu', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: white; text-align: center; display: none !important;">
 <div class="popup-box-animated" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); padding: 30px; border-radius: 12px; max-width: 90%;">
 <h1 style="font-size: 2rem;">بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِیْم</h1>
 <h2 style="margin-top: 15px;">Muhammad Usman</h2>
@@ -780,21 +686,21 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </div>
 </div>
 <ul class="nav" id="menu">
-<li><a class="active" data-page="home" href="#">Home ⌂</a></li>
-<li><a data-page="income" href="#">Income ₨+</a></li>
-<li><a data-page="expense" href="#">Expense ₨−</a></li>
+<li><a class="active" data-page="home" href="#">Home🏠</a></li>
+<li><a data-page="income" href="#">Income🤑+</a></li>
+<li><a data-page="expense" href="#">Expense📈−</a></li>
 <li><a data-page="shop" href="#">Shop Expense 🏪</a></li>
-<li><a data-page="udhar" href="#">Loans ↔︎</a></li>
-<li><a data-page="abu" href="#">Abu ↔︎</a></li>
-<li><a data-page="banks" href="#">Banks 🏦</a></li>
+<li><a data-page="abu" href="#">Abu ka Hisab 👨‍👦</a></li>
+<li><a data-page="udhar" href="#">Loans💸↔︎</a></li>
+<li><a data-page="banks" href="#">Banks🏦</a></li>
 <li><a data-page="weekly" href="#">Weekly 7d</a></li>
 <li><a data-page="monthly" href="#">Monthly 30d</a></li>
 </ul>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="icon-btn" id="export-json">JSON ⬇</button>
-<button class="icon-btn" id="export-csv">CSV ⬇</button>
-<button class="icon-btn" id="import-json">JSON ⬆</button>
-<button class="icon-btn" id="import-csv">CSV ⬆</button>
+<button class="icon-btn" id="export-json">JSON ex</button>
+<button class="icon-btn" id="export-csv">CSV ex</button>
+<button class="icon-btn" id="import-json">JSON im</button>
+<button class="icon-btn" id="import-csv">CSV im</button>
 </div>
 <div class="small" style="margin-top:12px">مقامی اسٹوریج: <strong>usman_esahulat_final</strong></div>
 </aside>
@@ -830,21 +736,12 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </div>
 </div>
 <div class="summary-grid" style="margin-top:12px">
-
-<div class="summary" data-summary="abu-dena">
-  <h3>ابو کو دینا</h3>
-  <p id="total-abu-dena">0</p>
-</div>
-<div class="summary" data-summary="abu-lena">
-  <h3>ابو سے لینا</h3>
-  <p id="total-abu-lena">0</p>
-</div>
-
 <div class="summary"><h3>Income</h3><p id="dash-income">0</p></div>
 <div class="summary"><h3>Expense</h3><p id="dash-expense">0</p></div>
 <div class="summary"><h3>دکان Expenseہ</h3><p id="dash-shop">0</p></div>
 <div class="summary"><h3>Net Balance</h3><p id="dash-balance">0</p></div>
-<div class="summary"><h3>Loan Taken</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3>Loan Given</h3><p id="dash-udhar-given">0</p></div></div>
+<div class="summary"><h3>Abu ka Hisab</h3><p id="dash-abu">0</p></div>
+<div class="summary"><h3><span class="loan-icon loan-icon-taken"></span>Loan Taken😊</h3><p id="dash-udhar-taken">0</p></div><div class="summary"><h3><span class="loan-icon loan-icon-given"></span>Loan Given😭</h3><p id="dash-udhar-given">0</p></div></div>
 <div class="card" style="margin-top:12px">
 <div class="section-title"><h3>Chart — Sales vs Expense</h3></div>
 <canvas id="barChart"></canvas>
@@ -947,7 +844,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <h2>ادھار مینجمنٹ</h2>
 <div class="right">
 <select id="udhar-filter">
-<option value="all">سب</option><option value="taken">Loan Taken</option><option value="given">Loan Given</option>
+<option value="all">سب</option><option value="taken">Loan Taken😊</option><option value="given">Loan Given😭</option>
 </select>
 <button class="primary" id="add-udhar-btn">نیا ادھار</button>
 <button class="icon-btn page-print" data-page="udhar">🖨️</button>
@@ -957,7 +854,7 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 <form id="udhar-form">
 <div class="row">
 <div><label>نام</label><input id="udhar-name" required="" type="text"/></div>
-<div><label>قسم</label><select id="udhar-type"><option value="taken">Loan Taken</option><option value="given">Loan Given</option></select></div>
+<div><label>قسم</label><select id="udhar-type"><option value="taken">Loan Taken😊</option><option value="given">Loan Given😭</option></select></div>
 </div>
 <div class="row" style="margin-top:8px">
 <div><label>رقم</label><input id="udhar-amount" required="" type="number"/></div>
@@ -998,6 +895,33 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </table>
 </div>
 </section>
+
+<!-- ABU -->
+<section class="card hidden" id="abu-section">
+  <div class="section-title">
+    <h2>Abu ka Hisab — مینج</h2>
+    <div class="right">
+      <input id="abu-date" type="date"/>
+      <button class="icon-btn page-print" data-page="abu">🖨️</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <form id="abu-form">
+      <div class="row">
+        <div><label>رقم</label><input id="abu-amount" type="number" required/></div>
+        <div><label>تفصیل</label><input id="abu-desc" type="text"/></div>
+      </div>
+      <div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
+    </form>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <table>
+      <thead><tr><th>وقت</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
+      <tbody id="abu-table"><tr><td colspan="4" style="text-align:center">No records</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
 <!-- WEEKLY -->
 <section class="card hidden" id="weekly-section">
 <div class="section-title"><h2>Weekly Report</h2><div class="right"><button class="icon-btn page-print" data-page="weekly">🖨️</button></div></div>
@@ -1018,59 +942,6 @@ html, body, *, button, .icon-btn, .primary, input, select, textarea, table, th, 
 </table>
 </div>
 </section>
-
-<!-- ABU (Combined) -->
-<section class="card hidden" id="abu-section">
-  <div class="section-title">
-    <h2>Abu — ریکارڈ</h2>
-    <div class="right">
-      <button class="icon-btn page-print" data-page="abu">🖨️</button>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:10px">
-    <form id="abu-form">
-      <div class="row">
-        <div>
-          <label>قسم</label>
-          <select id="abu-type">
-            <option value="lena">ابو سے لینا</option>
-            <option value="dena">ابو کو دینا</option>
-          </select>
-        </div>
-        <div>
-          <label>تاریخ</label>
-          <input type="date" id="abu-date" required />
-        </div>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <div><label>رقم</label><input type="number" id="abu-amount" required /></div>
-        <div><label>تفصیل</label><input type="text" id="abu-note" /></div>
-      </div>
-      <div style="margin-top:8px"><button class="primary" type="submit">Saved کریں</button></div>
-    </form>
-  </div>
-
-  <div class="card" style="margin-top:10px">
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <div class="chip">Total ابو کو دینا: <strong id="total-abu-dena">0</strong></div>
-      <div class="chip">Total ابو سے لینا: <strong id="total-abu-lena">0</strong></div>
-      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-        <label class="small">فلٹر</label>
-        <select id="abu-filter">
-          <option value="all">سب</option>
-          <option value="dena">صرف دینا</option>
-          <option value="lena">صرف لینا</option>
-        </select>
-      </div>
-    </div>
-    <table style="margin-top:10px">
-      <thead><tr><th>تاریخ</th><th>قسم</th><th>رقم</th><th>تفصیل</th><th>عمل</th></tr></thead>
-      <tbody id="abu-table"><tr><td colspan="5" style="text-align:center">No records</td></tr></tbody>
-    </table>
-  </div>
-</section>
-
 <div class="footer card">Saved: Local Browser Storage | Built by: Muhammad Usman — Usman NADRA e-Sahulat</div>
 </main>
 </div>
@@ -1107,11 +978,11 @@ const STORAGE_KEY = 'usman_esahulat_final';
 const THEME_KEY = 'usman_theme_final';
 
 /* -------------- Data stores -------------- */
-let dailyRecords = [], banks = [], udhars = [], weeklySummaries = [], monthlySummaries = [];
+let dailyRecords = [], banks = [], udhars = [], weeklySummaries = [], monthlySummaries = [], abuRecords = [];
 
 /* helpers */
 const $ = id => document.getElementById(id);
-function saveAll(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({dailyRecords,banks,udhars,weeklySummaries,monthlySummaries})); }catch(e){ console.warn(e); } }
+function saveAll(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({dailyRecords,banks,udhars,weeklySummaries,monthlySummaries,abuRecords})); }catch(e){ console.warn(e); } }
 function loadAll(){
   const raw = localStorage.getItem(STORAGE_KEY);
   if(raw){
@@ -1121,6 +992,7 @@ function loadAll(){
       banks = obj.banks || [];
       udhars = obj.udhars || [];
       weeklySummaries = obj.weeklySummaries || [];
+      abuRecords = obj.abuRecords || [];
       monthlySummaries = obj.monthlySummaries || [];
     }catch(e){ console.warn('parse err', e); initPresets(); }
   } else initPresets();
@@ -1139,7 +1011,7 @@ $('theme-picker').addEventListener('change', ()=> applyTheme($('theme-picker').v
 
 /* -------------- Page navigation -------------- */
 function showPage(id){
-  const pages = ['home','income','expense','shop','udhar','abu','banks','weekly','monthly'];
+  const pages = ['home','income','expense','shop','abu','udhar','banks','weekly','monthly'];
   pages.forEach(p=>{
     const el = $(p + '-section');
     if(el) el.classList.toggle('hidden', p !== id);
@@ -1162,7 +1034,7 @@ function setDefaultDates(){
   const from = before.toISOString().slice(0,10);
   if($('dash-from')) $('dash-from').value = from;
   if($('dash-to')) $('dash-to').value = today;
-  (['income-date','expense-date','shop-date','abu-date'].forEach)(id=>{ if($(id)) $(id).value = today; });
+  ['income-date','expense-date','shop-date','abu-date'].forEach(id=>{ if($(id)) $(id).value = today; });
 }
 function fmt(n){ return (n||0).toLocaleString('en-US'); }
 
@@ -1195,6 +1067,8 @@ function renderDashboard(){
   $('dash-expense').textContent = fmt(expense);
   $('dash-shop').textContent = fmt(shop);
   $('dash-balance').textContent = fmt(balance);
+  const abu = abuRecords.reduce((s,r)=>s+r.amount,0);
+  $('dash-abu').textContent = fmt(abu);
 
   
   const udharTaken = udhars.filter(u => u.type === 'taken').reduce((s,u) => s+u.amount, 0);
@@ -1279,31 +1153,49 @@ function drawPie(ctx, vals){
 
 /* -------------- Render pages -------------- */
 function renderIncomePage(){
-  const date = $('income-date').value || new Date().toISOString().slice(0,10);
-  const list = dailyRecords.filter(r=> r.type==='income' && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const list = dailyRecords
+    .filter(r => r.type === 'income')
+    .sort((a,b)=>b.timestamp-a.timestamp);
   const tbody = $('income-table');
-  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+  tbody.innerHTML = list.length ? list.map(r =>
+    `<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td>
+    <td>${fmt(r.amount)}</td>
+    <td>${r.description||'-'}</td>
+    <td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
 }
 
 function renderExpensePage(){
-  const date = $('expense-date').value || new Date().toISOString().slice(0,10);
-  const list = dailyRecords.filter(r=> (r.type==='expense') && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const list = dailyRecords
+    .filter(r => r.type === 'expense')
+    .sort((a,b)=>b.timestamp-a.timestamp);
   const tbody = $('expense-table');
-  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+  tbody.innerHTML = list.length ? list.map(r =>
+    `<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td>
+    <td>${fmt(r.amount)}</td>
+    <td>${r.description||'-'}</td>
+    <td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
 }
 
 function renderShopPage(){
-  const date = $('shop-date').value || new Date().toISOString().slice(0,10);
-  const list = dailyRecords.filter(r=> (r.type==='shop-expense') && r.date===date).sort((a,b)=>b.timestamp-a.timestamp);
+  const list = dailyRecords
+    .filter(r => r.type === 'shop-expense')
+    .sort((a,b)=>b.timestamp-a.timestamp);
   const tbody = $('shop-table');
-  tbody.innerHTML = list.length ? list.map(r=>`<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td><td>${fmt(r.amount)}</td><td>${r.description||'-'}</td><td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+  tbody.innerHTML = list.length ? list.map(r =>
+    `<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td>
+    <td>${fmt(r.amount)}</td>
+    <td>${r.description||'-'}</td>
+    <td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
 }
 
 function renderUdhars(){
   const filter = $('udhar-filter').value || 'all';
   const list = udhars.filter(u=> filter==='all' || u.type===filter).sort((a,b)=>b.timestamp-a.timestamp);
   const tbody = $('udhar-table');
-  tbody.innerHTML = list.length ? list.map(u=>`<tr><td>${u.name}</td><td>${u.type==='taken'?'Loan Taken':'Loan Given'}</td><td>${fmt(u.amount)}</td><td>${u.date||''}</td><td><button onclick="deleteUdhar('${u.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
+  tbody.innerHTML = list.length ? list.map(u=>`<tr><td>${u.name}</td><td>${u.type==='taken'?'Loan Taken😊':'Loan Given😭'}</td><td>${fmt(u.amount)}</td><td>${u.date||''}</td><td><button onclick="deleteUdhar('${u.id}')">🗑️</button></td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
 }
 
 function renderBanks(){
@@ -1359,24 +1251,12 @@ function addRecord(obj){
 }
 
 function deleteRecord(id){
-  if(!confirm('کیا آپ واقعی ریکارڈ حذف کرنا چاہتے ہیں؟')) return;
-  const idx = dailyRecords.findIndex(r=>r.id===id); if(idx===-1) return;
-  const rec = dailyRecords[idx];
-  if(rec.type==='bank-transfer' && rec.bankId){ const b = banks.find(x=>x.id===rec.bankId); if(b) b.balance -= rec.amount; }
-  dailyRecords.splice(idx,1);
-  saveAll();
-  
-  // Call the specific render function based on record type
-  if(rec.type === 'income') {
-    renderIncomePage();
-  } else if(rec.type === 'expense') {
-    renderExpensePage();
-  } else if(rec.type === 'shop-expense') {
-    renderShopPage();
+  if(confirm("کیا آپ واقعی یہ ریکارڈ حذف کرنا چاہتے ہیں؟")){
+    dailyRecords = dailyRecords.filter(r => r.id !== id);
+    abuRecords = abuRecords.filter(r => r.id !== id);
+    saveAll();
+    renderAll();
   }
-  
-  // Also update dashboard
-  renderDashboard();
 }
 
 function addUdhar(u){ u.id='u'+Date.now().toString(36); u.timestamp = Date.now(); u.date = u.date || new Date().toLocaleDateString('en-CA'); udhars.push(u); saveAll(); showToast('ادھار Saved'); renderUdhars(); renderDashboard(); }
@@ -1388,6 +1268,17 @@ function editBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; const v 
 function viewBank(id){ const b=banks.find(x=>x.id===id); if(!b) return; alert('Bank: '+b.name + '\nBalance: '+fmt(b.balance) + '\nٹرانزیکشنز: ' + (b.transactions? b.transactions.length : 0)); }
 
 /* -------------- Forms binding -------------- */
+
+$('abu-form')?.addEventListener('submit', e=>{
+  e.preventDefault();
+  const amt = parseFloat($('abu-amount').value||0);
+  const desc = $('abu-desc').value||'';
+  if(!amt){ alert('رقم درج کریں'); return; }
+  abuRecords.push({ id:'abu'+Date.now(), amount: amt, description: desc, date: $('abu-date').value || new Date().toLocaleDateString('en-CA'), timestamp: Date.now() }); saveAll(); renderAbuPage();
+  $('abu-form').reset();
+  $('abu-amount').focus();
+});
+
 $('income-form').addEventListener('submit', e=>{
   e.preventDefault();
   const amt = parseFloat($('income-amount').value||0);
@@ -1499,7 +1390,19 @@ $('calc-backspace').addEventListener('click', ()=> $('calc-display').value = $('
 // removed broken calc-eq listener (fixed) // ()=>{ try{ const expr = $('calc-display').value.replace(/×/g,'*').replace(/÷/g,'/'); const res = Function('"use strict"; return ('+expr+')')(); $('calc-display').value = (typeof res==='number' && isFinite(res)) ? res : 'Error'; }catch(e){ $('calc-display').value='Error'; } });
 
 /* -------------- Init & Render All -------------- */
-function renderAll(){
+
+/* -------------- Abu Page Render -------------- */
+function renderAbuPage(){
+  const list = abuRecords.sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('abu-table');
+  tbody.innerHTML = list.length ? list.map(r =>
+    `<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td>
+    <td>${fmt(r.amount)}</td>
+    <td>${r.description||'-'}</td>
+    <td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+function renderAll(){ renderAbuPage(); 
   renderDashboard(); renderIncomePage(); renderExpensePage(); renderShopPage(); renderUdhars(); renderBanks(); renderWeekly(); renderMonthly();
 }
 loadAll(); initTheme(); setDefaultDates(); renderAll();
@@ -1509,7 +1412,7 @@ $('dash-refresh').addEventListener('click', renderDashboard);
 
 /* date triggers */
 ['dash-from','dash-to'].forEach(id=>{ if($(id)) $(id).addEventListener('change', renderDashboard); });
-(['income-date','expense-date','shop-date','abu-date'].forEach)(id=>{ if($(id)) $(id).addEventListener('change', ()=>{ if(id==='income-date') renderIncomePage(); if(id==='expense-date') renderExpensePage(); if(id==='shop-date') renderShopPage(); }); });
+['income-date','expense-date','shop-date','abu-date'].forEach(id=>{ if($(id)) $(id).addEventListener('change', ()=>{ if(id==='income-date') renderIncomePage(); if(id==='expense-date') renderExpensePage(); if(id==='shop-date') renderShopPage(); }); });
 $('udhar-filter')?.addEventListener('change', renderUdhars);
 
 /* autosave every 20s (no heavy render) */
@@ -1596,213 +1499,81 @@ document.querySelectorAll('.brand h1').forEach(el => {
   });
 });
 
+
+// ---------------- Abu Page ----------------
+function renderAbuPage(){
+  const list = abuRecords.sort((a,b)=>b.timestamp-a.timestamp);
+  const tbody = $('abu-table');
+  tbody.innerHTML = list.length ? list.map(r =>
+    `<tr><td>${new Date(r.timestamp).toLocaleString('en-US')}</td>
+    <td>${fmt(r.amount)}</td>
+    <td>${r.description||'-'}</td>
+    <td><button onclick="deleteRecord('${r.id}')">🗑️</button></td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center">No records</td></tr>';
+}
+
+function addAbuRecord(obj){
+  obj.id = 'a' + Date.now().toString(36);
+  obj.timestamp = Date.now();
+  obj.date = obj.date || new Date().toLocaleDateString('en-CA');
+  abuRecords.push(obj);
+  saveAll();
+  showToast('Abu record saved');
+  renderAbuPage();
+  renderDashboard();
+}
+
+function deleteAbuRecord(id){
+  if(!confirm('کیا آپ واقعی ریکارڈ حذف کرنا چاہتے ہیں؟')) return;
+  const idx = abuRecords.findIndex(r=>r.id===id);
+  if(idx===-1) return;
+  abuRecords.splice(idx,1);
+  saveAll();
+  renderAbuPage();
+  renderDashboard();
+}
+
 </script>
 
 
 
 
-<style>
-#calc-modal .modal {
-  animation: slideInColor 1s ease forwards;
-}
-#calc-modal {
-  align-items: center !important;
-  justify-content: center !important;
-}
-#calc-display {
-  font-size: 2rem !important;
-}
-#calc-modal button {
-  font-size: 1.5rem !important;
-  padding: 15px !important;
-}
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
-
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
@@ -1821,560 +1592,155 @@ input, select, textarea {
     <h3 style="margin-top: 15px;">Welcome</h3>
   </div>
 </div>
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
-<style>
-@keyframes slideInColor {
-  0% { transform: translateX(-100vw) scale(0.8); opacity: 0; background: linear-gradient(90deg, red, orange); }
-  25% { background: linear-gradient(90deg, orange, yellow); }
-  50% { background: linear-gradient(90deg, yellow, green); }
-  75% { background: linear-gradient(90deg, green, blue); }
-  100% { transform: translateX(0) scale(1); opacity: 1; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2)); }
-}
-#hover-welcome-popup .popup-box-animated {
-  animation: slideInColor 1s ease forwards;
-}
-
-<style>
-#calc-modal .modal {
-  animation: slideInColor 1s ease forwards;
-}
-#calc-modal {
-  align-items: center !important;
-  justify-content: center !important;
-}
-#calc-display {
-  font-size: 2rem !important;
-}
-#calc-modal button {
-  font-size: 1.5rem !important;
-  padding: 15px !important;
-}
-
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
-
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-#calc-modal .modal {
-  animation: slideInColor 1s ease forwards;
-}
-#calc-modal {
-  align-items: center !important;
-  justify-content: center !important;
-}
-#calc-display {
-  font-size: 2rem !important;
-}
-#calc-modal button {
-  font-size: 1.5rem !important;
-  padding: 15px !important;
-}
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
-
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-input, select, textarea {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0px transparent;
-}
-input:hover, select:hover, textarea:hover {
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent2), 0 0 30px var(--accent);
-  transform: translateY(-2px) scale(1.03);
-}
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 15px var(--accent2), 0 0 25px var(--accent);
-  transform: scale(1.02);
-  outline: none;
-}
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
-
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
 
-<style>
-@keyframes borderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-input, select, textarea {
-  animation: borderGlow 2s infinite ease-in-out;
-}
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
 
 </style>
 
 
-<style>
-@keyframes summaryBorderGlow {
-  0% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-  50% { box-shadow: 0 0 15px var(--accent2), inset 0 0 10px var(--accent2); border-color: var(--accent2); }
-  100% { box-shadow: 0 0 5px var(--accent), inset 0 0 5px var(--accent); border-color: var(--accent); }
-}
-.summary {
-  animation: summaryBorderGlow 2s infinite ease-in-out;
-  border: 1px solid var(--accent);
-}
-</style>
+
 
 </style>
 
-<script>
-// --- Abu combined page logic ---
+
+<script id="perf-boost-js">
+/* ---- Runtime Performance Patch ---- */
 (function(){
-  const KEY_ABU_DENA = 'records_abu_dena';
-  const KEY_ABU_LENA = 'records_abu_lena';
+  // Prefer idle time for heavy work
+  var idle = window.requestIdleCallback || function(cb){ return setTimeout(function(){ cb({}); }, 1); };
 
-  function load(key){
-    try{ return JSON.parse(localStorage.getItem(key) || '[]'); }catch(e){ return []; }
-  }
-  function save(key, arr){
-    localStorage.setItem(key, JSON.stringify(arr));
-  }
-  function fmt(n){
-    try{ return new Intl.NumberFormat('ur-PK', { maximumFractionDigits: 0 }).format(Number(n||0)); }
-    catch(e){ return String(Math.round(Number(n||0))); }
-  }
-
-  function totals(){
-    const dena = load(KEY_ABU_DENA).reduce((s,r)=>s+Number(r.amount||0),0);
-    const lena = load(KEY_ABU_LENA).reduce((s,r)=>s+Number(r.amount||0),0);
-    const t1 = document.getElementById('total-abu-dena');
-    const t2 = document.getElementById('total-abu-lena');
-    if(t1) t1.textContent = fmt(dena);
-    if(t2) t2.textContent = fmt(lena);
-  }
-
-  function merged(filter='all'){
-    const d = load(KEY_ABU_DENA).map((r,i)=>({type:'dena', idx:i, date:r.date||'', amount:Number(r.amount||0), note:r.note||'', timestamp:r.timestamp||0}));
-    const l = load(KEY_ABU_LENA).map((r,i)=>({type:'lena', idx:i, date:r.date||'', amount:Number(r.amount||0), note:r.note||'', timestamp:r.timestamp||0}));
-    let arr = d.concat(l);
-    // sort by date desc then by timestamp desc
-    arr.sort((a,b)=>{
-      if(a.date===b.date) return (b.timestamp||0)-(a.timestamp||0);
-      return (b.date||'').localeCompare(a.date||'');
-    });
-    if(filter!=='all') arr = arr.filter(x=>x.type===filter);
-    return arr;
-  }
-
-  function renderTable(){
-    const tbody = document.getElementById('abu-table');
-    if(!tbody) return;
-    const filter = (document.getElementById('abu-filter')?.value)||'all';
-    const rows = merged(filter);
-    if(!rows.length){
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No records</td></tr>';
-      return;
+  // Throttle renderAll calls to once per animation frame
+  (function(){
+    var scheduled = false;
+    var orig = window.renderAll;
+    if(typeof orig === "function"){
+      window.renderAll = function(){
+        if(scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(function(){ scheduled = false; orig(); });
+      };
     }
-    tbody.innerHTML = rows.map(r=>{
-      const typeLabel = r.type==='dena' ? 'ابو کو دینا' : 'ابو سے لینا';
-      return `<tr>
-        <td>${r.date||''}</td>
-        <td>${typeLabel}</td>
-        <td>${fmt(r.amount)}</td>
-        <td>${r.note||''}</td>
-        <td><button class="abu-del" data-type="${r.type}" data-idx="${r.idx}">🗑️</button></td>
-      </tr>`;
-    }).join('');
-  }
+  })();
 
-  function rerender(){ totals(); renderTable(); }
-
-  function addRecord(data){
-    const {type, date, amount, note} = data;
-    const key = (type==='dena') ? KEY_ABU_DENA : KEY_ABU_LENA;
-    const list = load(key);
-    list.unshift({
-      date: date,
-      amount: amount,
-      note: note,
-      timestamp: Date.now()
-    });
-    save(key, list);
-    rerender();
-  }
-
-  // Form submit
-  document.addEventListener('submit', function(e){
-    const form = e.target.closest('#abu-form');
-    if(!form) return;
-    e.preventDefault();
-    const type = document.getElementById('abu-type').value;
-    const date = document.getElementById('abu-date').value;
-    const amount = document.getElementById('abu-amount').value;
-    const note = document.getElementById('abu-note').value;
-    if(!date || !amount) return;
-    addRecord({type, date, amount, note});
-    form.reset();
-  });
-
-  // Delete handler
-  document.addEventListener('click', function(e){
-    const btn = e.target.closest('button.abu-del');
-    if(!btn) return;
-    const type = btn.getAttribute('data-type');
-    const idx = Number(btn.getAttribute('data-idx'));
-    const key = (type==='dena') ? KEY_ABU_DENA : KEY_ABU_LENA;
-    const list = load(key);
-    if(idx>=0 && idx<list.length){
-      list.splice(idx,1);
-      save(key, list);
-      rerender();
+  // Lazy-run charts: only build when visible & in idle time
+  (function(){
+    var origCharts = window.renderCharts;
+    if(typeof origCharts === "function"){
+      window.renderCharts = function(slice){
+        var el = document.getElementById('barChart');
+        function isVisible(x){
+          if(!x) return false;
+          var r = x.getBoundingClientRect();
+          return r.top < window.innerHeight && r.bottom > 0;
+        }
+        function kick(){
+          idle(function(){
+            if(isVisible(el)){ origCharts(slice); }
+            else{
+              var onScroll = function(){
+                if(isVisible(el)){
+                  window.removeEventListener('scroll', onScroll, {passive:true});
+                  idle(function(){ origCharts(slice); });
+                }
+              };
+              window.addEventListener('scroll', onScroll, {passive:true});
+            }
+          });
+        }
+        kick();
+      };
     }
+  })();
+
+  // Passive listeners to avoid scroll jank
+  ['touchstart','touchmove','wheel','scroll'].forEach(function(ev){
+    window.addEventListener(ev, function(){} , {passive:true});
   });
 
-  // Filter change
-  document.addEventListener('change', function(e){
-    if(e.target && e.target.id==='abu-filter'){ renderTable(); }
-  });
-
-  // Initialize defaults
-  document.addEventListener('DOMContentLoaded', function(){
-    const d = document.getElementById('abu-date');
-    if(d && !d.value){ d.value = new Date().toISOString().slice(0,10); }
-    rerender();
-  });
-  if(document.readyState==='complete' || document.readyState==='interactive'){
-    setTimeout(()=>{
-      const d = document.getElementById('abu-date');
-      if(d && !d.value){ d.value = new Date().toISOString().slice(0,10); }
-      rerender();
-    },0);
-  }
+  // Disable neon ripple allocations if any script tries to add them
+  var style = document.createElement('style');
+  style.textContent = '.neon-ripple, .falling-text, .falling-confetti{display:none!important}';
+  document.head.appendChild(style);
 })();
 </script>
 
 </body>
 </html>
+<script>
+window.addEventListener('load', ()=>{
+  loadAll();
+  setDefaultDates();
+  initTheme();
+  renderAll();
+  showPage('home');
+});
+</script>
